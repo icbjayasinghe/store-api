@@ -1,0 +1,2645 @@
+openapi: 3.0.3
+info:
+  title: Store API - OpenAPI 3.0
+  description: |-
+    This is a Store API Server
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://store-api.swagger.io/api/v3
+tags:
+  - name: parentCategory
+    description: Everything about Parent Category
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: category
+    description: Everything about Category
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: productBrand
+    description: Everything about Product Brand
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: product
+    description: Everything about Product
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: sku
+    description: Everything about SKU
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: batch
+    description: Everything about Batch
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: store
+    description: Access to Store
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+  - name: branch
+    description: Access to Branch
+    externalDocs:
+      description: Find out more about our branch
+      url: http://swagger.io
+  - name: inventoryItem
+    description: Access to Inventory Item
+    externalDocs:
+      description: Find out more about our Inventory Item
+      url: http://swagger.io
+paths:
+  /parentCategory:
+    put:
+      tags:
+        - parentCategory
+      summary: Update an existing Parent Category
+      description: Update an existing Parent Category by Id
+      operationId: updateParentCategory
+      requestBody:
+        description: Update an existent Parent Category in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParentCategory'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ParentCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParentCategory'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentCategory'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ParentCategory'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Parent Category not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:parentCategories
+            - read:parentCategories
+    post:
+      tags:
+        - parentCategory
+      summary: Add a new Parent Category to the app
+      description: Add a new Parent Category to the app
+      operationId: addParentCategory
+      requestBody:
+        description: Create a new Parent Category to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParentCategory'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ParentCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParentCategory'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentCategory'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ParentCategory'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:parentCategorys
+            - read:parentCategorys
+  /parentCategory/findByStatus:
+    get:
+      tags:
+        - parentCategory
+      summary: Finds Parent Categorys by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findParentCategoryByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParentCategory'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParentCategory'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:parentCategories
+            - read:parentCategories
+  /parentCategory/{parentCategoryId}:
+    get:
+      tags:
+        - parentCategory
+      summary: Find Parent Category by ID
+      description: Returns a single Parent Category
+      operationId: getParentCategoryById
+      parameters:
+        - name: parentCategoryId
+          in: path
+          description: ID of Parent Category to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentCategory'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ParentCategory'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Parent Category not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:parentCategories
+            - read:parentCategories
+    post:
+      tags:
+        - parentCategory
+      summary: Updates a parent category in the app with form data
+      description: ''
+      operationId: updateParentCategoryWithForm
+      parameters:
+        - name: parentCategoryId
+          in: path
+          description: ID of Parent Category to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Name of parent category that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of parent category that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:parentCategories
+            - read:parentCategories
+    delete:
+      tags:
+        - parentCategory
+      summary: Deletes a parent category
+      description: delete a parent category
+      operationId: deleteParentCategory
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: parentCategoryId
+          in: path
+          description: Parent category id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid parent category value
+      security:
+        - petstore_auth:
+            - write:parentCategories
+            - read:parentCategories
+
+  /category:
+    put:
+      tags:
+        - category
+      summary: Update an existing Category
+      description: Update an existing Category by Id
+      operationId: updateCategory
+      requestBody:
+        description: Update an existent Category in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Category not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:categories
+            - read:categories
+    post:
+      tags:
+        - category
+      summary: Add a new Category to the app
+      description: Add a new Category to the app
+      operationId: addCategory
+      requestBody:
+        description: Create a new Category to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:categories
+            - read:categories
+  /category/findByStatus:
+    get:
+      tags:
+        - category
+      summary: Finds Categorys by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findCategoryByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryResponse'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:categories
+            - read:categories
+  /category/{categoryId}:
+    get:
+      tags:
+        - category
+      summary: Find Category by ID
+      description: Returns a single Category
+      operationId: getCategoryById
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of Category to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Category not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:categories
+            - read:categories
+    post:
+      tags:
+        - category
+      summary: Updates a category in the app with form data
+      description: ''
+      operationId: updateCategoryWithForm
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of Parent Category to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Name of category that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of category that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:categories
+            - read:categories
+    delete:
+      tags:
+        - category
+      summary: Deletes a category
+      description: delete a category
+      operationId: deleteCategory
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: categoryId
+          in: path
+          description: Category id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid category value
+      security:
+        - petstore_auth:
+            - write:categories
+            - read:categories
+
+  /productBrand:
+    put:
+      tags:
+        - productBrand
+      summary: Update an existing Product Brand
+      description: Update an existing Product Brand by Id
+      operationId: updateProductBrand
+      requestBody:
+        description: Update an existent Product Brand in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBrand'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ProductBrand'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductBrand'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Product Brand not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+    post:
+      tags:
+        - productBrand
+      summary: Add a new Product Brand to the app
+      description: Add a new Product Brand to the app
+      operationId: addProductBrand
+      requestBody:
+        description: Create a new Product Brand to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBrand'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ProductBrand'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductBrand'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+  /productBrand/findByStatus:
+    get:
+      tags:
+        - productBrand
+      summary: Finds Product Brand by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findProductBrandByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductBrand'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductBrand'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+  /productBrand/{brandId}:
+    get:
+      tags:
+        - productBrand
+      summary: Find Product Brand by ID
+      description: Returns a single Product Brand
+      operationId: getProductBrandById
+      parameters:
+        - name: brandId
+          in: path
+          description: ID of Product Brand to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductBrand'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Product Brand not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+    post:
+      tags:
+        - productBrand
+      summary: Updates a Product Brand in the app with form data
+      description: ''
+      operationId: updateProductBrandWithForm
+      parameters:
+        - name: brandId
+          in: path
+          description: ID of Product Brand to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: brandName
+          in: query
+          description: Name of Product Brand that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of Product Brand that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+    delete:
+      tags:
+        - productBrand
+      summary: Deletes a Product Brand
+      description: delete a Product Brand
+      operationId: deleteProductBrand
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: brandId
+          in: path
+          description: Product Brand id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Product Brand value
+      security:
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+  /productBrand/{brandId}/uploadImage:
+    post:
+      tags:
+        - productBrand
+      summary: uploads an image
+      description: ''
+      operationId: uploadProductBrandFile
+      parameters:
+        - name: brandId
+          in: path
+          description: ID of product brand to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: additionalMetadata
+          in: query
+          description: Additional Metadata
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - petstore_auth:
+            - write:productBrands
+            - read:productBrands
+
+  /product:
+    put:
+      tags:
+        - product
+      summary: Update an existing Product
+      description: Update an existing Product by Id
+      operationId: updateProduct
+      requestBody:
+        description: Update an existent Product in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Product not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:products
+            - read:products
+    post:
+      tags:
+        - product
+      summary: Add a new Product to the app
+      description: Add a new Product to the app
+      operationId: addProduct
+      requestBody:
+        description: Create a new Product to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:products
+            - read:products
+  /product/findByStatus:
+    get:
+      tags:
+        - product
+      summary: Finds Product by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findProductByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:products
+            - read:products
+  /product/{productId}:
+    get:
+      tags:
+        - product
+      summary: Find Product by ID
+      description: Returns a single Product
+      operationId: getProductById
+      parameters:
+        - name: productId
+          in: path
+          description: ID of Product to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Product not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:products
+            - read:products
+    post:
+      tags:
+        - product
+      summary: Updates a Product in the app with form data
+      description: ''
+      operationId: updateProductWithForm
+      parameters:
+        - name: productId
+          in: path
+          description: ID of Product to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: productName
+          in: query
+          description: Name of Product that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of Product that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:products
+            - read:products
+    delete:
+      tags:
+        - product
+      summary: Deletes a Product
+      description: delete a Product
+      operationId: deleteProduct
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: productId
+          in: path
+          description: Product id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Product value
+      security:
+        - petstore_auth:
+            - write:products
+            - read:products
+  /product/{productId}/uploadImage:
+    post:
+      tags:
+        - product
+      summary: uploads an image
+      description: ''
+      operationId: uploadProductFile
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: additionalMetadata
+          in: query
+          description: Additional Metadata
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - petstore_auth:
+            - write:products
+            - read:products
+
+  /sku:
+    put:
+      tags:
+        - sku
+      summary: Update an existing SKU
+      description: Update an existing SKU by Id
+      operationId: updateSku
+      requestBody:
+        description: Update an existent SKU in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sku'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Sku'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Sku'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkuResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SkuResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: SKU not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:skus
+            - read:skus
+    post:
+      tags:
+        - sku
+      summary: Add a new SKU to the app
+      description: Add a new SKU to the app
+      operationId: addSku
+      requestBody:
+        description: Create a new SKU to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sku'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Sku'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Sku'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkuResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SkuResponse'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:skus
+            - read:skus
+  /sku/findByStatus:
+    get:
+      tags:
+        - sku
+      summary: Finds SKU by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findSkuByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkuResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkuResponse'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:skus
+            - read:skus
+  /sku/{skuId}:
+    get:
+      tags:
+        - sku
+      summary: Find SKU by ID
+      description: Returns a single SKU
+      operationId: getSkuById
+      parameters:
+        - name: skuId
+          in: path
+          description: ID of SKU to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkuResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SkuResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: SKU not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:sku
+            - read:sku
+    post:
+      tags:
+        - sku
+      summary: Updates a SKU in the app with form data
+      description: ''
+      operationId: updateSkuWithForm
+      parameters:
+        - name: skuId
+          in: path
+          description: ID of SKU to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: skuName
+          in: query
+          description: Name of Product that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of SKU that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:skus
+            - read:skus
+    delete:
+      tags:
+        - sku
+      summary: Deletes a SKU
+      description: delete a SKU
+      operationId: deleteSku
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: skuId
+          in: path
+          description: SKU id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid SKU value
+      security:
+        - petstore_auth:
+            - write:skus
+            - read:skus
+  /sku/{skuId}/uploadImage:
+    post:
+      tags:
+        - sku
+      summary: uploads an image
+      description: ''
+      operationId: uploadSkuFile
+      parameters:
+        - name: skuId
+          in: path
+          description: ID of sku to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: additionalMetadata
+          in: query
+          description: Additional Metadata
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - petstore_auth:
+            - write:skus
+            - read:skus
+
+  /batch:
+    put:
+      tags:
+        - batch
+      summary: Update an existing Batch
+      description: Update an existing Batch by Id
+      operationId: updateBatch
+      requestBody:
+        description: Update an existent Batch in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Batch not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:batches
+            - read:batches
+    post:
+      tags:
+        - batch
+      summary: Add a new Batch to the app
+      description: Add a new Batch to the app
+      operationId: addBatch
+      requestBody:
+        description: Create a new Batch to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Batch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Batch'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:batches
+            - read:batches
+  /batch/findByStatus:
+    get:
+      tags:
+        - batch
+      summary: Finds Batch by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findBatchByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BatchResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BatchResponse'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:batches
+            - read:batches
+  /batch/{batchId}:
+    get:
+      tags:
+        - batch
+      summary: Find Batch by ID
+      description: Returns a single Batch
+      operationId: getBatchById
+      parameters:
+        - name: batchId
+          in: path
+          description: ID of Batch to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Batch not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:batches
+            - read:batches
+    post:
+      tags:
+        - batch
+      summary: Updates a Batch in the app with form data
+      description: ''
+      operationId: updateBatchWithForm
+      parameters:
+        - name: batchId
+          in: path
+          description: ID of Batch to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: batchName
+          in: query
+          description: Name of Batch that needs to be updated
+          schema:
+            type: string
+        - name: buyingPrice
+          in: query
+          description: Buying Price of Batch that needs to be updated
+          schema:
+            type: number
+            format: double
+        - name: sellingPrice
+          in: query
+          description: Buying Price of Batch that needs to be updated
+          schema:
+            type: number
+            format: double
+        - name: status
+          in: query
+          description: Status of Batch that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:batches
+            - read:batches
+    delete:
+      tags:
+        - batch
+      summary: Deletes a Batch
+      description: delete a Batch
+      operationId: deleteBatch
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: batchId
+          in: path
+          description: Batch id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Batch value
+      security:
+        - petstore_auth:
+            - write:batches
+            - read:batches
+
+  /store:
+    put:
+      tags:
+        - store
+      summary: Update an existing Store
+      description: Update an existing Store by Id
+      operationId: updateStore
+      requestBody:
+        description: Update an existent Store in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Store'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Store'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Store'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Store not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+    post:
+      tags:
+        - store
+      summary: Add a new Store to the app
+      description: Add a new Store to the app
+      operationId: addStore
+      requestBody:
+        description: Create a new Store to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Store'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Store'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Store'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+  /store/findByStatus:
+    get:
+      tags:
+        - store
+      summary: Finds Store by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findStoreByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Store'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Store'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+  /store/{storeId}:
+    get:
+      tags:
+        - store
+      summary: Find Store by ID
+      description: Returns a single Store
+      operationId: getStoreById
+      parameters:
+        - name: storeId
+          in: path
+          description: ID of Store to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Store not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:stores
+            - read:stores
+    post:
+      tags:
+        - store
+      summary: Updates a Store in the app with form data
+      description: ''
+      operationId: updateStoreWithForm
+      parameters:
+        - name: storeId
+          in: path
+          description: ID of Store to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: storeName
+          in: query
+          description: Name of Store that needs to be updated
+          schema:
+            type: string
+        - name: addressLine1
+          in: query
+          description: Address Line1 of Store that needs to be updated
+          schema:
+            type: string
+        - name: addressLine2
+          in: query
+          description: Address Line2 of Store that needs to be updated
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: City of Store that needs to be updated
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: State of Store that needs to be updated
+          schema:
+            type: string
+        - name: zipCode
+          in: query
+          description: Zip Code of Batch that needs to be updated
+          schema:
+            type: integer
+            format: int64
+        - name: country
+          in: query
+          description: Country of Store that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of Store that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+    delete:
+      tags:
+        - store
+      summary: Deletes a Store
+      description: delete a Store
+      operationId: deleteStore
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: storeId
+          in: path
+          description: Store id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Store value
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+  /store/{storeId}/uploadImage:
+    post:
+      tags:
+        - store
+      summary: uploads an image
+      description: ''
+      operationId: uploadStoreFile
+      parameters:
+        - name: storeId
+          in: path
+          description: ID of store to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: additionalMetadata
+          in: query
+          description: Additional Metadata
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+
+  /branch:
+    put:
+      tags:
+        - branch
+      summary: Update an existing Branch
+      description: Update an existing Branch by Id
+      operationId: updateBranch
+      requestBody:
+        description: Update an existent Branch in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Branch'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Branch not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:branches
+            - read:branches
+    post:
+      tags:
+        - branch
+      summary: Add a new Branch to the app
+      description: Add a new Store to the app
+      operationId: addBranch
+      requestBody:
+        description: Create a new Branch to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Branch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Branch'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:branches
+            - read:branches
+  /branch/findByStatus:
+    get:
+      tags:
+        - branch
+      summary: Finds Branch by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findBranchByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BranchResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BranchResponse'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:branches
+            - read:branches
+  /branch/{branchId}:
+    get:
+      tags:
+        - branch
+      summary: Find Branch by ID
+      description: Returns a single Branch
+      operationId: getBranchById
+      parameters:
+        - name: branchId
+          in: path
+          description: ID of Branch to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BranchResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Branch not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:branches
+            - read:branches
+    post:
+      tags:
+        - branch
+      summary: Updates a Branch in the app with form data
+      description: ''
+      operationId: updateBranchWithForm
+      parameters:
+        - name: branchId
+          in: path
+          description: ID of Branch to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: store_id
+          in: query
+          description: Store ID of Branch that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: branchName
+          in: query
+          description: Name of Branch that needs to be updated
+          schema:
+            type: string
+        - name: addressLine1
+          in: query
+          description: Address Line1 of Branch that needs to be updated
+          schema:
+            type: string
+        - name: addressLine2
+          in: query
+          description: Address Line2 of Branch that needs to be updated
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: City of Branch that needs to be updated
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: State of Branch that needs to be updated
+          schema:
+            type: string
+        - name: zipCode
+          in: query
+          description: Zip Code of Branch that needs to be updated
+          schema:
+            type: integer
+            format: int64
+        - name: country
+          in: query
+          description: Country of Branch that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of Branch that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:branches
+            - read:branches
+    delete:
+      tags:
+        - branch
+      summary: Deletes a Branch
+      description: delete a Branch
+      operationId: deleteBranch
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: branchId
+          in: path
+          description: Branch id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Store value
+      security:
+        - petstore_auth:
+            - write:stores
+            - read:stores
+
+  /inventoryItem:
+    put:
+      tags:
+        - inventoryItem
+      summary: Update an existing Inventory Item
+      description: Update an existing Branch by Id
+      operationId: updateInventoryItem
+      requestBody:
+        description: Update an existent Inventory Item in the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItemResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/InventoryItemResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Inventory Item not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:inventoryItems
+            - read:inventoryItems
+    post:
+      tags:
+        - inventoryItem
+      summary: Add a new Inventory Item to the app
+      description: Add a new Inventory Item to the app
+      operationId: addInventoryItem
+      requestBody:
+        description: Create a new Inventory Item to the app
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItemResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/InventoryItemResponse'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:inventoryItems
+            - read:inventoryItems
+  /inventoryItem/findByStatus:
+    get:
+      tags:
+        - branch
+      summary: Finds Inventory Item by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findInventoryItemByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryItemResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryItemResponse'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:inventoryItems
+            - read:inventoryItems
+  /inventoryItem/{inventoryItemId}:
+    get:
+      tags:
+        - inventoryItem
+      summary: Find Inventory Item by ID
+      description: Returns a single Inventory Item
+      operationId: getInventoryItemById
+      parameters:
+        - name: inventoryItemId
+          in: path
+          description: ID of Inventory Item to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItemResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/InventoryItemResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Inventory Item not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:inventoryItems
+            - read:inventoryItems
+    post:
+      tags:
+        - inventoryItem
+      summary: Updates a Inventory Item in the app with form data
+      description: ''
+      operationId: updateInventoryItemWithForm
+      parameters:
+        - name: inventoryItemId
+          in: path
+          description: ID of Inventory Item to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: branchId
+          in: query
+          description: Branch ID of Inventory Item that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: batch_id
+          in: query
+          description: Store ID of Inventory Item that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: quantity
+          in: query
+          description: Quantity of Inventory Item that needs to be updated
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          description: Status of Branch that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:inventoryItems
+            - read:inventoryItems
+    delete:
+      tags:
+        - inventoryItem
+      summary: Deletes a Inventory Item
+      description: delete a Inventory Item
+      operationId: deleteInventoryItem
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: inventoryItemId
+          in: path
+          description: Inventory Item id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid Inventory Item value
+      security:
+        - petstore_auth:
+            - write:inventoryItems
+            - read:inventoryItems
+
+components:
+  schemas:
+    ParentCategory:
+      required:
+        - name
+        - photoUrls
+      type: object
+      properties:
+        parentCategoryId:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: Lubricants
+        photoUrl:
+          type: string
+          example: Lubricants
+        status:
+          type: string
+          description: Parent Category status in the store
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: parentCategory
+    Category:
+      required:
+        - categoryName
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 10
+        categoryName:
+          type: string
+          example: Engine Oil, Break Oil
+        photoUrl:
+          type: string
+        parentCategoryId:
+          type: integer
+          format: int64
+          example: 10
+        status:
+          type: string
+          description: Category status in the store
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: category
+    CategoryResponse:
+      required:
+        - categoryName
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 10
+        categoryName:
+          type: string
+          example: Engine Oil, Break Oil
+        photoUrl:
+          type: string
+        parentCategory:
+          $ref: '#/components/schemas/ParentCategory'
+        status:
+          type: string
+          description: category status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: categoryResponse
+    ProductBrand:
+      required:
+        - brandName
+        - photoUrls
+      type: object
+      properties:
+        brandId:
+          type: integer
+          format: int64
+          example: 10
+        brandName:
+          type: string
+          example: Lubricants
+        photoUrl:
+          type: string
+          example: Lubricants
+        status:
+          type: string
+          description: Product Brand status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: productBrand
+    Product:
+      required:
+        - productName
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+          example: 10
+        productName:
+          type: string
+          example: Dot 3, Dot 4
+        photoUrl:
+          type: string
+        brandId:
+          type: integer
+          format: int64
+          example: 10
+        categoryId:
+          type: integer
+          format: int64
+          example: 10
+        status:
+          type: string
+          description: Product status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: product
+    ProductResponse:
+      required:
+        - productName
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+          example: 10
+        productName:
+          type: string
+          example: Dot 3, Dot 4
+        photoUrl:
+          type: string
+        brand:
+          $ref: '#/components/schemas/ProductBrand'
+        category:
+          $ref: '#/components/schemas/Category'
+        status:
+          type: string
+          description: Product status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: productResponse
+    Sku:
+      required:
+        - skuName
+      type: object
+      properties:
+        skuId:
+          type: integer
+          format: int64
+          example: 10
+        skuName:
+          type: string
+          example: 2L, 4L
+        photoUrl:
+          type: string
+        productId:
+          type: integer
+          format: int64
+          example: 10
+        status:
+          type: string
+          description: SKU status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: sku
+    SkuResponse:
+      required:
+        - skuName
+        - quantity
+      type: object
+      properties:
+        skuId:
+          type: integer
+          format: int64
+          example: 10
+        skuName:
+          type: string
+          example: 2L, 4L
+        photoUrl:
+          type: string
+        product:
+          $ref: '#/components/schemas/Product'
+        status:
+          type: string
+          description: SKU status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: skuResponse
+    Batch:
+      required:
+        - batchName
+        - sellingPrice
+        - skuId
+      type: object
+      properties:
+        batchId:
+          type: integer
+          format: int64
+          example: 10
+        batchName:
+          type: string
+          example: 1st batch, 2nd batch
+        buyingPrice:
+          type: number
+          format: double
+          example: 100.00
+        sellingPrice:
+          type: number
+          format: double
+          example: 100.00
+        photoUrl:
+          type: string
+        skuId:
+          type: integer
+          format: int64
+          example: 10
+        status:
+          type: string
+          description: Batch status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: batch
+    BatchResponse:
+      required:
+        - batchName
+        - sellingPrice
+        - skuId
+      type: object
+      properties:
+        batchId:
+          type: integer
+          format: int64
+          example: 10
+        batchName:
+          type: string
+          example: 1st batch, 2nd batch
+        buyingPrice:
+          type: number
+          format: double
+          example: 100.00
+        sellingPrice:
+          type: number
+          format: double
+          example: 100.00
+        photoUrl:
+          type: string
+        sku:
+          $ref: '#/components/schemas/Sku'
+        status:
+          type: string
+          description: Batch status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: batchResponse
+    Store:
+      required:
+        - storeName
+        - sellingPrice
+        - skuId
+      type: object
+      properties:
+        storeId:
+          type: integer
+          format: int64
+          example: 10
+        storeName:
+          type: string
+          example: Auto Range, MagCity
+        address:
+          $ref: '#/components/schemas/Address'
+        photoUrl:
+          type: string
+        status:
+          type: string
+          description: Store status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: batch
+    Address:
+      type: object
+      properties:
+        addressId:
+          type: integer
+          format: int64
+          example: 10
+        addresLine1:
+          type: string
+          example: 437 Lytton
+        addresLine2:
+          type: string
+          example: 437 Lytton
+        city:
+          type: string
+          example: Palo Alto
+        state:
+          type: string
+          example: CA
+        zip:
+          type: string
+          example: '94301'
+        country:
+          type: string
+          example: Canada
+      xml:
+        name: address
+    Branch:
+      required:
+        - branchName
+        - storeId
+      type: object
+      properties:
+        branchId:
+          type: integer
+          format: int64
+          example: 10
+        storeId:
+          type: integer
+          format: int64
+          example: 10
+        branchName:
+          type: string
+          example: Branch Toronto
+        address:
+          $ref: '#/components/schemas/Address'
+        photoUrl:
+          type: string
+        status:
+          type: string
+          description: Branch status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: branch
+    BranchResponse:
+      required:
+        - branchName
+        - store
+      type: object
+      properties:
+        branchId:
+          type: integer
+          format: int64
+          example: 10
+        store:
+          $ref: '#/components/schemas/Store'
+        branchName:
+          type: string
+          example: Branch Toronto
+        address:
+          $ref: '#/components/schemas/Address'
+        photoUrl:
+          type: string
+        status:
+          type: string
+          description: Branch status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: branchResponse
+    InventoryItem:
+      required:
+        - branchId
+        - batchId
+      type: object
+      properties:
+        inventoryItemId:
+          type: integer
+          format: int64
+          example: 10
+        branchId:
+          type: integer
+          format: int64
+          example: 10
+        batchId:
+          type: integer
+          format: int64
+          example: 10
+        quantity:
+          type: integer
+          format: int64
+          example: 10
+        status:
+          type: string
+          description: Branch status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: inventoryItem
+    InventoryItemResponse:
+      required:
+        - branchId
+        - batchId
+      type: object
+      properties:
+        inventoryItemId:
+          type: integer
+          format: int64
+          example: 10
+        branch:
+          $ref: '#/components/schemas/Branch'
+        batch:
+          $ref: '#/components/schemas/Batch'
+        quantity:
+          type: integer
+          format: int64
+          example: 10
+        status:
+          type: string
+          description: Branch status in the app
+          enum:
+            - ACTIVE
+            - DEACTIVE
+      xml:
+        name: inventoryItemResponse
+
+
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
