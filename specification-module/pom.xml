@@ -48,6 +48,11 @@
             <artifactId>springfox-core</artifactId>
             <version>${springfox-core-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.4</version>
+        </dependency>
 
     </dependencies>
 
