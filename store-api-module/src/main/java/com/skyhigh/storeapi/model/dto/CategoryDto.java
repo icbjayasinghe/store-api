@@ -4,6 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.skyhigh.storeapi.model.Status;
+import lombok.Builder;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import javax.validation.Valid;
@@ -18,6 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
 public class CategoryDto {
 
   @JsonProperty("categoryId")
@@ -32,43 +35,9 @@ public class CategoryDto {
   @JsonProperty("parentCategoryId")
   private Long parentCategoryId;
 
-  /**
-   * Category status in the store
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
 
   @JsonProperty("status")
-  private StatusEnum status;
+  private Status status;
 
   public CategoryDto categoryId(Long categoryId) {
     this.categoryId = categoryId;
@@ -146,7 +115,7 @@ public class CategoryDto {
     this.parentCategoryId = parentCategoryId;
   }
 
-  public CategoryDto status(StatusEnum status) {
+  public CategoryDto status(Status status) {
     this.status = status;
     return this;
   }
@@ -157,11 +126,11 @@ public class CategoryDto {
   */
   
   @Schema(name = "status", description = "Category status in the store", required = false)
-  public StatusEnum getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
