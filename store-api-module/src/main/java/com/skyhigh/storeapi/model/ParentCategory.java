@@ -1,41 +1,60 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.skyhigh.storeapi.model.Status;
-import lombok.Builder;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
- * ParentCategoryDto
+ * ParentCategory
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
 @Builder
-public class ParentCategoryDto {
+@Entity
+@Table(name = "ParentCategory")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class ParentCategory implements Serializable {
 
+  public ParentCategory() {
+  }
+
+  public ParentCategory(Long parentCategoryId, String name, String photoUrl, Status status) {
+    this.parentCategoryId = parentCategoryId;
+    this.name = name;
+    this.photoUrl = photoUrl;
+    this.status = status;
+  }
+
+  @Id
+  @GeneratedValue (strategy = GenerationType.IDENTITY)
   @JsonProperty("parentCategoryId")
   private Long parentCategoryId;
 
+  @NotNull
+  @Column(name="name", unique=true)
   @JsonProperty("name")
   private String name;
 
   @JsonProperty("photoUrl")
   private String photoUrl;
 
+  @Enumerated(EnumType.STRING)
   @JsonProperty("status")
   private Status status;
 
-  public ParentCategoryDto parentCategoryId(Long parentCategoryId) {
+  public ParentCategory parentCategoryId(Long parentCategoryId) {
     this.parentCategoryId = parentCategoryId;
     return this;
   }
@@ -54,7 +73,7 @@ public class ParentCategoryDto {
     this.parentCategoryId = parentCategoryId;
   }
 
-  public ParentCategoryDto name(String name) {
+  public ParentCategory name(String name) {
     this.name = name;
     return this;
   }
@@ -73,7 +92,7 @@ public class ParentCategoryDto {
     this.name = name;
   }
 
-  public ParentCategoryDto photoUrl(String photoUrl) {
+  public ParentCategory photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
   }
@@ -92,7 +111,7 @@ public class ParentCategoryDto {
     this.photoUrl = photoUrl;
   }
 
-  public ParentCategoryDto status(Status status) {
+  public ParentCategory status(Status status) {
     this.status = status;
     return this;
   }
@@ -119,11 +138,11 @@ public class ParentCategoryDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ParentCategoryDto parentCategoryDto = (ParentCategoryDto) o;
-    return Objects.equals(this.parentCategoryId, parentCategoryDto.parentCategoryId) &&
-        Objects.equals(this.name, parentCategoryDto.name) &&
-        Objects.equals(this.photoUrl, parentCategoryDto.photoUrl) &&
-        Objects.equals(this.status, parentCategoryDto.status);
+    ParentCategory parentCategory = (ParentCategory) o;
+    return Objects.equals(this.parentCategoryId, parentCategory.parentCategoryId) &&
+        Objects.equals(this.name, parentCategory.name) &&
+        Objects.equals(this.photoUrl, parentCategory.photoUrl) &&
+        Objects.equals(this.status, parentCategory.status);
   }
 
   @Override
@@ -134,7 +153,7 @@ public class ParentCategoryDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ParentCategoryDto {\n");
+    sb.append("class ParentCategory {\n");
     sb.append("    parentCategoryId: ").append(toIndentedString(parentCategoryId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
