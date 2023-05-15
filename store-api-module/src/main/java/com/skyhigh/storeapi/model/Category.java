@@ -26,7 +26,19 @@ import java.util.Objects;
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class Category implements Serializable {
 
+  public Category() {
+  }
+
+  public Category(Long categoryId, String categoryName, String photoUrl, ParentCategory parentCategory, Status status) {
+    this.categoryId = categoryId;
+    this.categoryName = categoryName;
+    this.photoUrl = photoUrl;
+    this.parentCategory = parentCategory;
+    this.status = status;
+  }
+
   @Id
+  @GeneratedValue (strategy = GenerationType.IDENTITY)
   @JsonProperty("categoryId")
   private Long categoryId;
 

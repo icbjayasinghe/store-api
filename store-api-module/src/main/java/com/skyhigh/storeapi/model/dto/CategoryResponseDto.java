@@ -4,7 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.openapitools.jackson.nullable.JsonNullable;
+import com.skyhigh.storeapi.model.Status;
+import lombok.Builder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -18,6 +19,7 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
 public class CategoryResponseDto {
 
   @JsonProperty("categoryId")
@@ -32,43 +34,8 @@ public class CategoryResponseDto {
   @JsonProperty("parentCategory")
   private ParentCategoryDto parentCategory;
 
-  /**
-   * category status in the app
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status;
+  private Status status;
 
   public CategoryResponseDto categoryId(Long categoryId) {
     this.categoryId = categoryId;
@@ -146,7 +113,7 @@ public class CategoryResponseDto {
     this.parentCategory = parentCategory;
   }
 
-  public CategoryResponseDto status(StatusEnum status) {
+  public CategoryResponseDto status(Status status) {
     this.status = status;
     return this;
   }
@@ -157,11 +124,11 @@ public class CategoryResponseDto {
   */
   
   @Schema(name = "status", description = "category status in the app", required = false)
-  public StatusEnum getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
