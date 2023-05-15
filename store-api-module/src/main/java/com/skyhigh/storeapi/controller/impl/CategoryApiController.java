@@ -1,11 +1,15 @@
 package com.skyhigh.storeapi.controller.impl;
 
 import com.skyhigh.storeapi.controller.CategoryApi;
+import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
 import com.skyhigh.storeapi.model.dto.CategoryDto;
 import com.skyhigh.storeapi.model.dto.CategoryResponseDto;
 
 
+import com.skyhigh.storeapi.model.dto.ParentCategoryDto;
+import com.skyhigh.storeapi.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -21,6 +25,9 @@ public class CategoryApiController implements CategoryApi {
     private final NativeWebRequest request;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     public CategoryApiController(NativeWebRequest request) {
         this.request = request;
     }
@@ -30,4 +37,18 @@ public class CategoryApiController implements CategoryApi {
         return Optional.ofNullable(request);
     }
 
+    @Override
+    public ResponseEntity<CategoryResponseDto> addCategory(CategoryDto categoryDto) {
+        CategoryResponseDto categoryResDto = categoryService.createCategory(categoryDto);
+        return ResponseEntity.ok(categoryResDto);
+    }
+
+    @Override
+    public ResponseEntity<CategoryResponseDto> getCategoryById(Long categoryId) {
+        CategoryResponseDto categoryResDto = categoryService.getCategory(categoryId);
+        if (categoryResDto == null) {
+            throw new ResourceNotFoundException("Parent with ID :"+categoryId+" Not Found!");
+        }
+        return ResponseEntity.ok(categoryResDto);
+    }
 }

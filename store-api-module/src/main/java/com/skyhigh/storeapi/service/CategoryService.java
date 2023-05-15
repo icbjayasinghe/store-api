@@ -1,8 +1,9 @@
 package com.skyhigh.storeapi.service;
 
 import com.skyhigh.storeapi.model.dto.CategoryDto;
+import com.skyhigh.storeapi.model.dto.CategoryResponseDto;
 
 public interface CategoryService {
-    CategoryDto createCategory(CategoryDto categoryDto);
-    CategoryDto getCategory(Long categoryId);
+    CategoryResponseDto createCategory(CategoryDto categoryDto);
+    CategoryResponseDto getCategory(Long categoryId);
 }
