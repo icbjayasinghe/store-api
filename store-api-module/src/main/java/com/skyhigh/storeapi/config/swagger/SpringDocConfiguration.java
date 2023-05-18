@@ -34,15 +34,12 @@ public class SpringDocConfiguration {
                 )
                 .components(
                         new Components()
-                                .addSecuritySchemes("api_key", new SecurityScheme()
-                                        .type(SecurityScheme.Type.APIKEY)
-                                        .in(SecurityScheme.In.HEADER)
-                                        .name("api_key")
-                                )
-                                .addSecuritySchemes("store_auth", new SecurityScheme()
-                                        .type(SecurityScheme.Type.OAUTH2)
+                                .addSecuritySchemes("bearerAuth", new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
                                 )
                 )
-        ;
+                ;
     }
 }

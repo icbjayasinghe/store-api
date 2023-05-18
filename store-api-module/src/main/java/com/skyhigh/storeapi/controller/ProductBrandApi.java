@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "productBrand", description = "Everything about Product Brand")
 public interface ProductBrandApi {
@@ -44,28 +44,28 @@ public interface ProductBrandApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addProductBrand",
-        summary = "Add a new Product Brand to the app",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addProductBrand",
+            summary = "Add a new Product Brand to the app",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/productBrand",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/productBrand",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<ProductBrandDto> addProductBrand(
-        @Parameter(name = "ProductBrandDto", description = "Create a new Product Brand to the app", required = true) @Valid @RequestBody ProductBrandDto productBrandDto
+            @Parameter(name = "ProductBrandDto", description = "Create a new Product Brand to the app", required = true) @Valid @RequestBody ProductBrandDto productBrandDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -95,23 +95,23 @@ public interface ProductBrandApi {
      * @return Invalid Product Brand value (status code 400)
      */
     @Operation(
-        operationId = "deleteProductBrand",
-        summary = "Deletes a Product Brand",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid Product Brand value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteProductBrand",
+            summary = "Deletes a Product Brand",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid Product Brand value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/productBrand/{brandId}"
+            method = RequestMethod.DELETE,
+            value = "/productBrand/{brandId}"
     )
     default ResponseEntity<Void> deleteProductBrand(
-        @Parameter(name = "brandId", description = "Product Brand id to delete", required = true) @PathVariable("brandId") Long brandId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "brandId", description = "Product Brand id to delete", required = true) @PathVariable("brandId") Long brandId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -127,27 +127,27 @@ public interface ProductBrandApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findProductBrandByStatus",
-        summary = "Finds Product Brand by status",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findProductBrandByStatus",
+            summary = "Finds Product Brand by status",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/productBrand/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/productBrand/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<ProductBrandDto>> findProductBrandByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -178,29 +178,28 @@ public interface ProductBrandApi {
      *         or Product Brand not found (status code 404)
      */
     @Operation(
-        operationId = "getProductBrandById",
-        summary = "Find Product Brand by ID",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Product Brand not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getProductBrandById",
+            summary = "Find Product Brand by ID",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Product Brand not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/productBrand/{brandId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/productBrand/{brandId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<ProductBrandDto> getProductBrandById(
-        @Parameter(name = "brandId", description = "ID of Product Brand to return", required = true) @PathVariable("brandId") Long brandId
+            @Parameter(name = "brandId", description = "ID of Product Brand to return", required = true) @PathVariable("brandId") Long brandId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -232,30 +231,30 @@ public interface ProductBrandApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateProductBrand",
-        summary = "Update an existing Product Brand",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Product Brand not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateProductBrand",
+            summary = "Update an existing Product Brand",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductBrandDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductBrandDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Product Brand not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/productBrand",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/productBrand",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<ProductBrandDto> updateProductBrand(
-        @Parameter(name = "ProductBrandDto", description = "Update an existent Product Brand in the app", required = true) @Valid @RequestBody ProductBrandDto productBrandDto
+            @Parameter(name = "ProductBrandDto", description = "Update an existent Product Brand in the app", required = true) @Valid @RequestBody ProductBrandDto productBrandDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -278,7 +277,7 @@ public interface ProductBrandApi {
 
     /**
      * POST /productBrand/{brandId} : Updates a Product Brand in the app with form data
-     * 
+     *
      *
      * @param brandId ID of Product Brand to return (required)
      * @param brandName Name of Product Brand that needs to be updated (optional)
@@ -286,24 +285,24 @@ public interface ProductBrandApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateProductBrandWithForm",
-        summary = "Updates a Product Brand in the app with form data",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateProductBrandWithForm",
+            summary = "Updates a Product Brand in the app with form data",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/productBrand/{brandId}"
+            method = RequestMethod.POST,
+            value = "/productBrand/{brandId}"
     )
     default ResponseEntity<Void> updateProductBrandWithForm(
-        @Parameter(name = "brandId", description = "ID of Product Brand to return", required = true) @PathVariable("brandId") Long brandId,
-        @Parameter(name = "brandName", description = "Name of Product Brand that needs to be updated") @Valid @RequestParam(value = "brandName", required = false) String brandName,
-        @Parameter(name = "status", description = "Status of Product Brand that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "brandId", description = "ID of Product Brand to return", required = true) @PathVariable("brandId") Long brandId,
+            @Parameter(name = "brandName", description = "Name of Product Brand that needs to be updated") @Valid @RequestParam(value = "brandName", required = false) String brandName,
+            @Parameter(name = "status", description = "Status of Product Brand that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -312,7 +311,7 @@ public interface ProductBrandApi {
 
     /**
      * POST /productBrand/{brandId}/uploadImage : uploads an image
-     * 
+     *
      *
      * @param brandId ID of product brand to update (required)
      * @param additionalMetadata Additional Metadata (optional)
@@ -320,28 +319,28 @@ public interface ProductBrandApi {
      * @return successful operation (status code 200)
      */
     @Operation(
-        operationId = "uploadProductBrandFile",
-        summary = "uploads an image",
-        tags = { "productBrand" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "uploadProductBrandFile",
+            summary = "uploads an image",
+            tags = { "productBrand" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+                    })
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/productBrand/{brandId}/uploadImage",
-        produces = { "application/json" },
-        consumes = { "application/octet-stream" }
+            method = RequestMethod.POST,
+            value = "/productBrand/{brandId}/uploadImage",
+            produces = { "application/json" },
+            consumes = { "application/octet-stream" }
     )
     default ResponseEntity<ModelApiResponse> uploadProductBrandFile(
-        @Parameter(name = "brandId", description = "ID of product brand to update", required = true) @PathVariable("brandId") Long brandId,
-        @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
-        @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
+            @Parameter(name = "brandId", description = "ID of product brand to update", required = true) @PathVariable("brandId") Long brandId,
+            @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
+            @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {

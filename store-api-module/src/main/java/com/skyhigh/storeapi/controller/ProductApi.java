@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "product", description = "Everything about Product")
 public interface ProductApi {
@@ -45,28 +45,28 @@ public interface ProductApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addProduct",
-        summary = "Add a new Product to the app",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addProduct",
+            summary = "Add a new Product to the app",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/product",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/product",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<ProductResponseDto> addProduct(
-        @Parameter(name = "ProductDto", description = "Create a new Product to the app", required = true) @Valid @RequestBody ProductDto productDto
+            @Parameter(name = "ProductDto", description = "Create a new Product to the app", required = true) @Valid @RequestBody ProductDto productDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -96,23 +96,23 @@ public interface ProductApi {
      * @return Invalid Product value (status code 400)
      */
     @Operation(
-        operationId = "deleteProduct",
-        summary = "Deletes a Product",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid Product value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteProduct",
+            summary = "Deletes a Product",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid Product value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/product/{productId}"
+            method = RequestMethod.DELETE,
+            value = "/product/{productId}"
     )
     default ResponseEntity<Void> deleteProduct(
-        @Parameter(name = "productId", description = "Product id to delete", required = true) @PathVariable("productId") Long productId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "productId", description = "Product id to delete", required = true) @PathVariable("productId") Long productId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -128,27 +128,27 @@ public interface ProductApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findProductByStatus",
-        summary = "Finds Product by status",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findProductByStatus",
+            summary = "Finds Product by status",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/product/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/product/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<ProductResponseDto>> findProductByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -179,29 +179,28 @@ public interface ProductApi {
      *         or Product not found (status code 404)
      */
     @Operation(
-        operationId = "getProductById",
-        summary = "Find Product by ID",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Product not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getProductById",
+            summary = "Find Product by ID",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Product not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/product/{productId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/product/{productId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<ProductResponseDto> getProductById(
-        @Parameter(name = "productId", description = "ID of Product to return", required = true) @PathVariable("productId") Long productId
+            @Parameter(name = "productId", description = "ID of Product to return", required = true) @PathVariable("productId") Long productId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -233,30 +232,30 @@ public interface ProductApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateProduct",
-        summary = "Update an existing Product",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Product not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateProduct",
+            summary = "Update an existing Product",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = ProductResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Product not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/product",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/product",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<ProductResponseDto> updateProduct(
-        @Parameter(name = "ProductDto", description = "Update an existent Product in the app", required = true) @Valid @RequestBody ProductDto productDto
+            @Parameter(name = "ProductDto", description = "Update an existent Product in the app", required = true) @Valid @RequestBody ProductDto productDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -279,7 +278,7 @@ public interface ProductApi {
 
     /**
      * POST /product/{productId} : Updates a Product in the app with form data
-     * 
+     *
      *
      * @param productId ID of Product to return (required)
      * @param productName Name of Product that needs to be updated (optional)
@@ -287,24 +286,24 @@ public interface ProductApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateProductWithForm",
-        summary = "Updates a Product in the app with form data",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateProductWithForm",
+            summary = "Updates a Product in the app with form data",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/product/{productId}"
+            method = RequestMethod.POST,
+            value = "/product/{productId}"
     )
     default ResponseEntity<Void> updateProductWithForm(
-        @Parameter(name = "productId", description = "ID of Product to return", required = true) @PathVariable("productId") Long productId,
-        @Parameter(name = "productName", description = "Name of Product that needs to be updated") @Valid @RequestParam(value = "productName", required = false) String productName,
-        @Parameter(name = "status", description = "Status of Product that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "productId", description = "ID of Product to return", required = true) @PathVariable("productId") Long productId,
+            @Parameter(name = "productName", description = "Name of Product that needs to be updated") @Valid @RequestParam(value = "productName", required = false) String productName,
+            @Parameter(name = "status", description = "Status of Product that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -313,7 +312,7 @@ public interface ProductApi {
 
     /**
      * POST /product/{productId}/uploadImage : uploads an image
-     * 
+     *
      *
      * @param productId ID of product to update (required)
      * @param additionalMetadata Additional Metadata (optional)
@@ -321,28 +320,28 @@ public interface ProductApi {
      * @return successful operation (status code 200)
      */
     @Operation(
-        operationId = "uploadProductFile",
-        summary = "uploads an image",
-        tags = { "product" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "uploadProductFile",
+            summary = "uploads an image",
+            tags = { "product" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+                    })
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/product/{productId}/uploadImage",
-        produces = { "application/json" },
-        consumes = { "application/octet-stream" }
+            method = RequestMethod.POST,
+            value = "/product/{productId}/uploadImage",
+            produces = { "application/json" },
+            consumes = { "application/octet-stream" }
     )
     default ResponseEntity<ModelApiResponse> uploadProductFile(
-        @Parameter(name = "productId", description = "ID of product to update", required = true) @PathVariable("productId") Long productId,
-        @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
-        @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
+            @Parameter(name = "productId", description = "ID of product to update", required = true) @PathVariable("productId") Long productId,
+            @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
+            @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
