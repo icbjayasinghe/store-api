@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
         "com.skyhigh.storeapi",
         "com.skyhigh.storeapi.controller",
         "com.skyhigh.storeapi.config.swagger",
+        "com.skyhigh.storeapi.config",
         "com.skyhigh.storeapi.util",
         "com.skyhigh.storeapi.util.convertor",
         "com.skyhigh.storeapi.service",

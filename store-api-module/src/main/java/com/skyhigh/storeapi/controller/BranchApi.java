@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "branch", description = "Access to Branch")
 public interface BranchApi {
@@ -45,28 +45,28 @@ public interface BranchApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addBranch",
-        summary = "Add a new Branch to the app",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addBranch",
+            summary = "Add a new Branch to the app",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/branch",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/branch",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<BranchResponseDto> addBranch(
-        @Parameter(name = "BranchDto", description = "Create a new Branch to the app", required = true) @Valid @RequestBody BranchDto branchDto
+            @Parameter(name = "BranchDto", description = "Create a new Branch to the app", required = true) @Valid @RequestBody BranchDto branchDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -96,23 +96,23 @@ public interface BranchApi {
      * @return Invalid Store value (status code 400)
      */
     @Operation(
-        operationId = "deleteBranch",
-        summary = "Deletes a Branch",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid Store value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteBranch",
+            summary = "Deletes a Branch",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid Store value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/branch/{branchId}"
+            method = RequestMethod.DELETE,
+            value = "/branch/{branchId}"
     )
     default ResponseEntity<Void> deleteBranch(
-        @Parameter(name = "branchId", description = "Branch id to delete", required = true) @PathVariable("branchId") Long branchId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "branchId", description = "Branch id to delete", required = true) @PathVariable("branchId") Long branchId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -128,27 +128,27 @@ public interface BranchApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findBranchByStatus",
-        summary = "Finds Branch by status",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findBranchByStatus",
+            summary = "Finds Branch by status",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/branch/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/branch/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<BranchResponseDto>> findBranchByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -179,29 +179,28 @@ public interface BranchApi {
      *         or Branch not found (status code 404)
      */
     @Operation(
-        operationId = "getBranchById",
-        summary = "Find Branch by ID",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Branch not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getBranchById",
+            summary = "Find Branch by ID",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Branch not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/branch/{branchId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/branch/{branchId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<BranchResponseDto> getBranchById(
-        @Parameter(name = "branchId", description = "ID of Branch to return", required = true) @PathVariable("branchId") Long branchId
+            @Parameter(name = "branchId", description = "ID of Branch to return", required = true) @PathVariable("branchId") Long branchId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -233,30 +232,30 @@ public interface BranchApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateBranch",
-        summary = "Update an existing Branch",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Branch not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateBranch",
+            summary = "Update an existing Branch",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BranchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BranchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Branch not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/branch",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/branch",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<BranchResponseDto> updateBranch(
-        @Parameter(name = "BranchDto", description = "Update an existent Branch in the app", required = true) @Valid @RequestBody BranchDto branchDto
+            @Parameter(name = "BranchDto", description = "Update an existent Branch in the app", required = true) @Valid @RequestBody BranchDto branchDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -279,7 +278,7 @@ public interface BranchApi {
 
     /**
      * POST /branch/{branchId} : Updates a Branch in the app with form data
-     * 
+     *
      *
      * @param branchId ID of Branch to return (required)
      * @param storeId Store ID of Branch that needs to be updated (required)
@@ -294,31 +293,31 @@ public interface BranchApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateBranchWithForm",
-        summary = "Updates a Branch in the app with form data",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateBranchWithForm",
+            summary = "Updates a Branch in the app with form data",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/branch/{branchId}"
+            method = RequestMethod.POST,
+            value = "/branch/{branchId}"
     )
     default ResponseEntity<Void> updateBranchWithForm(
-        @Parameter(name = "branchId", description = "ID of Branch to return", required = true) @PathVariable("branchId") Long branchId,
-        @NotNull @Parameter(name = "store_id", description = "Store ID of Branch that needs to be updated", required = true) @Valid @RequestParam(value = "store_id", required = true) Long storeId,
-        @Parameter(name = "branchName", description = "Name of Branch that needs to be updated") @Valid @RequestParam(value = "branchName", required = false) String branchName,
-        @Parameter(name = "addressLine1", description = "Address Line1 of Branch that needs to be updated") @Valid @RequestParam(value = "addressLine1", required = false) String addressLine1,
-        @Parameter(name = "addressLine2", description = "Address Line2 of Branch that needs to be updated") @Valid @RequestParam(value = "addressLine2", required = false) String addressLine2,
-        @Parameter(name = "city", description = "City of Branch that needs to be updated") @Valid @RequestParam(value = "city", required = false) String city,
-        @Parameter(name = "state", description = "State of Branch that needs to be updated") @Valid @RequestParam(value = "state", required = false) String state,
-        @Parameter(name = "zipCode", description = "Zip Code of Branch that needs to be updated") @Valid @RequestParam(value = "zipCode", required = false) Long zipCode,
-        @Parameter(name = "country", description = "Country of Branch that needs to be updated") @Valid @RequestParam(value = "country", required = false) String country,
-        @Parameter(name = "status", description = "Status of Branch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "branchId", description = "ID of Branch to return", required = true) @PathVariable("branchId") Long branchId,
+            @NotNull @Parameter(name = "store_id", description = "Store ID of Branch that needs to be updated", required = true) @Valid @RequestParam(value = "store_id", required = true) Long storeId,
+            @Parameter(name = "branchName", description = "Name of Branch that needs to be updated") @Valid @RequestParam(value = "branchName", required = false) String branchName,
+            @Parameter(name = "addressLine1", description = "Address Line1 of Branch that needs to be updated") @Valid @RequestParam(value = "addressLine1", required = false) String addressLine1,
+            @Parameter(name = "addressLine2", description = "Address Line2 of Branch that needs to be updated") @Valid @RequestParam(value = "addressLine2", required = false) String addressLine2,
+            @Parameter(name = "city", description = "City of Branch that needs to be updated") @Valid @RequestParam(value = "city", required = false) String city,
+            @Parameter(name = "state", description = "State of Branch that needs to be updated") @Valid @RequestParam(value = "state", required = false) String state,
+            @Parameter(name = "zipCode", description = "Zip Code of Branch that needs to be updated") @Valid @RequestParam(value = "zipCode", required = false) Long zipCode,
+            @Parameter(name = "country", description = "Country of Branch that needs to be updated") @Valid @RequestParam(value = "country", required = false) String country,
+            @Parameter(name = "status", description = "Status of Branch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 

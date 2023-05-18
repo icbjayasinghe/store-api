@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "store", description = "Access to Store")
 public interface StoreApi {
@@ -45,28 +45,28 @@ public interface StoreApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addStore",
-        summary = "Add a new Store to the app",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addStore",
+            summary = "Add a new Store to the app",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/store",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/store",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<StoreDto> addStore(
-        @Parameter(name = "StoreDto", description = "Create a new Store to the app", required = true) @Valid @RequestBody StoreDto storeDto
+            @Parameter(name = "StoreDto", description = "Create a new Store to the app", required = true) @Valid @RequestBody StoreDto storeDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -96,23 +96,23 @@ public interface StoreApi {
      * @return Invalid Store value (status code 400)
      */
     @Operation(
-        operationId = "deleteStore",
-        summary = "Deletes a Store",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid Store value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteStore",
+            summary = "Deletes a Store",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid Store value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/store/{storeId}"
+            method = RequestMethod.DELETE,
+            value = "/store/{storeId}"
     )
     default ResponseEntity<Void> deleteStore(
-        @Parameter(name = "storeId", description = "Store id to delete", required = true) @PathVariable("storeId") Long storeId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "storeId", description = "Store id to delete", required = true) @PathVariable("storeId") Long storeId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -128,27 +128,27 @@ public interface StoreApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findStoreByStatus",
-        summary = "Finds Store by status",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findStoreByStatus",
+            summary = "Finds Store by status",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/store/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/store/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<StoreDto>> findStoreByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -179,29 +179,28 @@ public interface StoreApi {
      *         or Store not found (status code 404)
      */
     @Operation(
-        operationId = "getStoreById",
-        summary = "Find Store by ID",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Store not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getStoreById",
+            summary = "Find Store by ID",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Store not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/store/{storeId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/store/{storeId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<StoreDto> getStoreById(
-        @Parameter(name = "storeId", description = "ID of Store to return", required = true) @PathVariable("storeId") Long storeId
+            @Parameter(name = "storeId", description = "ID of Store to return", required = true) @PathVariable("storeId") Long storeId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -233,30 +232,30 @@ public interface StoreApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateStore",
-        summary = "Update an existing Store",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Store not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateStore",
+            summary = "Update an existing Store",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = StoreDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Store not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/store",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/store",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<StoreDto> updateStore(
-        @Parameter(name = "StoreDto", description = "Update an existent Store in the app", required = true) @Valid @RequestBody StoreDto storeDto
+            @Parameter(name = "StoreDto", description = "Update an existent Store in the app", required = true) @Valid @RequestBody StoreDto storeDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -279,7 +278,7 @@ public interface StoreApi {
 
     /**
      * POST /store/{storeId} : Updates a Store in the app with form data
-     * 
+     *
      *
      * @param storeId ID of Store to return (required)
      * @param storeName Name of Store that needs to be updated (optional)
@@ -293,30 +292,30 @@ public interface StoreApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateStoreWithForm",
-        summary = "Updates a Store in the app with form data",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateStoreWithForm",
+            summary = "Updates a Store in the app with form data",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/store/{storeId}"
+            method = RequestMethod.POST,
+            value = "/store/{storeId}"
     )
     default ResponseEntity<Void> updateStoreWithForm(
-        @Parameter(name = "storeId", description = "ID of Store to return", required = true) @PathVariable("storeId") Long storeId,
-        @Parameter(name = "storeName", description = "Name of Store that needs to be updated") @Valid @RequestParam(value = "storeName", required = false) String storeName,
-        @Parameter(name = "addressLine1", description = "Address Line1 of Store that needs to be updated") @Valid @RequestParam(value = "addressLine1", required = false) String addressLine1,
-        @Parameter(name = "addressLine2", description = "Address Line2 of Store that needs to be updated") @Valid @RequestParam(value = "addressLine2", required = false) String addressLine2,
-        @Parameter(name = "city", description = "City of Store that needs to be updated") @Valid @RequestParam(value = "city", required = false) String city,
-        @Parameter(name = "state", description = "State of Store that needs to be updated") @Valid @RequestParam(value = "state", required = false) String state,
-        @Parameter(name = "zipCode", description = "Zip Code of Batch that needs to be updated") @Valid @RequestParam(value = "zipCode", required = false) Long zipCode,
-        @Parameter(name = "country", description = "Country of Store that needs to be updated") @Valid @RequestParam(value = "country", required = false) String country,
-        @Parameter(name = "status", description = "Status of Store that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "storeId", description = "ID of Store to return", required = true) @PathVariable("storeId") Long storeId,
+            @Parameter(name = "storeName", description = "Name of Store that needs to be updated") @Valid @RequestParam(value = "storeName", required = false) String storeName,
+            @Parameter(name = "addressLine1", description = "Address Line1 of Store that needs to be updated") @Valid @RequestParam(value = "addressLine1", required = false) String addressLine1,
+            @Parameter(name = "addressLine2", description = "Address Line2 of Store that needs to be updated") @Valid @RequestParam(value = "addressLine2", required = false) String addressLine2,
+            @Parameter(name = "city", description = "City of Store that needs to be updated") @Valid @RequestParam(value = "city", required = false) String city,
+            @Parameter(name = "state", description = "State of Store that needs to be updated") @Valid @RequestParam(value = "state", required = false) String state,
+            @Parameter(name = "zipCode", description = "Zip Code of Batch that needs to be updated") @Valid @RequestParam(value = "zipCode", required = false) Long zipCode,
+            @Parameter(name = "country", description = "Country of Store that needs to be updated") @Valid @RequestParam(value = "country", required = false) String country,
+            @Parameter(name = "status", description = "Status of Store that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -325,7 +324,7 @@ public interface StoreApi {
 
     /**
      * POST /store/{storeId}/uploadImage : uploads an image
-     * 
+     *
      *
      * @param storeId ID of store to update (required)
      * @param additionalMetadata Additional Metadata (optional)
@@ -333,28 +332,28 @@ public interface StoreApi {
      * @return successful operation (status code 200)
      */
     @Operation(
-        operationId = "uploadStoreFile",
-        summary = "uploads an image",
-        tags = { "store" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "uploadStoreFile",
+            summary = "uploads an image",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+                    })
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/store/{storeId}/uploadImage",
-        produces = { "application/json" },
-        consumes = { "application/octet-stream" }
+            method = RequestMethod.POST,
+            value = "/store/{storeId}/uploadImage",
+            produces = { "application/json" },
+            consumes = { "application/octet-stream" }
     )
     default ResponseEntity<ModelApiResponse> uploadStoreFile(
-        @Parameter(name = "storeId", description = "ID of store to update", required = true) @PathVariable("storeId") Long storeId,
-        @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
-        @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
+            @Parameter(name = "storeId", description = "ID of store to update", required = true) @PathVariable("storeId") Long storeId,
+            @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
+            @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {

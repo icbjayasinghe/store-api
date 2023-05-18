@@ -99,9 +99,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:parentCategories
-            - read:parentCategories
+        - bearerAuth: []
     post:
       tags:
         - parentCategory
@@ -134,9 +132,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:parentCategorys
-            - read:parentCategorys
+        - bearerAuth: []
   /parentCategory/findByStatus:
     get:
       tags:
@@ -173,9 +169,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:parentCategories
-            - read:parentCategories
+        - bearerAuth: []
   /parentCategory/{parentCategoryId}:
     get:
       tags:
@@ -206,10 +200,7 @@ paths:
         '404':
           description: Parent Category not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:parentCategories
-            - read:parentCategories
+        - bearerAuth: []
     post:
       tags:
         - parentCategory
@@ -238,9 +229,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:parentCategories
-            - read:parentCategories
+        - bearerAuth: []
     delete:
       tags:
         - parentCategory
@@ -265,9 +254,7 @@ paths:
         '400':
           description: Invalid parent category value
       security:
-        - store_auth:
-            - write:parentCategories
-            - read:parentCategories
+        - bearerAuth: []
 
   /category:
     put:
@@ -306,9 +293,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:categories
-            - read:categories
+        - bearerAuth: []
     post:
       tags:
         - category
@@ -341,9 +326,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:categories
-            - read:categories
+        - bearerAuth: []
   /category/findByStatus:
     get:
       tags:
@@ -380,9 +363,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:categories
-            - read:categories
+        - bearerAuth: []
   /category/{categoryId}:
     get:
       tags:
@@ -413,10 +394,7 @@ paths:
         '404':
           description: Category not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:categories
-            - read:categories
+        - bearerAuth: []
     post:
       tags:
         - category
@@ -445,9 +423,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:categories
-            - read:categories
+        - bearerAuth: []
     delete:
       tags:
         - category
@@ -472,9 +448,7 @@ paths:
         '400':
           description: Invalid category value
       security:
-        - store_auth:
-            - write:categories
-            - read:categories
+        - bearerAuth: []
 
   /productBrand:
     put:
@@ -513,9 +487,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
     post:
       tags:
         - productBrand
@@ -548,9 +520,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
   /productBrand/findByStatus:
     get:
       tags:
@@ -587,9 +557,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
   /productBrand/{brandId}:
     get:
       tags:
@@ -620,10 +588,7 @@ paths:
         '404':
           description: Product Brand not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
     post:
       tags:
         - productBrand
@@ -652,9 +617,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
     delete:
       tags:
         - productBrand
@@ -679,9 +642,7 @@ paths:
         '400':
           description: Invalid Product Brand value
       security:
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
   /productBrand/{brandId}/uploadImage:
     post:
       tags:
@@ -717,9 +678,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
       security:
-        - store_auth:
-            - write:productBrands
-            - read:productBrands
+        - bearerAuth: []
 
   /product:
     put:
@@ -758,9 +717,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
     post:
       tags:
         - product
@@ -793,9 +750,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
   /product/findByStatus:
     get:
       tags:
@@ -832,9 +787,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
   /product/{productId}:
     get:
       tags:
@@ -865,10 +818,7 @@ paths:
         '404':
           description: Product not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
     post:
       tags:
         - product
@@ -897,9 +847,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
     delete:
       tags:
         - product
@@ -924,9 +872,7 @@ paths:
         '400':
           description: Invalid Product value
       security:
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
   /product/{productId}/uploadImage:
     post:
       tags:
@@ -962,9 +908,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
       security:
-        - store_auth:
-            - write:products
-            - read:products
+        - bearerAuth: []
 
   /sku:
     put:
@@ -1003,9 +947,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:skus
-            - read:skus
+        - bearerAuth: []
     post:
       tags:
         - sku
@@ -1038,9 +980,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:skus
-            - read:skus
+        - bearerAuth: []
   /sku/findByStatus:
     get:
       tags:
@@ -1077,9 +1017,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:skus
-            - read:skus
+        - bearerAuth: []
   /sku/{skuId}:
     get:
       tags:
@@ -1110,10 +1048,7 @@ paths:
         '404':
           description: SKU not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:sku
-            - read:sku
+        - bearerAuth: []
     post:
       tags:
         - sku
@@ -1142,9 +1077,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:skus
-            - read:skus
+        - bearerAuth: []
     delete:
       tags:
         - sku
@@ -1169,9 +1102,7 @@ paths:
         '400':
           description: Invalid SKU value
       security:
-        - store_auth:
-            - write:skus
-            - read:skus
+        - bearerAuth: []
   /sku/{skuId}/uploadImage:
     post:
       tags:
@@ -1207,9 +1138,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
       security:
-        - store_auth:
-            - write:skus
-            - read:skus
+        - bearerAuth: []
 
   /batch:
     put:
@@ -1248,9 +1177,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:batches
-            - read:batches
+        - bearerAuth: []
     post:
       tags:
         - batch
@@ -1283,9 +1210,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:batches
-            - read:batches
+        - bearerAuth: []
   /batch/findByStatus:
     get:
       tags:
@@ -1322,9 +1247,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:batches
-            - read:batches
+        - bearerAuth: []
   /batch/{batchId}:
     get:
       tags:
@@ -1355,10 +1278,7 @@ paths:
         '404':
           description: Batch not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:batches
-            - read:batches
+        - bearerAuth: []
     post:
       tags:
         - batch
@@ -1399,9 +1319,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:batches
-            - read:batches
+        - bearerAuth: []
     delete:
       tags:
         - batch
@@ -1426,9 +1344,7 @@ paths:
         '400':
           description: Invalid Batch value
       security:
-        - store_auth:
-            - write:batches
-            - read:batches
+        - bearerAuth: []
 
   /store:
     put:
@@ -1467,9 +1383,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
     post:
       tags:
         - store
@@ -1502,9 +1416,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
   /store/findByStatus:
     get:
       tags:
@@ -1541,9 +1453,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
   /store/{storeId}:
     get:
       tags:
@@ -1574,10 +1484,7 @@ paths:
         '404':
           description: Store not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
     post:
       tags:
         - store
@@ -1637,9 +1544,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
     delete:
       tags:
         - store
@@ -1664,9 +1569,7 @@ paths:
         '400':
           description: Invalid Store value
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
   /store/{storeId}/uploadImage:
     post:
       tags:
@@ -1702,9 +1605,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
 
   /branch:
     put:
@@ -1743,9 +1644,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:branches
-            - read:branches
+        - bearerAuth: []
     post:
       tags:
         - branch
@@ -1778,9 +1677,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:branches
-            - read:branches
+        - bearerAuth: []
   /branch/findByStatus:
     get:
       tags:
@@ -1817,9 +1714,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:branches
-            - read:branches
+        - bearerAuth: []
   /branch/{branchId}:
     get:
       tags:
@@ -1850,10 +1745,7 @@ paths:
         '404':
           description: Branch not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:branches
-            - read:branches
+        - bearerAuth: []
     post:
       tags:
         - branch
@@ -1920,9 +1812,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:branches
-            - read:branches
+        - bearerAuth: []
     delete:
       tags:
         - branch
@@ -1947,9 +1837,7 @@ paths:
         '400':
           description: Invalid Store value
       security:
-        - store_auth:
-            - write:stores
-            - read:stores
+        - bearerAuth: []
 
   /inventoryItem:
     put:
@@ -1988,9 +1876,7 @@ paths:
         '405':
           description: Validation exception
       security:
-        - store_auth:
-            - write:inventoryItems
-            - read:inventoryItems
+        - bearerAuth: []
     post:
       tags:
         - inventoryItem
@@ -2023,9 +1909,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:inventoryItems
-            - read:inventoryItems
+        - bearerAuth: []
   /inventoryItem/findByStatus:
     get:
       tags:
@@ -2062,9 +1946,7 @@ paths:
         '400':
           description: Invalid status value
       security:
-        - store_auth:
-            - write:inventoryItems
-            - read:inventoryItems
+        - bearerAuth: []
   /inventoryItem/{inventoryItemId}:
     get:
       tags:
@@ -2095,10 +1977,7 @@ paths:
         '404':
           description: Inventory Item not found
       security:
-        - api_key: []
-        - store_auth:
-            - write:inventoryItems
-            - read:inventoryItems
+        - bearerAuth: []
     post:
       tags:
         - inventoryItem
@@ -2142,9 +2021,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - store_auth:
-            - write:inventoryItems
-            - read:inventoryItems
+        - bearerAuth: []
     delete:
       tags:
         - inventoryItem
@@ -2169,9 +2046,7 @@ paths:
         '400':
           description: Invalid Inventory Item value
       security:
-        - store_auth:
-            - write:inventoryItems
-            - read:inventoryItems
+        - bearerAuth: []
 
 components:
   schemas:
@@ -2631,15 +2506,7 @@ components:
         name: '##default'
 
   securitySchemes:
-    store_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://store3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

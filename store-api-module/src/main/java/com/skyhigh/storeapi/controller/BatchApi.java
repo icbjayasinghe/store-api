@@ -26,7 +26,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "batch", description = "Everything about Batch")
 public interface BatchApi {
@@ -44,28 +44,28 @@ public interface BatchApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addBatch",
-        summary = "Add a new Batch to the app",
-        tags = { "batch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addBatch",
+            summary = "Add a new Batch to the app",
+            tags = { "batch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/batch",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/batch",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<BatchResponseDto> addBatch(
-        @Parameter(name = "BatchDto", description = "Create a new Batch to the app", required = true) @Valid @RequestBody BatchDto batchDto
+            @Parameter(name = "BatchDto", description = "Create a new Batch to the app", required = true) @Valid @RequestBody BatchDto batchDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -95,23 +95,23 @@ public interface BatchApi {
      * @return Invalid Batch value (status code 400)
      */
     @Operation(
-        operationId = "deleteBatch",
-        summary = "Deletes a Batch",
-        tags = { "batch" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid Batch value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteBatch",
+            summary = "Deletes a Batch",
+            tags = { "batch" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid Batch value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/batch/{batchId}"
+            method = RequestMethod.DELETE,
+            value = "/batch/{batchId}"
     )
     default ResponseEntity<Void> deleteBatch(
-        @Parameter(name = "batchId", description = "Batch id to delete", required = true) @PathVariable("batchId") Long batchId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "batchId", description = "Batch id to delete", required = true) @PathVariable("batchId") Long batchId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -127,27 +127,27 @@ public interface BatchApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findBatchByStatus",
-        summary = "Finds Batch by status",
-        tags = { "batch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findBatchByStatus",
+            summary = "Finds Batch by status",
+            tags = { "batch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/batch/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/batch/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<BatchResponseDto>> findBatchByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -178,29 +178,28 @@ public interface BatchApi {
      *         or Batch not found (status code 404)
      */
     @Operation(
-        operationId = "getBatchById",
-        summary = "Find Batch by ID",
-        tags = { "batch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Batch not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getBatchById",
+            summary = "Find Batch by ID",
+            tags = { "batch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Batch not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/batch/{batchId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/batch/{batchId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<BatchResponseDto> getBatchById(
-        @Parameter(name = "batchId", description = "ID of Batch to return", required = true) @PathVariable("batchId") Long batchId
+            @Parameter(name = "batchId", description = "ID of Batch to return", required = true) @PathVariable("batchId") Long batchId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -232,30 +231,30 @@ public interface BatchApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateBatch",
-        summary = "Update an existing Batch",
-        tags = { "batch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Batch not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateBatch",
+            summary = "Update an existing Batch",
+            tags = { "batch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = BatchResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = BatchResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Batch not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/batch",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/batch",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<BatchResponseDto> updateBatch(
-        @Parameter(name = "BatchDto", description = "Update an existent Batch in the app", required = true) @Valid @RequestBody BatchDto batchDto
+            @Parameter(name = "BatchDto", description = "Update an existent Batch in the app", required = true) @Valid @RequestBody BatchDto batchDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -278,7 +277,7 @@ public interface BatchApi {
 
     /**
      * POST /batch/{batchId} : Updates a Batch in the app with form data
-     * 
+     *
      *
      * @param batchId ID of Batch to return (required)
      * @param batchName Name of Batch that needs to be updated (optional)
@@ -288,26 +287,26 @@ public interface BatchApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateBatchWithForm",
-        summary = "Updates a Batch in the app with form data",
-        tags = { "batch" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateBatchWithForm",
+            summary = "Updates a Batch in the app with form data",
+            tags = { "batch" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/batch/{batchId}"
+            method = RequestMethod.POST,
+            value = "/batch/{batchId}"
     )
     default ResponseEntity<Void> updateBatchWithForm(
-        @Parameter(name = "batchId", description = "ID of Batch to return", required = true) @PathVariable("batchId") Long batchId,
-        @Parameter(name = "batchName", description = "Name of Batch that needs to be updated") @Valid @RequestParam(value = "batchName", required = false) String batchName,
-        @Parameter(name = "buyingPrice", description = "Buying Price of Batch that needs to be updated") @Valid @RequestParam(value = "buyingPrice", required = false) Double buyingPrice,
-        @Parameter(name = "sellingPrice", description = "Buying Price of Batch that needs to be updated") @Valid @RequestParam(value = "sellingPrice", required = false) Double sellingPrice,
-        @Parameter(name = "status", description = "Status of Batch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "batchId", description = "ID of Batch to return", required = true) @PathVariable("batchId") Long batchId,
+            @Parameter(name = "batchName", description = "Name of Batch that needs to be updated") @Valid @RequestParam(value = "batchName", required = false) String batchName,
+            @Parameter(name = "buyingPrice", description = "Buying Price of Batch that needs to be updated") @Valid @RequestParam(value = "buyingPrice", required = false) Double buyingPrice,
+            @Parameter(name = "sellingPrice", description = "Buying Price of Batch that needs to be updated") @Valid @RequestParam(value = "sellingPrice", required = false) Double sellingPrice,
+            @Parameter(name = "status", description = "Status of Batch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 

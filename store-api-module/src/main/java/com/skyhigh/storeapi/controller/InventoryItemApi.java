@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "inventoryItem", description = "Access to Inventory Item")
 public interface InventoryItemApi {
@@ -45,28 +45,28 @@ public interface InventoryItemApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addInventoryItem",
-        summary = "Add a new Inventory Item to the app",
-        tags = { "inventoryItem" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addInventoryItem",
+            summary = "Add a new Inventory Item to the app",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/inventoryItem",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/inventoryItem",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<InventoryItemResponseDto> addInventoryItem(
-        @Parameter(name = "InventoryItemDto", description = "Create a new Inventory Item to the app", required = true) @Valid @RequestBody InventoryItemDto inventoryItemDto
+            @Parameter(name = "InventoryItemDto", description = "Create a new Inventory Item to the app", required = true) @Valid @RequestBody InventoryItemDto inventoryItemDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -96,23 +96,23 @@ public interface InventoryItemApi {
      * @return Invalid Inventory Item value (status code 400)
      */
     @Operation(
-        operationId = "deleteInventoryItem",
-        summary = "Deletes a Inventory Item",
-        tags = { "inventoryItem" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid Inventory Item value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteInventoryItem",
+            summary = "Deletes a Inventory Item",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid Inventory Item value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/inventoryItem/{inventoryItemId}"
+            method = RequestMethod.DELETE,
+            value = "/inventoryItem/{inventoryItemId}"
     )
     default ResponseEntity<Void> deleteInventoryItem(
-        @Parameter(name = "inventoryItemId", description = "Inventory Item id to delete", required = true) @PathVariable("inventoryItemId") Long inventoryItemId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "inventoryItemId", description = "Inventory Item id to delete", required = true) @PathVariable("inventoryItemId") Long inventoryItemId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -128,27 +128,27 @@ public interface InventoryItemApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findInventoryItemByStatus",
-        summary = "Finds Inventory Item by status",
-        tags = { "branch" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findInventoryItemByStatus",
+            summary = "Finds Inventory Item by status",
+            tags = { "branch" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/inventoryItem/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/inventoryItem/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<InventoryItemResponseDto>> findInventoryItemByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -179,29 +179,28 @@ public interface InventoryItemApi {
      *         or Inventory Item not found (status code 404)
      */
     @Operation(
-        operationId = "getInventoryItemById",
-        summary = "Find Inventory Item by ID",
-        tags = { "inventoryItem" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Inventory Item not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getInventoryItemById",
+            summary = "Find Inventory Item by ID",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Inventory Item not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/inventoryItem/{inventoryItemId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/inventoryItem/{inventoryItemId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<InventoryItemResponseDto> getInventoryItemById(
-        @Parameter(name = "inventoryItemId", description = "ID of Inventory Item to return", required = true) @PathVariable("inventoryItemId") Long inventoryItemId
+            @Parameter(name = "inventoryItemId", description = "ID of Inventory Item to return", required = true) @PathVariable("inventoryItemId") Long inventoryItemId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -233,30 +232,30 @@ public interface InventoryItemApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateInventoryItem",
-        summary = "Update an existing Inventory Item",
-        tags = { "inventoryItem" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "Inventory Item not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateInventoryItem",
+            summary = "Update an existing Inventory Item",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "Inventory Item not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/inventoryItem",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/inventoryItem",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<InventoryItemResponseDto> updateInventoryItem(
-        @Parameter(name = "InventoryItemDto", description = "Update an existent Inventory Item in the app", required = true) @Valid @RequestBody InventoryItemDto inventoryItemDto
+            @Parameter(name = "InventoryItemDto", description = "Update an existent Inventory Item in the app", required = true) @Valid @RequestBody InventoryItemDto inventoryItemDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -279,7 +278,7 @@ public interface InventoryItemApi {
 
     /**
      * POST /inventoryItem/{inventoryItemId} : Updates a Inventory Item in the app with form data
-     * 
+     *
      *
      * @param inventoryItemId ID of Inventory Item to return (required)
      * @param branchId Branch ID of Inventory Item that needs to be updated (required)
@@ -289,26 +288,26 @@ public interface InventoryItemApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateInventoryItemWithForm",
-        summary = "Updates a Inventory Item in the app with form data",
-        tags = { "inventoryItem" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateInventoryItemWithForm",
+            summary = "Updates a Inventory Item in the app with form data",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/inventoryItem/{inventoryItemId}"
+            method = RequestMethod.POST,
+            value = "/inventoryItem/{inventoryItemId}"
     )
     default ResponseEntity<Void> updateInventoryItemWithForm(
-        @Parameter(name = "inventoryItemId", description = "ID of Inventory Item to return", required = true) @PathVariable("inventoryItemId") Long inventoryItemId,
-        @NotNull @Parameter(name = "branchId", description = "Branch ID of Inventory Item that needs to be updated", required = true) @Valid @RequestParam(value = "branchId", required = true) Long branchId,
-        @NotNull @Parameter(name = "batch_id", description = "Store ID of Inventory Item that needs to be updated", required = true) @Valid @RequestParam(value = "batch_id", required = true) Long batchId,
-        @Parameter(name = "quantity", description = "Quantity of Inventory Item that needs to be updated") @Valid @RequestParam(value = "quantity", required = false) Long quantity,
-        @Parameter(name = "status", description = "Status of Branch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "inventoryItemId", description = "ID of Inventory Item to return", required = true) @PathVariable("inventoryItemId") Long inventoryItemId,
+            @NotNull @Parameter(name = "branchId", description = "Branch ID of Inventory Item that needs to be updated", required = true) @Valid @RequestParam(value = "branchId", required = true) Long branchId,
+            @NotNull @Parameter(name = "batch_id", description = "Store ID of Inventory Item that needs to be updated", required = true) @Valid @RequestParam(value = "batch_id", required = true) Long batchId,
+            @Parameter(name = "quantity", description = "Quantity of Inventory Item that needs to be updated") @Valid @RequestParam(value = "quantity", required = false) Long quantity,
+            @Parameter(name = "status", description = "Status of Branch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 

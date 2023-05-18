@@ -13,7 +13,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import javax.annotation.Generated;
 import java.util.Optional;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Controller
 @RequestMapping("${openapi.storeAPIOpenAPI30.base-path:/api/v3}")
 public class BatchApiController implements BatchApi {

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-05-17T22:49:14.789018+05:30[Asia/Colombo]")
 @Validated
 @Tag(name = "sku", description = "Everything about SKU")
 public interface SkuApi {
@@ -45,28 +45,28 @@ public interface SkuApi {
      *         or Invalid input (status code 405)
      */
     @Operation(
-        operationId = "addSku",
-        summary = "Add a new SKU to the app",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "addSku",
+            summary = "Add a new SKU to the app",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/sku",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.POST,
+            value = "/sku",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<SkuResponseDto> addSku(
-        @Parameter(name = "SkuDto", description = "Create a new SKU to the app", required = true) @Valid @RequestBody SkuDto skuDto
+            @Parameter(name = "SkuDto", description = "Create a new SKU to the app", required = true) @Valid @RequestBody SkuDto skuDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -96,23 +96,23 @@ public interface SkuApi {
      * @return Invalid SKU value (status code 400)
      */
     @Operation(
-        operationId = "deleteSku",
-        summary = "Deletes a SKU",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "400", description = "Invalid SKU value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "deleteSku",
+            summary = "Deletes a SKU",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "400", description = "Invalid SKU value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/sku/{skuId}"
+            method = RequestMethod.DELETE,
+            value = "/sku/{skuId}"
     )
     default ResponseEntity<Void> deleteSku(
-        @Parameter(name = "skuId", description = "SKU id to delete", required = true) @PathVariable("skuId") Long skuId,
-        @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
+            @Parameter(name = "skuId", description = "SKU id to delete", required = true) @PathVariable("skuId") Long skuId,
+            @Parameter(name = "api_key", description = "") @RequestHeader(value = "api_key", required = false) String apiKey
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -128,27 +128,27 @@ public interface SkuApi {
      *         or Invalid status value (status code 400)
      */
     @Operation(
-        operationId = "findSkuByStatus",
-        summary = "Finds SKU by status",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid status value")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "findSkuByStatus",
+            summary = "Finds SKU by status",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/sku/findByStatus",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/sku/findByStatus",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<List<SkuResponseDto>> findSkuByStatus(
-        @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -179,29 +179,28 @@ public interface SkuApi {
      *         or SKU not found (status code 404)
      */
     @Operation(
-        operationId = "getSkuById",
-        summary = "Find SKU by ID",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "SKU not found")
-        },
-        security = {
-            @SecurityRequirement(name = "api_key"),
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "getSkuById",
+            summary = "Find SKU by ID",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "SKU not found")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/sku/{skuId}",
-        produces = { "application/json", "application/xml" }
+            method = RequestMethod.GET,
+            value = "/sku/{skuId}",
+            produces = { "application/json", "application/xml" }
     )
     default ResponseEntity<SkuResponseDto> getSkuById(
-        @Parameter(name = "skuId", description = "ID of SKU to return", required = true) @PathVariable("skuId") Long skuId
+            @Parameter(name = "skuId", description = "ID of SKU to return", required = true) @PathVariable("skuId") Long skuId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -233,30 +232,30 @@ public interface SkuApi {
      *         or Validation exception (status code 405)
      */
     @Operation(
-        operationId = "updateSku",
-        summary = "Update an existing SKU",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
-                @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-            @ApiResponse(responseCode = "404", description = "SKU not found"),
-            @ApiResponse(responseCode = "405", description = "Validation exception")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateSku",
+            summary = "Update an existing SKU",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = SkuResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = SkuResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                    @ApiResponse(responseCode = "404", description = "SKU not found"),
+                    @ApiResponse(responseCode = "405", description = "Validation exception")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/sku",
-        produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
+            method = RequestMethod.PUT,
+            value = "/sku",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" }
     )
     default ResponseEntity<SkuResponseDto> updateSku(
-        @Parameter(name = "SkuDto", description = "Update an existent SKU in the app", required = true) @Valid @RequestBody SkuDto skuDto
+            @Parameter(name = "SkuDto", description = "Update an existent SKU in the app", required = true) @Valid @RequestBody SkuDto skuDto
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -279,7 +278,7 @@ public interface SkuApi {
 
     /**
      * POST /sku/{skuId} : Updates a SKU in the app with form data
-     * 
+     *
      *
      * @param skuId ID of SKU to return (required)
      * @param skuName Name of Product that needs to be updated (optional)
@@ -287,24 +286,24 @@ public interface SkuApi {
      * @return Invalid input (status code 405)
      */
     @Operation(
-        operationId = "updateSkuWithForm",
-        summary = "Updates a SKU in the app with form data",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "405", description = "Invalid input")
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "updateSkuWithForm",
+            summary = "Updates a SKU in the app with form data",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "405", description = "Invalid input")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/sku/{skuId}"
+            method = RequestMethod.POST,
+            value = "/sku/{skuId}"
     )
     default ResponseEntity<Void> updateSkuWithForm(
-        @Parameter(name = "skuId", description = "ID of SKU to return", required = true) @PathVariable("skuId") Long skuId,
-        @Parameter(name = "skuName", description = "Name of Product that needs to be updated") @Valid @RequestParam(value = "skuName", required = false) String skuName,
-        @Parameter(name = "status", description = "Status of SKU that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
+            @Parameter(name = "skuId", description = "ID of SKU to return", required = true) @PathVariable("skuId") Long skuId,
+            @Parameter(name = "skuName", description = "Name of Product that needs to be updated") @Valid @RequestParam(value = "skuName", required = false) String skuName,
+            @Parameter(name = "status", description = "Status of SKU that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -313,7 +312,7 @@ public interface SkuApi {
 
     /**
      * POST /sku/{skuId}/uploadImage : uploads an image
-     * 
+     *
      *
      * @param skuId ID of sku to update (required)
      * @param additionalMetadata Additional Metadata (optional)
@@ -321,28 +320,28 @@ public interface SkuApi {
      * @return successful operation (status code 200)
      */
     @Operation(
-        operationId = "uploadSkuFile",
-        summary = "uploads an image",
-        tags = { "sku" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "store_auth", scopes={  })
-        }
+            operationId = "uploadSkuFile",
+            summary = "uploads an image",
+            tags = { "sku" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))
+                    })
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/sku/{skuId}/uploadImage",
-        produces = { "application/json" },
-        consumes = { "application/octet-stream" }
+            method = RequestMethod.POST,
+            value = "/sku/{skuId}/uploadImage",
+            produces = { "application/json" },
+            consumes = { "application/octet-stream" }
     )
     default ResponseEntity<ModelApiResponse> uploadSkuFile(
-        @Parameter(name = "skuId", description = "ID of sku to update", required = true) @PathVariable("skuId") Long skuId,
-        @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
-        @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
+            @Parameter(name = "skuId", description = "ID of sku to update", required = true) @PathVariable("skuId") Long skuId,
+            @Parameter(name = "additionalMetadata", description = "Additional Metadata") @Valid @RequestParam(value = "additionalMetadata", required = false) String additionalMetadata,
+            @Parameter(name = "body", description = "") @Valid @RequestBody(required = false) org.springframework.core.io.Resource body
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
