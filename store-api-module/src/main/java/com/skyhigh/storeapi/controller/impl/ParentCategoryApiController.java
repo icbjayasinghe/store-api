@@ -6,6 +6,8 @@ import com.skyhigh.storeapi.model.dto.ParentCategoryDto;
 
 
 import com.skyhigh.storeapi.service.ParentCategoryService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import javax.annotation.Generated;
 public class ParentCategoryApiController implements ParentCategoryApi {
 
     private final NativeWebRequest request;
+
+    private static final Logger logger = LogManager.getLogger(ParentCategoryApiController.class);
 
     @Autowired
     private ParentCategoryService parentCategoryService;
@@ -46,8 +50,10 @@ public class ParentCategoryApiController implements ParentCategoryApi {
     public ResponseEntity<ParentCategoryDto> getParentCategoryById(Long parentCategoryId) {
         ParentCategoryDto parentCategoryDtoRes = parentCategoryService.getParentCategory(parentCategoryId);
         if (parentCategoryDtoRes == null) {
+            logger.error("Parent with ID :"+parentCategoryId+" Not Found!");
             throw new ResourceNotFoundException("Parent with ID :"+parentCategoryId+" Not Found!");
         }
+        logger.debug("Parent category returned successfully : {}", () -> parentCategoryDtoRes);
         return ResponseEntity.ok(parentCategoryDtoRes);
     }
 }
