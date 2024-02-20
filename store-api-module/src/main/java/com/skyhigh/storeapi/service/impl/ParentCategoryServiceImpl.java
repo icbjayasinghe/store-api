@@ -1,6 +1,7 @@
 package com.skyhigh.storeapi.service.impl;
 
 import com.skyhigh.storeapi.exception.customException.AlreadyExistException;
+import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
 import com.skyhigh.storeapi.model.ParentCategory;
 import com.skyhigh.storeapi.model.dto.ParentCategoryDto;
 import com.skyhigh.storeapi.repository.ParentCategoryRepository;
@@ -48,6 +49,25 @@ public class ParentCategoryServiceImpl implements ParentCategoryService {
     public ParentCategoryDto getParentCategory(Long parentCategoryId) {
         Optional<ParentCategory> parentCategory = parentCategoryRepository.findById(parentCategoryId);
         ParentCategoryDto parentCategoryDtoRes = conversionService.convert(parentCategory.get(), ParentCategoryDto.class);
+        return parentCategoryDtoRes;
+    }
+
+    @Override
+    public ParentCategoryDto updateParentCategory(ParentCategoryDto parentCategoryDto) {
+        long parentCategoryId = parentCategoryDto.getParentCategoryId();
+        ParentCategory existParentCategory = parentCategoryRepository.findById(parentCategoryDto.getParentCategoryId()).get();
+        if (existParentCategory == null) {
+            throw new ResourceNotFoundException("Parent with ID :"+parentCategoryId+" Not Found!");
+        }
+        ParentCategory parentCategory = ParentCategory.builder()
+                .parentCategoryId(parentCategoryId)
+                .name(parentCategoryDto.getName())
+                .status(parentCategoryDto.getStatus())
+                .photoUrl(parentCategoryDto.getPhotoUrl())
+                .parentCategoryId(parentCategoryDto.getParentCategoryId())
+                .build();
+        parentCategory = parentCategoryRepository.save(parentCategory);
+        ParentCategoryDto parentCategoryDtoRes = conversionService.convert(parentCategory, ParentCategoryDto.class);
         return parentCategoryDtoRes;
     }
 }

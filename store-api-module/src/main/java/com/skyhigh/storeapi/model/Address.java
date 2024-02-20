@@ -1,15 +1,15 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -18,8 +18,27 @@ import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
 @Builder
-public class AddressDto {
+@Entity
+@Table(name = "Address")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class Address implements Serializable {
 
+  public Address() {
+  }
+
+  public Address(Long addressId, String addresLine1, String addresLine2, String city, String state, String zip, String country) {
+    this.addressId = addressId;
+    this.addresLine1 = addresLine1;
+    this.addresLine2 = addresLine2;
+    this.city = city;
+    this.state = state;
+    this.zip = zip;
+    this.country = country;
+  }
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("addressId")
   private Long addressId;
 
@@ -41,7 +60,7 @@ public class AddressDto {
   @JsonProperty("country")
   private String country;
 
-  public AddressDto addressId(Long addressId) {
+  public Address addressId(Long addressId) {
     this.addressId = addressId;
     return this;
   }
@@ -60,7 +79,7 @@ public class AddressDto {
     this.addressId = addressId;
   }
 
-  public AddressDto addresLine1(String addresLine1) {
+  public Address addresLine1(String addresLine1) {
     this.addresLine1 = addresLine1;
     return this;
   }
@@ -79,7 +98,7 @@ public class AddressDto {
     this.addresLine1 = addresLine1;
   }
 
-  public AddressDto addresLine2(String addresLine2) {
+  public Address addresLine2(String addresLine2) {
     this.addresLine2 = addresLine2;
     return this;
   }
@@ -98,7 +117,7 @@ public class AddressDto {
     this.addresLine2 = addresLine2;
   }
 
-  public AddressDto city(String city) {
+  public Address city(String city) {
     this.city = city;
     return this;
   }
@@ -117,7 +136,7 @@ public class AddressDto {
     this.city = city;
   }
 
-  public AddressDto state(String state) {
+  public Address state(String state) {
     this.state = state;
     return this;
   }
@@ -136,7 +155,7 @@ public class AddressDto {
     this.state = state;
   }
 
-  public AddressDto zip(String zip) {
+  public Address zip(String zip) {
     this.zip = zip;
     return this;
   }
@@ -155,7 +174,7 @@ public class AddressDto {
     this.zip = zip;
   }
 
-  public AddressDto country(String country) {
+  public Address country(String country) {
     this.country = country;
     return this;
   }
@@ -182,7 +201,7 @@ public class AddressDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AddressDto addressDto = (AddressDto) o;
+    Address addressDto = (Address) o;
     return Objects.equals(this.addressId, addressDto.addressId) &&
         Objects.equals(this.addresLine1, addressDto.addresLine1) &&
         Objects.equals(this.addresLine2, addressDto.addresLine2) &&
@@ -200,7 +219,7 @@ public class AddressDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AddressDto {\n");
+    sb.append("class Address {\n");
     sb.append("    addressId: ").append(toIndentedString(addressId)).append("\n");
     sb.append("    addresLine1: ").append(toIndentedString(addresLine1)).append("\n");
     sb.append("    addresLine2: ").append(toIndentedString(addresLine2)).append("\n");

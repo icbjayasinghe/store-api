@@ -4,6 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.skyhigh.storeapi.model.StoreStatus;
+import lombok.Builder;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import javax.annotation.Generated;
@@ -19,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
 public class StoreDto {
 
   @JsonProperty("storeId")
@@ -33,43 +36,8 @@ public class StoreDto {
   @JsonProperty("photoUrl")
   private String photoUrl;
 
-  /**
-   * Store status in the app
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status;
+  private StoreStatus status;
 
   public StoreDto storeId(Long storeId) {
     this.storeId = storeId;
@@ -147,7 +115,7 @@ public class StoreDto {
     this.photoUrl = photoUrl;
   }
 
-  public StoreDto status(StatusEnum status) {
+  public StoreDto status(StoreStatus status) {
     this.status = status;
     return this;
   }
@@ -158,11 +126,11 @@ public class StoreDto {
   */
   
   @Schema(name = "status", description = "Store status in the app", required = false)
-  public StatusEnum getStatus() {
+  public StoreStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(StoreStatus status) {
     this.status = status;
   }
 
