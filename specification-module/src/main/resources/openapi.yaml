@@ -1606,6 +1606,27 @@ paths:
                 $ref: '#/components/schemas/ApiResponse'
       security:
         - bearerAuth: []
+  /store/configurations:
+    get:
+      tags:
+        - store
+      summary: Finds Store details
+      description: Store details from token
+      operationId: findStoreDetails
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreConfDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StoreConfDto'
+        '400':
+          description: Invalid details
+      security:
+        - bearerAuth: []
 
   /branch:
     put:
@@ -2490,6 +2511,28 @@ components:
             - DEACTIVE
       xml:
         name: InventoryItemResponseDto
+    StoreConfDto:
+      type: object
+      properties:
+        store:
+          $ref: '#/components/schemas/StoreDto'
+        branch:
+          $ref: '#/components/schemas/BranchDto'
+        additionalConf:
+          $ref: '#/components/schemas/StringObjectMap'
+      xml:
+        name: BatchDto
+    PropertyObjectDto:
+      type: object
+      properties:
+        property:
+          type: string
+        value:
+          type: boolean
+    StringObjectMap:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/PropertyObjectDto"
 
 
     ApiResponse:

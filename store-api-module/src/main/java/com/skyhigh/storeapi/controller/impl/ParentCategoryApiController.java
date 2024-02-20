@@ -56,4 +56,12 @@ public class ParentCategoryApiController implements ParentCategoryApi {
         logger.debug("Parent category returned successfully : {}", () -> parentCategoryDtoRes);
         return ResponseEntity.ok(parentCategoryDtoRes);
     }
+
+    @Override
+    public ResponseEntity<ParentCategoryDto> updateParentCategory(ParentCategoryDto parentCategoryDto) {
+        logger.debug("Received update request for Parent Category: {}", () -> parentCategoryDto);
+        ParentCategoryDto parentCategoryDtoRes = parentCategoryService.updateParentCategory(parentCategoryDto);
+        logger.debug("Parent category returned successfully : {}", () -> parentCategoryDtoRes);
+        return ResponseEntity.ok(parentCategoryDtoRes);
+    }
 }

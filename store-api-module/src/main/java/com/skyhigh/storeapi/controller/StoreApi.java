@@ -7,6 +7,7 @@ package com.skyhigh.storeapi.controller;
 
 
 import com.skyhigh.storeapi.model.dto.ModelApiResponse;
+import com.skyhigh.storeapi.model.dto.StoreConfDto;
 import com.skyhigh.storeapi.model.dto.StoreDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -59,6 +61,7 @@ public interface StoreApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/store",
@@ -159,6 +162,55 @@ public interface StoreApi {
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/xml"))) {
                     String exampleString = "<BatchDto> <storeId>10</storeId> <storeName>Auto Range, MagCity</storeName> <photoUrl>aeiou</photoUrl> <status>aeiou</status> </BatchDto>";
+                    ApiUtil.setExampleResponse(request, "application/xml", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /store/configurations : Finds Store details
+     * Store details from token
+     *
+     * @return successful operation (status code 200)
+     *         or Invalid details (status code 400)
+     */
+    @Operation(
+            operationId = "findStoreDetails",
+            summary = "Finds Store details",
+            tags = { "store" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = StoreConfDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = StoreConfDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid details")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
+    )
+    @PreAuthorize("hasRole('store-admin')")
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/store/configurations",
+            produces = { "application/json", "application/xml" }
+    )
+    default ResponseEntity<StoreConfDto> findStoreDetails(
+
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"additionalConf\" : { \"key\" : { \"property\" : \"property\", \"value\" : true } }, \"store\" : { \"photoUrl\" : \"photoUrl\", \"address\" : { \"zip\" : \"94301\", \"country\" : \"Canada\", \"addresLine1\" : \"437 Lytton\", \"addresLine2\" : \"437 Lytton\", \"city\" : \"Palo Alto\", \"state\" : \"CA\", \"addressId\" : 10 }, \"storeName\" : \"Auto Range, MagCity\", \"storeId\" : 10, \"status\" : \"ACTIVE\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/xml"))) {
+                    String exampleString = "<BatchDto> <additionalConf>UNDEFINED_EXAMPLE_VALUE</additionalConf> </BatchDto>";
                     ApiUtil.setExampleResponse(request, "application/xml", exampleString);
                     break;
                 }
