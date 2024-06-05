@@ -4,6 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.skyhigh.storeapi.model.BranchStatus;
+import lombok.Builder;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import javax.validation.Valid;
@@ -18,6 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
 public class BranchResponseDto {
 
   @JsonProperty("branchId")
@@ -35,43 +38,8 @@ public class BranchResponseDto {
   @JsonProperty("photoUrl")
   private String photoUrl;
 
-  /**
-   * Branch status in the app
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status;
+  private BranchStatus status;
 
   public BranchResponseDto branchId(Long branchId) {
     this.branchId = branchId;
@@ -168,7 +136,7 @@ public class BranchResponseDto {
     this.photoUrl = photoUrl;
   }
 
-  public BranchResponseDto status(StatusEnum status) {
+  public BranchResponseDto status(BranchStatus status) {
     this.status = status;
     return this;
   }
@@ -179,11 +147,11 @@ public class BranchResponseDto {
   */
   
   @Schema(name = "status", description = "Branch status in the app", required = false)
-  public StatusEnum getStatus() {
+  public BranchStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(BranchStatus status) {
     this.status = status;
   }
 

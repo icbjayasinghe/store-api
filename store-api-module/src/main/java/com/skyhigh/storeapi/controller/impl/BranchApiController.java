@@ -1,11 +1,18 @@
 package com.skyhigh.storeapi.controller.impl;
 
 import com.skyhigh.storeapi.controller.BranchApi;
+import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
 import com.skyhigh.storeapi.model.dto.BranchDto;
 import com.skyhigh.storeapi.model.dto.BranchResponseDto;
 
 
+import com.skyhigh.storeapi.model.dto.StoreDto;
+import com.skyhigh.storeapi.service.BranchService;
+import com.skyhigh.storeapi.service.StoreService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -20,6 +27,11 @@ public class BranchApiController implements BranchApi {
 
     private final NativeWebRequest request;
 
+    private static final Logger logger = LogManager.getLogger(ParentCategoryApiController.class);
+
+    @Autowired
+    BranchService branchService;
+
     @Autowired
     public BranchApiController(NativeWebRequest request) {
         this.request = request;
@@ -30,4 +42,20 @@ public class BranchApiController implements BranchApi {
         return Optional.ofNullable(request);
     }
 
+    @Override
+    public ResponseEntity<BranchResponseDto> addBranch(BranchDto branchDto) {
+        BranchResponseDto branchDtoRes = branchService.createBranch(branchDto);
+        return ResponseEntity.ok(branchDtoRes);
+    }
+
+    @Override
+    public ResponseEntity<BranchResponseDto> getBranchById(Long branchId) {
+        BranchResponseDto branchRes = branchService.getBranch(branchId);
+        if (branchRes == null) {
+            logger.error("Branch with ID :"+branchId+" Not Found!");
+            throw new ResourceNotFoundException("Branch with ID :"+branchId+" Not Found!");
+        }
+        logger.debug("Branch returned successfully : {}", () -> branchRes);
+        return ResponseEntity.ok(branchRes);
+    }
 }

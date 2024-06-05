@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  * StoreConfDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-02-16T22:29:10.942519+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-30T13:54:53.903585+05:30[Asia/Colombo]")
 public class StoreConfDto {
 
   @JsonProperty("store")
@@ -28,6 +28,9 @@ public class StoreConfDto {
 
   @JsonProperty("branch")
   private BranchDto branch;
+
+  @JsonProperty("user")
+  private UserConfDto user;
 
   @JsonProperty("additionalConf")
   @Valid
@@ -71,6 +74,25 @@ public class StoreConfDto {
     this.branch = branch;
   }
 
+  public StoreConfDto user(UserConfDto user) {
+    this.user = user;
+    return this;
+  }
+
+  /**
+   * Get user
+   * @return user
+   */
+  @Valid
+  @Schema(name = "user", required = false)
+  public UserConfDto getUser() {
+    return user;
+  }
+
+  public void setUser(UserConfDto user) {
+    this.user = user;
+  }
+
   public StoreConfDto additionalConf(Map<String, PropertyObjectDto> additionalConf) {
     this.additionalConf = additionalConf;
     return this;
@@ -109,12 +131,13 @@ public class StoreConfDto {
     StoreConfDto storeConfDto = (StoreConfDto) o;
     return Objects.equals(this.store, storeConfDto.store) &&
             Objects.equals(this.branch, storeConfDto.branch) &&
+            Objects.equals(this.user, storeConfDto.user) &&
             Objects.equals(this.additionalConf, storeConfDto.additionalConf);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(store, branch, additionalConf);
+    return Objects.hash(store, branch, user, additionalConf);
   }
 
   @Override
@@ -123,6 +146,7 @@ public class StoreConfDto {
     sb.append("class StoreConfDto {\n");
     sb.append("    store: ").append(toIndentedString(store)).append("\n");
     sb.append("    branch: ").append(toIndentedString(branch)).append("\n");
+    sb.append("    user: ").append(toIndentedString(user)).append("\n");
     sb.append("    additionalConf: ").append(toIndentedString(additionalConf)).append("\n");
     sb.append("}");
     return sb.toString();

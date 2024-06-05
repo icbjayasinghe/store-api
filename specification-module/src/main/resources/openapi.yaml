@@ -2518,6 +2518,8 @@ components:
           $ref: '#/components/schemas/StoreDto'
         branch:
           $ref: '#/components/schemas/BranchDto'
+        user:
+          $ref: '#/components/schemas/UserConfDto'
         additionalConf:
           $ref: '#/components/schemas/StringObjectMap'
       xml:
@@ -2533,6 +2535,21 @@ components:
       type: object
       additionalProperties:
         $ref: "#/components/schemas/PropertyObjectDto"
+    UserConfDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Asela
+        lastName:
+          type: string
+          example: Bandara
+        role:
+          type: array
+          items:
+            type: string
+      xml:
+        name: UserConfDto
 
 
     ApiResponse:
