@@ -57,7 +57,6 @@ public class StoreApiController implements StoreApi {
 
     @Override
     public ResponseEntity<StoreDto> getStoreById(Long storeId) {
-//        System.out.println("ICB " +request);
         StoreDto storeDtoRes = storeService.getStore(storeId);
         if (storeDtoRes == null) {
             logger.error("Store with ID :"+storeId+" Not Found!");

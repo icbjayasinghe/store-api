@@ -48,6 +48,7 @@ public class Store implements Serializable {
     private Address address;
 
     @JsonProperty("photoUrl")
+    @Lob
     private String photoUrl;
 
     @JsonProperty("status")

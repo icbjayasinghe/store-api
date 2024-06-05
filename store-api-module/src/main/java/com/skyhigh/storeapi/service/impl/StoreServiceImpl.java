@@ -9,6 +9,7 @@ import com.skyhigh.storeapi.repository.AddressRepository;
 import com.skyhigh.storeapi.repository.BranchRepository;
 import com.skyhigh.storeapi.repository.StoreRepository;
 import com.skyhigh.storeapi.service.StoreService;
+import com.skyhigh.storeapi.util.RoleFilterUtil;
 import com.skyhigh.storeapi.util.TokenConversionUtil;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -20,6 +21,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,6 +43,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     TokenConversionUtil tokenConversionUtil;
+
+    @Autowired
+    RoleFilterUtil roleFilterUtil;
 
     @Override
     public StoreDto createStore(StoreDto storeDto) {
@@ -84,19 +90,17 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreConfDto getStoreConfig(NativeWebRequest request) {
         StoreConfDto storeConfDto = new StoreConfDto();
-        Map<String, Object> customPrams = tokenConversionUtil.getCustomPrams(request);
+        AccessToken accessToken = tokenConversionUtil.getAccessToken(request);
+
+        Map<String, Object> customPrams = accessToken.getOtherClaims();
         if (customPrams.containsKey("store_id")) {
             Long storeId = Long.valueOf(String.valueOf(customPrams.get("store_id")));
             Optional<Store> store = storeRepository.findById(storeId);
             StoreDto storeDto = conversionService.convert(store.get(), StoreDto.class);
             storeConfDto.setStore(storeDto);
         }
-//        if (customPrams.containsKey("branch_id")) {
-//            Long branchId = Long.valueOf(String.valueOf(customPrams.get("branch_id")));
-//            Optional<Branch> branch = branchRepository.findById(branchId);
-//            BranchDto branchDto = conversionService.convert(branch.get(), BranchDto.class);
-//            storeConfDto.setBranch(branchDto);
-//        }
+        UserConfDto userConfDto = new UserConfDto(accessToken.getGivenName(), accessToken.getFamilyName(), roleFilterUtil.filterAppRole(accessToken.getRealmAccess().getRoles()));
+        storeConfDto.setUser(userConfDto);
         return storeConfDto;
     }
 }

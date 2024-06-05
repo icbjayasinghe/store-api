@@ -11,6 +11,12 @@ import java.util.Map;
 
 @Service
 public class TokenConversionUtil {
+    public AccessToken getAccessToken(NativeWebRequest request) {
+        KeycloakAuthenticationToken authenticationToken = (KeycloakAuthenticationToken) request.getUserPrincipal();
+        KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) authenticationToken.getPrincipal();
+        return keycloakPrincipal.getKeycloakSecurityContext().getToken();
+    }
+
     public Map<String, Object> getCustomPrams(NativeWebRequest request) {
         KeycloakAuthenticationToken authenticationToken = (KeycloakAuthenticationToken) request.getUserPrincipal();
         KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) authenticationToken.getPrincipal();
