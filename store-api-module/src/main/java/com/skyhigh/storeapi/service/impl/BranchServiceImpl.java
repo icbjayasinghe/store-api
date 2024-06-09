@@ -2,6 +2,7 @@ package com.skyhigh.storeapi.service.impl;
 
 import com.skyhigh.storeapi.model.Address;
 import com.skyhigh.storeapi.model.Branch;
+import com.skyhigh.storeapi.model.ParentCategory;
 import com.skyhigh.storeapi.model.Store;
 import com.skyhigh.storeapi.model.dto.BranchDto;
 import com.skyhigh.storeapi.model.dto.BranchResponseDto;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.Optional;
 
@@ -44,12 +46,15 @@ public class BranchServiceImpl implements BranchService {
                     .zip(branchDto.getAddress().getZip())
                     .build();
             address = addressRepository.save(address);
+            Store store = storeRepository.findById(branchDto.getStoreId()).orElseThrow(
+                    () -> new NotFoundException("Store not found")
+            );
             Branch branch = Branch.builder()
                     .branchName(branchDto.getBranchName())
                     .address(address)
                     .photoUrl(branchDto.getPhotoUrl())
                     .status(branchDto.getStatus())
-                    .storeId(branchDto.getStoreId())
+                    .store(store)
                     .build();
             branch = branchRepository.save(branch);
             BranchResponseDto branchRes = conversionService.convert(branch, BranchResponseDto.class);

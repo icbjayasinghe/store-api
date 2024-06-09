@@ -47,7 +47,7 @@ public class CategoryApiController implements CategoryApi {
     public ResponseEntity<CategoryResponseDto> getCategoryById(Long categoryId) {
         CategoryResponseDto categoryResDto = categoryService.getCategory(categoryId);
         if (categoryResDto == null) {
-            throw new ResourceNotFoundException("Parent with ID :"+categoryId+" Not Found!");
+            throw new ResourceNotFoundException("Category with ID :"+categoryId+" Not Found!");
         }
         return ResponseEntity.ok(categoryResDto);
     }

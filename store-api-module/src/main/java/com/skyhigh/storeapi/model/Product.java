@@ -1,29 +1,42 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.skyhigh.storeapi.model.ProductStatus;
-import lombok.Builder;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+import lombok.Builder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 
 /**
- * ProductResponseDto
+ * ProductDto
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
 @Builder
-public class ProductResponseDto {
+@Entity
+@Table(name = "Product")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class Product {
 
+  public Product() {
+  }
+
+  public Product(Long productId, String productName, String photoUrl, ProductBrand productBrand, Category category, ProductStatus status) {
+    this.productId = productId;
+    this.productName = productName;
+    this.photoUrl = photoUrl;
+    this.productBrand = productBrand;
+    this.category = category;
+    this.status = status;
+  }
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("productId")
   private Long productId;
 
@@ -31,18 +44,23 @@ public class ProductResponseDto {
   private String productName;
 
   @JsonProperty("photoUrl")
+  @Lob
   private String photoUrl;
 
-  @JsonProperty("brand")
-  private ProductBrandDto brand;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "brand_id", nullable = false)
+  @JsonIgnore
+  private ProductBrand productBrand;
 
-  @JsonProperty("category")
-  private CategoryDto category;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "category_id", nullable = false)
+  @JsonIgnore
+  private Category category;
 
   @JsonProperty("status")
   private ProductStatus status;
 
-  public ProductResponseDto productId(Long productId) {
+  public Product productId(Long productId) {
     this.productId = productId;
     return this;
   }
@@ -61,7 +79,7 @@ public class ProductResponseDto {
     this.productId = productId;
   }
 
-  public ProductResponseDto productName(String productName) {
+  public Product productName(String productName) {
     this.productName = productName;
     return this;
   }
@@ -80,7 +98,7 @@ public class ProductResponseDto {
     this.productName = productName;
   }
 
-  public ProductResponseDto photoUrl(String photoUrl) {
+  public Product photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
   }
@@ -99,45 +117,40 @@ public class ProductResponseDto {
     this.photoUrl = photoUrl;
   }
 
-  public ProductResponseDto brand(ProductBrandDto brand) {
-    this.brand = brand;
+
+  public Product(ProductBrand productBrand) {
+    this.productBrand = productBrand;
+  }
+
+  @Schema(name = "productBrand", required = false)
+  public ProductBrand getProductBrand() {
+    return productBrand;
+  }
+
+  public void setProductBrand(ProductBrand productBrand) {
+    this.productBrand = productBrand;
+  }
+
+  public Product categoryId(Category categoryId) {
+    this.category = categoryId;
     return this;
   }
 
   /**
-   * Get brand
-   * @return brand
+   * Get categoryId
+   * @return categoryId
   */
-  @Valid 
-  @Schema(name = "brand", required = false)
-  public ProductBrandDto getBrand() {
-    return brand;
-  }
-
-  public void setBrand(ProductBrandDto brand) {
-    this.brand = brand;
-  }
-
-  public ProductResponseDto category(CategoryDto category) {
-    this.category = category;
-    return this;
-  }
-
-  /**
-   * Get category
-   * @return category
-  */
-  @Valid 
+  
   @Schema(name = "category", required = false)
-  public CategoryDto getCategory() {
+  public Category getCategory() {
     return category;
   }
 
-  public void setCategory(CategoryDto category) {
-    this.category = category;
+  public void setCategory(Category categoryId) {
+    this.category = categoryId;
   }
 
-  public ProductResponseDto status(ProductStatus status) {
+  public Product status(ProductStatus status) {
     this.status = status;
     return this;
   }
@@ -164,29 +177,29 @@ public class ProductResponseDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ProductResponseDto productResponseDto = (ProductResponseDto) o;
-    return Objects.equals(this.productId, productResponseDto.productId) &&
-        Objects.equals(this.productName, productResponseDto.productName) &&
-        Objects.equals(this.photoUrl, productResponseDto.photoUrl) &&
-        Objects.equals(this.brand, productResponseDto.brand) &&
-        Objects.equals(this.category, productResponseDto.category) &&
-        Objects.equals(this.status, productResponseDto.status);
+    Product productDto = (Product) o;
+    return Objects.equals(this.productId, productDto.productId) &&
+        Objects.equals(this.productName, productDto.productName) &&
+        Objects.equals(this.photoUrl, productDto.photoUrl) &&
+        Objects.equals(this.productBrand, productDto.productBrand) &&
+        Objects.equals(this.category, productDto.category) &&
+        Objects.equals(this.status, productDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(productId, productName, photoUrl, brand, category, status);
+    return Objects.hash(productId, productName, photoUrl, productBrand, category, status);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ProductResponseDto {\n");
+    sb.append("class ProductDto {\n");
     sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
     sb.append("    productName: ").append(toIndentedString(productName)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
-    sb.append("    brand: ").append(toIndentedString(brand)).append("\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    brand: ").append(toIndentedString(productBrand.toString())).append("\n");
+    sb.append("    categoryId: ").append(toIndentedString(category.toString())).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

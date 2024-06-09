@@ -3,7 +3,6 @@ package com.skyhigh.storeapi.util.convertor;
 import com.skyhigh.storeapi.model.Branch;
 import com.skyhigh.storeapi.model.dto.AddressDto;
 import com.skyhigh.storeapi.model.dto.BranchDto;
-import com.skyhigh.storeapi.model.dto.StoreDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class BranchToBranchDto implements Converter<Branch, BranchDto> {
                 .photoUrl(branch.getPhotoUrl())
                 .status(branch.getStatus())
                 .address(addressDto)
-                .storeId(branch.getStoreId())
+                .storeId(branch.getStore().getStoreId())
                 .build();
         return branchDto;
     }
