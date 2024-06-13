@@ -1,25 +1,45 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.skyhigh.storeapi.model.enums.SkuStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
- * SkuResponseDto
+ * SkuDto
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T14:48:48.168372+05:30[Asia/Colombo]")
 @Builder
-public class SkuResponseDto {
+@Entity
+@Table(name = "Sku")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class Sku {
 
+  public Sku() {
+  }
+
+  public Sku(Long skuId, String skuName, String concatProductName, String photoUrl, Product product, SkuStatus status) {
+    this.skuId = skuId;
+    this.skuName = skuName;
+    this.concatProductName = concatProductName;
+    this.photoUrl = photoUrl;
+    this.product = product;
+    this.status = status;
+  }
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("skuId")
   private Long skuId;
 
@@ -29,16 +49,19 @@ public class SkuResponseDto {
   @JsonProperty("concatProductName")
   private String concatProductName;
 
+  @Lob
   @JsonProperty("photoUrl")
   private String photoUrl;
 
-  @JsonProperty("product")
-  private ProductDto product;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "productId", nullable = false)
+  @JsonIgnore
+  private Product product;
 
   @JsonProperty("status")
   private SkuStatus status;
 
-  public SkuResponseDto skuId(Long skuId) {
+  public Sku skuId(Long skuId) {
     this.skuId = skuId;
     return this;
   }
@@ -57,7 +80,7 @@ public class SkuResponseDto {
     this.skuId = skuId;
   }
 
-  public SkuResponseDto skuName(String skuName) {
+  public Sku skuName(String skuName) {
     this.skuName = skuName;
     return this;
   }
@@ -76,7 +99,7 @@ public class SkuResponseDto {
     this.skuName = skuName;
   }
 
-  public SkuResponseDto concatProductName(String concatProductName) {
+  public Sku concatProductName(String concatProductName) {
     this.concatProductName = concatProductName;
     return this;
   }
@@ -95,7 +118,7 @@ public class SkuResponseDto {
     this.concatProductName = concatProductName;
   }
 
-  public SkuResponseDto photoUrl(String photoUrl) {
+  public Sku photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
   }
@@ -114,26 +137,24 @@ public class SkuResponseDto {
     this.photoUrl = photoUrl;
   }
 
-  public SkuResponseDto product(ProductDto product) {
+  public Sku product(Product product) {
     this.product = product;
     return this;
   }
 
   /**
-   * Get product
-   * @return product
+   * Get productId
+   * @return productId
    */
-  @Valid
-  @Schema(name = "product", required = false)
-  public ProductDto getProduct() {
+  public Product getProduct() {
     return product;
   }
 
-  public void setProduct(ProductDto product) {
+  public void setProduct(Product product) {
     this.product = product;
   }
 
-  public SkuResponseDto status(SkuStatus status) {
+  public Sku status(SkuStatus status) {
     this.status = status;
     return this;
   }
@@ -160,13 +181,13 @@ public class SkuResponseDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SkuResponseDto skuResponseDto = (SkuResponseDto) o;
-    return Objects.equals(this.skuId, skuResponseDto.skuId) &&
-            Objects.equals(this.skuName, skuResponseDto.skuName) &&
-            Objects.equals(this.concatProductName, skuResponseDto.concatProductName) &&
-            Objects.equals(this.photoUrl, skuResponseDto.photoUrl) &&
-            Objects.equals(this.product, skuResponseDto.product) &&
-            Objects.equals(this.status, skuResponseDto.status);
+    Sku skuDto = (Sku) o;
+    return Objects.equals(this.skuId, skuDto.skuId) &&
+            Objects.equals(this.skuName, skuDto.skuName) &&
+            Objects.equals(this.concatProductName, skuDto.concatProductName) &&
+            Objects.equals(this.photoUrl, skuDto.photoUrl) &&
+            Objects.equals(this.product, skuDto.product) &&
+            Objects.equals(this.status, skuDto.status);
   }
 
   @Override
@@ -177,12 +198,12 @@ public class SkuResponseDto {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SkuResponseDto {\n");
+    sb.append("class SkuDto {\n");
     sb.append("    skuId: ").append(toIndentedString(skuId)).append("\n");
     sb.append("    skuName: ").append(toIndentedString(skuName)).append("\n");
     sb.append("    concatProductName: ").append(toIndentedString(concatProductName)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
+    sb.append("    product: ").append(toIndentedString(product.toString())).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

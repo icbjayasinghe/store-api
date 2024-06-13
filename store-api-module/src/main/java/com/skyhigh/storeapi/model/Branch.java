@@ -1,8 +1,7 @@
 package com.skyhigh.storeapi.model;
 
 import com.fasterxml.jackson.annotation.*;
-import com.skyhigh.storeapi.model.dto.AddressDto;
-import com.skyhigh.storeapi.model.dto.BranchDto;
+import com.skyhigh.storeapi.model.enums.BranchStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,9 +23,9 @@ public class Branch implements Serializable {
     public Branch() {
     }
 
-    public Branch(Long branchId, Long storeId, String branchName, Address address, String photoUrl, BranchStatus status) {
+    public Branch(Long branchId, Store store, String branchName, Address address, String photoUrl, BranchStatus status) {
         this.branchId = branchId;
-        this.storeId = storeId;
+        this.store = store;
         this.branchName = branchName;
         this.address = address;
         this.photoUrl = photoUrl;
@@ -38,8 +37,10 @@ public class Branch implements Serializable {
     @JsonProperty("branchId")
     private Long branchId;
 
-    @JsonProperty("storeId")
-    private Long storeId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "storeId", nullable = false)
+    @JsonIgnore
+    private Store store;
 
     @JsonProperty("branchName")
     private String branchName;
@@ -76,8 +77,8 @@ public class Branch implements Serializable {
         this.branchId = branchId;
     }
 
-    public Branch storeId(Long storeId) {
-        this.storeId = storeId;
+    public Branch storeId(Store storeId) {
+        this.store = storeId;
         return this;
     }
 
@@ -85,14 +86,13 @@ public class Branch implements Serializable {
      * Get storeId
      * @return storeId
      */
-    @NotNull
     @Schema(name = "storeId", example = "10", required = true)
-    public Long getStoreId() {
-        return storeId;
+    public Store getStore() {
+        return store;
     }
 
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
+    public void setStore(Store storeId) {
+        this.store = storeId;
     }
 
     public Branch branchName(String branchName) {
@@ -181,7 +181,7 @@ public class Branch implements Serializable {
         }
         Branch branch = (Branch) o;
         return Objects.equals(this.branchId, branch.branchId) &&
-                Objects.equals(this.storeId, branch.storeId) &&
+                Objects.equals(this.store, branch.store) &&
                 Objects.equals(this.branchName, branch.branchName) &&
                 Objects.equals(this.address, branch.address) &&
                 Objects.equals(this.photoUrl, branch.photoUrl) &&
@@ -190,7 +190,7 @@ public class Branch implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(branchId, storeId, branchName, address, photoUrl, status);
+        return Objects.hash(branchId, store, branchName, address, photoUrl, status);
     }
 
     @Override
@@ -198,7 +198,7 @@ public class Branch implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("class BranchDto {\n");
         sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
-        sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
+        sb.append("    storeId: ").append(toIndentedString(store)).append("\n");
         sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
         sb.append("    address: ").append(toIndentedString(address)).append("\n");
         sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");

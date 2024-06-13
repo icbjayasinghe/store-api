@@ -44,10 +44,16 @@ public class CategoryApiController implements CategoryApi {
     }
 
     @Override
+    public ResponseEntity<CategoryResponseDto> updateCategory(CategoryDto categoryDto) {
+        CategoryResponseDto categoryResDto = categoryService.updateCategory(categoryDto);
+        return ResponseEntity.ok(categoryResDto);
+    }
+
+    @Override
     public ResponseEntity<CategoryResponseDto> getCategoryById(Long categoryId) {
         CategoryResponseDto categoryResDto = categoryService.getCategory(categoryId);
         if (categoryResDto == null) {
-            throw new ResourceNotFoundException("Parent with ID :"+categoryId+" Not Found!");
+            throw new ResourceNotFoundException("Category with ID :"+categoryId+" Not Found!");
         }
         return ResponseEntity.ok(categoryResDto);
     }

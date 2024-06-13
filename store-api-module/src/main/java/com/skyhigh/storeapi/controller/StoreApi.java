@@ -7,7 +7,7 @@ package com.skyhigh.storeapi.controller;
 
 
 import com.skyhigh.storeapi.model.dto.ModelApiResponse;
-import com.skyhigh.storeapi.model.dto.StoreConfDto;
+import com.skyhigh.storeapi.model.enums.StoreConfDto;
 import com.skyhigh.storeapi.model.dto.StoreDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

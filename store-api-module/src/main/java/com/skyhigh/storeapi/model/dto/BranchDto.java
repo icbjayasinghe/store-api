@@ -2,7 +2,7 @@ package com.skyhigh.storeapi.model.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.skyhigh.storeapi.model.BranchStatus;
+import com.skyhigh.storeapi.model.enums.BranchStatus;
 import lombok.Builder;
 import javax.validation.Valid;
 import javax.validation.constraints.*;

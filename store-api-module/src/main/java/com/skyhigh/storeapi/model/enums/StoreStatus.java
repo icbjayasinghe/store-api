@@ -1,8 +1,7 @@
-package com.skyhigh.storeapi.model;
+package com.skyhigh.storeapi.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.skyhigh.storeapi.model.dto.StoreDto;
 
 public enum StoreStatus {
     ACTIVE("ACTIVE"),

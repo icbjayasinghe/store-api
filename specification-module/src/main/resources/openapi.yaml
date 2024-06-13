@@ -2237,6 +2237,9 @@ components:
         skuName:
           type: string
           example: 2L, 4L
+        concatProductName:
+          type: string
+          example: Toyota Motor Oil 10W-30sp 4L
         photoUrl:
           type: string
         productId:
@@ -2244,11 +2247,9 @@ components:
           format: int64
           example: 10
         status:
+          oneOf:
+            - $ref: '#/components/schemas/SkuStatus'
           type: string
-          description: SKU status in the app
-          enum:
-            - ACTIVE
-            - DEACTIVE
       xml:
         name: SkuDto
     SkuResponseDto:
@@ -2264,16 +2265,17 @@ components:
         skuName:
           type: string
           example: 2L, 4L
+        concatProductName:
+          type: string
+          example: Toyota Motor Oil 10W-30sp 4L
         photoUrl:
           type: string
         product:
           $ref: '#/components/schemas/ProductDto'
         status:
+          oneOf:
+            - $ref: '#/components/schemas/SkuStatus'
           type: string
-          description: SKU status in the app
-          enum:
-            - ACTIVE
-            - DEACTIVE
       xml:
         name: skuResponse
     BatchDto:
@@ -2550,6 +2552,12 @@ components:
             type: string
       xml:
         name: UserConfDto
+    SkuStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - DEACTIVE
+        - DELETED
 
 
     ApiResponse:

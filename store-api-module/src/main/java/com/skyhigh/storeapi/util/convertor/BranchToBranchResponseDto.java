@@ -22,8 +22,7 @@ public class BranchToBranchResponseDto implements Converter<Branch, BranchRespon
     @Override
     public BranchResponseDto convert(Branch branch) {
         AddressDto addressDto = addressToAddressDto.convert(branch.getAddress());
-        Store store = storeRepository.findById(branch.getStoreId()).get();
-        StoreDto storeDto = storeToStoreDto.convert(store);
+        StoreDto storeDto = storeToStoreDto.convert(branch.getStore());
         BranchResponseDto branchResponseDto = BranchResponseDto.builder()
                 .branchId(branch.getBranchId())
                 .store(storeDto)

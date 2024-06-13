@@ -2,13 +2,11 @@ package com.skyhigh.storeapi.model.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import org.openapitools.jackson.nullable.JsonNullable;
+import com.skyhigh.storeapi.model.enums.ProductStatus;
 
-import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 import javax.annotation.Generated;
 
@@ -18,6 +16,7 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
 public class ProductDto {
 
   @JsonProperty("productId")
@@ -35,43 +34,8 @@ public class ProductDto {
   @JsonProperty("categoryId")
   private Long categoryId;
 
-  /**
-   * Product status in the app
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status;
+  private ProductStatus status;
 
   public ProductDto productId(Long productId) {
     this.productId = productId;
@@ -168,7 +132,7 @@ public class ProductDto {
     this.categoryId = categoryId;
   }
 
-  public ProductDto status(StatusEnum status) {
+  public ProductDto status(ProductStatus status) {
     this.status = status;
     return this;
   }
@@ -179,11 +143,11 @@ public class ProductDto {
   */
   
   @Schema(name = "status", description = "Product status in the app", required = false)
-  public StatusEnum getStatus() {
+  public ProductStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(ProductStatus status) {
     this.status = status;
   }
 

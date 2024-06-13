@@ -1,10 +1,9 @@
 package com.skyhigh.storeapi.model;
 
 import com.fasterxml.jackson.annotation.*;
+import com.skyhigh.storeapi.model.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.annotation.Generated;

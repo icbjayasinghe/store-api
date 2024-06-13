@@ -1,6 +1,6 @@
 package com.skyhigh.storeapi.service;
 
-import com.skyhigh.storeapi.model.dto.StoreConfDto;
+import com.skyhigh.storeapi.model.enums.StoreConfDto;
 import com.skyhigh.storeapi.model.dto.StoreDto;
 import org.springframework.web.context.request.NativeWebRequest;
 

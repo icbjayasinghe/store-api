@@ -1,14 +1,16 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.skyhigh.storeapi.model.enums.ProductBrandStatus;
-import lombok.Builder;
-
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 
 /**
@@ -17,21 +19,38 @@ import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
 @Builder
-public class ProductBrandDto {
+@Entity
+@Table(name = "ProductBrand")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class ProductBrand {
+
+  public ProductBrand() {
+  }
+
+  public ProductBrand(Long brandId, String brandName, String photoUrl, ProductBrandStatus status) {
+    this.brandId = brandId;
+    this.brandName = brandName;
+    this.photoUrl = photoUrl;
+    this.status = status;
+  }
 
   @JsonProperty("brandId")
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long brandId;
 
   @JsonProperty("brandName")
   private String brandName;
 
   @JsonProperty("photoUrl")
+  @Lob
   private String photoUrl;
 
   @JsonProperty("status")
   private ProductBrandStatus status;
 
-  public ProductBrandDto brandId(Long brandId) {
+  public ProductBrand brandId(Long brandId) {
     this.brandId = brandId;
     return this;
   }
@@ -50,7 +69,7 @@ public class ProductBrandDto {
     this.brandId = brandId;
   }
 
-  public ProductBrandDto brandName(String brandName) {
+  public ProductBrand brandName(String brandName) {
     this.brandName = brandName;
     return this;
   }
@@ -69,7 +88,7 @@ public class ProductBrandDto {
     this.brandName = brandName;
   }
 
-  public ProductBrandDto photoUrl(String photoUrl) {
+  public ProductBrand photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
   }
@@ -88,7 +107,7 @@ public class ProductBrandDto {
     this.photoUrl = photoUrl;
   }
 
-  public ProductBrandDto status(ProductBrandStatus status) {
+  public ProductBrand status(ProductBrandStatus status) {
     this.status = status;
     return this;
   }
@@ -115,7 +134,7 @@ public class ProductBrandDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ProductBrandDto productBrandDto = (ProductBrandDto) o;
+    ProductBrand productBrandDto = (ProductBrand) o;
     return Objects.equals(this.brandId, productBrandDto.brandId) &&
         Objects.equals(this.brandName, productBrandDto.brandName) &&
         Objects.equals(this.photoUrl, productBrandDto.photoUrl) &&
