@@ -1,19 +1,15 @@
 package com.skyhigh.storeapi.service.impl;
 
 import com.skyhigh.storeapi.model.Address;
-import com.skyhigh.storeapi.model.Branch;
-import com.skyhigh.storeapi.model.ParentCategory;
 import com.skyhigh.storeapi.model.Store;
 import com.skyhigh.storeapi.model.dto.*;
+import com.skyhigh.storeapi.model.enums.StoreConfDto;
 import com.skyhigh.storeapi.repository.AddressRepository;
 import com.skyhigh.storeapi.repository.BranchRepository;
 import com.skyhigh.storeapi.repository.StoreRepository;
 import com.skyhigh.storeapi.service.StoreService;
 import com.skyhigh.storeapi.util.RoleFilterUtil;
 import com.skyhigh.storeapi.util.TokenConversionUtil;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -21,8 +17,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.NativeWebRequest;
 
-import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 

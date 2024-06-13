@@ -4,5 +4,7 @@ import com.skyhigh.storeapi.model.dto.ProductDto;
 import com.skyhigh.storeapi.model.dto.ProductResponseDto;
 
 public interface ProductService {
-    ProductResponseDto createProductService(ProductDto productDto);
+    ProductResponseDto createProduct(ProductDto productDto);
+
+    ProductResponseDto getProduct(Long productId);
 }

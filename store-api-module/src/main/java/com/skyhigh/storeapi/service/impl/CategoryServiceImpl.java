@@ -62,4 +62,21 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryResponseDto categoryResDto = conversionService.convert(category.get(), CategoryResponseDto.class);
         return categoryResDto;
     }
+
+    @Override
+    public CategoryResponseDto updateCategory(CategoryDto categoryDto) {
+        Category category = categoryRepository.findById(categoryDto.getCategoryId()).orElseThrow(
+                () -> new NotFoundException("Category with ID :"+categoryDto.getCategoryId()+" Not Found!")
+        );
+        ParentCategory parentCategory = parentCategoryRepository.findById(categoryDto.getParentCategoryId()).orElseThrow(
+                () -> new NotFoundException("Parent Category with ID :"+categoryDto.getParentCategoryId()+" Not Found!")
+        );
+        category.setCategoryName(categoryDto.getCategoryName());
+        category.setParentCategory(parentCategory);
+        category.setStatus(category.getStatus());
+        category.setPhotoUrl(category.getPhotoUrl());
+        category = categoryRepository.save(category);
+        CategoryResponseDto categoryResDto = conversionService.convert(category, CategoryResponseDto.class);
+        return categoryResDto;
+    }
 }

@@ -1,16 +1,17 @@
-package com.skyhigh.storeapi.model;
+package com.skyhigh.storeapi.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ProductStatus {
+public enum ProductBrandStatus {
+
     ACTIVE("ACTIVE"),
 
     DEACTIVE("DEACTIVE");
 
     private String value;
 
-    ProductStatus(String value) {
+    ProductBrandStatus(String value) {
         this.value = value;
     }
 
@@ -25,8 +26,8 @@ public enum ProductStatus {
     }
 
     @JsonCreator
-    public static ProductStatus fromValue(String value) {
-        for (ProductStatus b : ProductStatus.values()) {
+    public static ProductBrandStatus fromValue(String value) {
+        for (ProductBrandStatus b : ProductBrandStatus.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

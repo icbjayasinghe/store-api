@@ -2,22 +2,20 @@ package com.skyhigh.storeapi.model.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import org.openapitools.jackson.nullable.JsonNullable;
+import com.skyhigh.storeapi.model.enums.SkuStatus;
 
-import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
+import javax.annotation.Generated;
 
 /**
  * SkuDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T14:48:48.168372+05:30[Asia/Colombo]")
 public class SkuDto {
 
   @JsonProperty("skuId")
@@ -26,49 +24,18 @@ public class SkuDto {
   @JsonProperty("skuName")
   private String skuName;
 
+  @Deprecated
+  @JsonProperty("concatProductName")
+  private String concatProductName;
+
   @JsonProperty("photoUrl")
   private String photoUrl;
 
   @JsonProperty("productId")
   private Long productId;
 
-  /**
-   * SKU status in the app
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status;
+  private SkuStatus status;
 
   public SkuDto skuId(Long skuId) {
     this.skuId = skuId;
@@ -78,8 +45,8 @@ public class SkuDto {
   /**
    * Get skuId
    * @return skuId
-  */
-  
+   */
+
   @Schema(name = "skuId", example = "10", required = false)
   public Long getSkuId() {
     return skuId;
@@ -97,8 +64,8 @@ public class SkuDto {
   /**
    * Get skuName
    * @return skuName
-  */
-  @NotNull 
+   */
+  @NotNull
   @Schema(name = "skuName", example = "2L, 4L", required = true)
   public String getSkuName() {
     return skuName;
@@ -106,6 +73,25 @@ public class SkuDto {
 
   public void setSkuName(String skuName) {
     this.skuName = skuName;
+  }
+
+  public SkuDto concatProductName(String concatProductName) {
+    this.concatProductName = concatProductName;
+    return this;
+  }
+
+  /**
+   * Get concatProductName
+   * @return concatProductName
+   */
+
+  @Schema(name = "concatProductName", example = "Toyota Motor Oil 10W-30sp 4L", required = false)
+  public String getConcatProductName() {
+    return concatProductName;
+  }
+
+  public void setConcatProductName(String concatProductName) {
+    this.concatProductName = concatProductName;
   }
 
   public SkuDto photoUrl(String photoUrl) {
@@ -116,8 +102,8 @@ public class SkuDto {
   /**
    * Get photoUrl
    * @return photoUrl
-  */
-  
+   */
+
   @Schema(name = "photoUrl", required = false)
   public String getPhotoUrl() {
     return photoUrl;
@@ -135,8 +121,8 @@ public class SkuDto {
   /**
    * Get productId
    * @return productId
-  */
-  
+   */
+
   @Schema(name = "productId", example = "10", required = false)
   public Long getProductId() {
     return productId;
@@ -146,22 +132,22 @@ public class SkuDto {
     this.productId = productId;
   }
 
-  public SkuDto status(StatusEnum status) {
+  public SkuDto status(SkuStatus status) {
     this.status = status;
     return this;
   }
 
   /**
-   * SKU status in the app
+   * Get status
    * @return status
-  */
-  
-  @Schema(name = "status", description = "SKU status in the app", required = false)
-  public StatusEnum getStatus() {
+   */
+  @Valid
+  @Schema(name = "status", required = false)
+  public SkuStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(SkuStatus status) {
     this.status = status;
   }
 
@@ -175,15 +161,16 @@ public class SkuDto {
     }
     SkuDto skuDto = (SkuDto) o;
     return Objects.equals(this.skuId, skuDto.skuId) &&
-        Objects.equals(this.skuName, skuDto.skuName) &&
-        Objects.equals(this.photoUrl, skuDto.photoUrl) &&
-        Objects.equals(this.productId, skuDto.productId) &&
-        Objects.equals(this.status, skuDto.status);
+            Objects.equals(this.skuName, skuDto.skuName) &&
+            Objects.equals(this.concatProductName, skuDto.concatProductName) &&
+            Objects.equals(this.photoUrl, skuDto.photoUrl) &&
+            Objects.equals(this.productId, skuDto.productId) &&
+            Objects.equals(this.status, skuDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(skuId, skuName, photoUrl, productId, status);
+    return Objects.hash(skuId, skuName, concatProductName, photoUrl, productId, status);
   }
 
   @Override
@@ -192,6 +179,7 @@ public class SkuDto {
     sb.append("class SkuDto {\n");
     sb.append("    skuId: ").append(toIndentedString(skuId)).append("\n");
     sb.append("    skuName: ").append(toIndentedString(skuName)).append("\n");
+    sb.append("    concatProductName: ").append(toIndentedString(concatProductName)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

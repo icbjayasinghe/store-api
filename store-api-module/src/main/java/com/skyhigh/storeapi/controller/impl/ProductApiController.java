@@ -1,13 +1,10 @@
 package com.skyhigh.storeapi.controller.impl;
 
 import com.skyhigh.storeapi.controller.ProductApi;
-import com.skyhigh.storeapi.model.dto.ModelApiResponse;
-import com.skyhigh.storeapi.model.dto.ParentCategoryDto;
-import com.skyhigh.storeapi.model.dto.ProductDto;
-import com.skyhigh.storeapi.model.dto.ProductResponseDto;
+import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
+import com.skyhigh.storeapi.model.dto.*;
 
 
-import com.skyhigh.storeapi.service.ParentCategoryService;
 import com.skyhigh.storeapi.service.ProductService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,7 +41,16 @@ public class ProductApiController implements ProductApi {
 
     @Override
     public ResponseEntity<ProductResponseDto> addProduct(ProductDto productDto) {
-        ProductResponseDto productResponseDto = productService.createProductService(productDto);
+        ProductResponseDto productResponseDto = productService.createProduct(productDto);
         return ResponseEntity.ok(productResponseDto);
+    }
+
+    @Override
+    public ResponseEntity<ProductResponseDto> getProductById(Long productId) {
+        ProductResponseDto productResDto = productService.getProduct(productId);
+        if (productResDto == null) {
+            throw new ResourceNotFoundException("Product with ID :"+productId+" Not Found!");
+        }
+        return ResponseEntity.ok(productResDto);
     }
 }

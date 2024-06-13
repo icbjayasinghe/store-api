@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -59,6 +60,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/sku",
@@ -106,6 +108,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.DELETE,
             value = "/sku/{skuId}"
@@ -142,6 +145,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/sku/findByStatus",
@@ -194,6 +198,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/sku/{skuId}",
@@ -248,6 +253,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.PUT,
             value = "/sku",
@@ -296,6 +302,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/sku/{skuId}"
@@ -332,6 +339,7 @@ public interface SkuApi {
                     @SecurityRequirement(name = "bearerAuth")
             }
     )
+    @PreAuthorize("hasRole('store-admin')")
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/sku/{skuId}/uploadImage",

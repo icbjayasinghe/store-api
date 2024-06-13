@@ -2,14 +2,11 @@ package com.skyhigh.storeapi.model.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.skyhigh.storeapi.model.ProductStatus;
-import org.openapitools.jackson.nullable.JsonNullable;
+import com.skyhigh.storeapi.model.enums.ProductStatus;
 
-import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 import javax.annotation.Generated;
 
@@ -19,6 +16,7 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
 public class ProductDto {
 
   @JsonProperty("productId")

@@ -1,6 +1,7 @@
 package com.skyhigh.storeapi.model;
 
 import com.fasterxml.jackson.annotation.*;
+import com.skyhigh.storeapi.model.enums.ProductStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

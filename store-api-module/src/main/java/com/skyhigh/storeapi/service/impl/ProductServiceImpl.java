@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     ConversionService conversionService;
 
     @Override
-    public ProductResponseDto createProductService(ProductDto productDto) {
+    public ProductResponseDto createProduct(ProductDto productDto) {
         try {
             Category category = categoryRepository.findById(productDto.getCategoryId())
                     .orElseThrow(
@@ -67,5 +67,12 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public ProductResponseDto getProduct(Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        ProductResponseDto productResDto = conversionService.convert(product.get(), ProductResponseDto.class);
+        return productResDto;
     }
 }

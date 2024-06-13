@@ -2,11 +2,8 @@ package com.skyhigh.storeapi.model.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.skyhigh.storeapi.model.StoreStatus;
+import com.skyhigh.storeapi.model.enums.StoreStatus;
 import lombok.Builder;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 import javax.annotation.Generated;
 import javax.validation.Valid;

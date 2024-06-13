@@ -2,28 +2,18 @@ package com.skyhigh.storeapi.controller.impl;
 
 import com.skyhigh.storeapi.controller.StoreApi;
 import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
-import com.skyhigh.storeapi.model.dto.ParentCategoryDto;
-import com.skyhigh.storeapi.model.dto.StoreConfDto;
+import com.skyhigh.storeapi.model.enums.StoreConfDto;
 import com.skyhigh.storeapi.model.dto.StoreDto;
 import com.skyhigh.storeapi.service.StoreService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
-import org.keycloak.representations.IDToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 
 
-import java.security.Principal;
-import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
