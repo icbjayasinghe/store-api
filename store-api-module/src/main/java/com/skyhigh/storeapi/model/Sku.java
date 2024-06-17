@@ -12,6 +12,7 @@ import javax.annotation.Generated;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Objects;
 @Table(name = "Sku")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class Sku {
+public class Sku implements Serializable {
 
   public Sku() {
   }

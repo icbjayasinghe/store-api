@@ -1,25 +1,54 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.time.OffsetDateTime;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.skyhigh.storeapi.model.enums.BatchStatus;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 
 /**
  * BatchDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-17T21:40:37.332295+05:30[Asia/Colombo]")
-public class BatchDto {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-14T16:34:13.393349+05:30[Asia/Colombo]")
+@Builder
+@Entity
+@Table(name = "Batch")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class Batch implements Serializable {
 
+  public Batch() {
+  }
+
+  public Batch(Long batchId, String batchNumber, Double buyingPrice, Double sellingPrice, String photoUrl, Long skuId, OffsetDateTime inboundDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    this.batchId = batchId;
+    this.batchNumber = batchNumber;
+    this.buyingPrice = buyingPrice;
+    this.sellingPrice = sellingPrice;
+    this.photoUrl = photoUrl;
+    this.skuId = skuId;
+    this.inboundDate = inboundDate;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("batchId")
   private Long batchId;
 
@@ -45,7 +74,15 @@ public class BatchDto {
   @JsonProperty("status")
   private BatchStatus status;
 
-  public BatchDto batchId(Long batchId) {
+  @CreatedDate
+  @Column(name = "created_at", nullable = false, updatable = false)
+  private OffsetDateTime createdAt;
+
+  @LastModifiedDate
+  @Column(name = "updated_at")
+  private OffsetDateTime updatedAt;
+
+  public Batch batchId(Long batchId) {
     this.batchId = batchId;
     return this;
   }
@@ -64,7 +101,7 @@ public class BatchDto {
     this.batchId = batchId;
   }
 
-  public BatchDto batchName(String batchName) {
+  public Batch batchName(String batchName) {
     this.batchNumber = batchName;
     return this;
   }
@@ -79,11 +116,11 @@ public class BatchDto {
     return batchNumber;
   }
 
-  public void setBatchNumber(String batchNumber) {
-    this.batchNumber = batchNumber;
+  public void setBatchNumber(String batchName) {
+    this.batchNumber = batchName;
   }
 
-  public BatchDto buyingPrice(Double buyingPrice) {
+  public Batch buyingPrice(Double buyingPrice) {
     this.buyingPrice = buyingPrice;
     return this;
   }
@@ -102,7 +139,7 @@ public class BatchDto {
     this.buyingPrice = buyingPrice;
   }
 
-  public BatchDto sellingPrice(Double sellingPrice) {
+  public Batch sellingPrice(Double sellingPrice) {
     this.sellingPrice = sellingPrice;
     return this;
   }
@@ -121,7 +158,7 @@ public class BatchDto {
     this.sellingPrice = sellingPrice;
   }
 
-  public BatchDto photoUrl(String photoUrl) {
+  public Batch photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
   }
@@ -140,7 +177,7 @@ public class BatchDto {
     this.photoUrl = photoUrl;
   }
 
-  public BatchDto skuId(Long skuId) {
+  public Batch skuId(Long skuId) {
     this.skuId = skuId;
     return this;
   }
@@ -159,7 +196,7 @@ public class BatchDto {
     this.skuId = skuId;
   }
 
-  public BatchDto createdDate(OffsetDateTime createdDate) {
+  public Batch createdDate(OffsetDateTime createdDate) {
     this.inboundDate = createdDate;
     return this;
   }
@@ -174,11 +211,11 @@ public class BatchDto {
     return inboundDate;
   }
 
-  public void setInboundDate(OffsetDateTime inboundDate) {
-    this.inboundDate = inboundDate;
+  public void setInboundDate(OffsetDateTime createdDate) {
+    this.inboundDate = createdDate;
   }
 
-  public BatchDto status(BatchStatus status) {
+  public Batch status(BatchStatus status) {
     this.status = status;
     return this;
   }
@@ -205,7 +242,7 @@ public class BatchDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BatchDto batchDto = (BatchDto) o;
+    Batch batchDto = (Batch) o;
     return Objects.equals(this.batchId, batchDto.batchId) &&
             Objects.equals(this.batchNumber, batchDto.batchNumber) &&
             Objects.equals(this.buyingPrice, batchDto.buyingPrice) &&
