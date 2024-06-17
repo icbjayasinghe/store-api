@@ -7,6 +7,7 @@ import com.skyhigh.storeapi.model.enums.SkuStatus;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 
 import javax.annotation.Generated;
@@ -16,6 +17,7 @@ import javax.annotation.Generated;
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T14:48:48.168372+05:30[Asia/Colombo]")
+@Builder
 public class SkuDto {
 
   @JsonProperty("skuId")

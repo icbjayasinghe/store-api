@@ -2280,7 +2280,6 @@ components:
         name: skuResponse
     BatchDto:
       required:
-        - batchName
         - sellingPrice
         - skuId
       type: object
@@ -2289,9 +2288,9 @@ components:
           type: integer
           format: int64
           example: 10
-        batchName:
+        batchNumber:
           type: string
-          example: 1st batch, 2nd batch
+          example: LOT34LJ
         buyingPrice:
           type: number
           format: double
@@ -2306,17 +2305,17 @@ components:
           type: integer
           format: int64
           example: 10
-        status:
+        inboundDate:
           type: string
-          description: Batch status in the app
-          enum:
-            - ACTIVE
-            - DEACTIVE
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        status:
+          oneOf:
+            - $ref: '#/components/schemas/BatchStatus'
       xml:
         name: batch
     BatchResponseDto:
       required:
-        - batchName
         - sellingPrice
         - skuId
       type: object
@@ -2325,9 +2324,9 @@ components:
           type: integer
           format: int64
           example: 10
-        batchName:
+        batchNumber:
           type: string
-          example: 1st batch, 2nd batch
+          example: LOT34LJ
         buyingPrice:
           type: number
           format: double
@@ -2340,12 +2339,13 @@ components:
           type: string
         sku:
           $ref: '#/components/schemas/SkuDto'
-        status:
+        inboundDate:
           type: string
-          description: Batch status in the app
-          enum:
-            - ACTIVE
-            - DEACTIVE
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        status:
+          oneOf:
+            - $ref: '#/components/schemas/BatchStatus'
       xml:
         name: BatchResponseDto
     StoreDto:
@@ -2553,6 +2553,12 @@ components:
       xml:
         name: UserConfDto
     SkuStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - DEACTIVE
+        - DELETED
+    BatchStatus:
       type: string
       enum:
         - ACTIVE

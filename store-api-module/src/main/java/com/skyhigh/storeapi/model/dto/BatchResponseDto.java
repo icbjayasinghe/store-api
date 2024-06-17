@@ -1,14 +1,15 @@
 package com.skyhigh.storeapi.model.dto;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import org.openapitools.jackson.nullable.JsonNullable;
+import com.skyhigh.storeapi.model.enums.BatchStatus;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.Generated;
 
@@ -17,14 +18,15 @@ import javax.annotation.Generated;
  * BatchResponseDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-14T16:52:52.190547+05:30[Asia/Colombo]")
+@Builder
 public class BatchResponseDto {
 
   @JsonProperty("batchId")
   private Long batchId;
 
-  @JsonProperty("batchName")
-  private String batchName;
+  @JsonProperty("batchNumber")
+  private String batchNumber;
 
   @JsonProperty("buyingPrice")
   private Double buyingPrice;
@@ -38,43 +40,12 @@ public class BatchResponseDto {
   @JsonProperty("sku")
   private SkuDto sku;
 
-  /**
-   * Batch status in the app
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-    
-    DEACTIVE("DEACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
+  @JsonProperty("inboundDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime inboundDate;
 
   @JsonProperty("status")
-  private StatusEnum status;
+  private BatchStatus status;
 
   public BatchResponseDto batchId(Long batchId) {
     this.batchId = batchId;
@@ -84,8 +55,8 @@ public class BatchResponseDto {
   /**
    * Get batchId
    * @return batchId
-  */
-  
+   */
+
   @Schema(name = "batchId", example = "10", required = false)
   public Long getBatchId() {
     return batchId;
@@ -96,22 +67,22 @@ public class BatchResponseDto {
   }
 
   public BatchResponseDto batchName(String batchName) {
-    this.batchName = batchName;
+    this.batchNumber = batchName;
     return this;
   }
 
   /**
    * Get batchName
    * @return batchName
-  */
-  @NotNull 
+   */
+  @NotNull
   @Schema(name = "batchName", example = "1st batch, 2nd batch", required = true)
-  public String getBatchName() {
-    return batchName;
+  public String getBatchNumber() {
+    return batchNumber;
   }
 
-  public void setBatchName(String batchName) {
-    this.batchName = batchName;
+  public void setBatchNumber(String batchNumber) {
+    this.batchNumber = batchNumber;
   }
 
   public BatchResponseDto buyingPrice(Double buyingPrice) {
@@ -122,8 +93,8 @@ public class BatchResponseDto {
   /**
    * Get buyingPrice
    * @return buyingPrice
-  */
-  
+   */
+
   @Schema(name = "buyingPrice", example = "100.0", required = false)
   public Double getBuyingPrice() {
     return buyingPrice;
@@ -141,8 +112,8 @@ public class BatchResponseDto {
   /**
    * Get sellingPrice
    * @return sellingPrice
-  */
-  @NotNull 
+   */
+  @NotNull
   @Schema(name = "sellingPrice", example = "100.0", required = true)
   public Double getSellingPrice() {
     return sellingPrice;
@@ -160,8 +131,8 @@ public class BatchResponseDto {
   /**
    * Get photoUrl
    * @return photoUrl
-  */
-  
+   */
+
   @Schema(name = "photoUrl", required = false)
   public String getPhotoUrl() {
     return photoUrl;
@@ -179,8 +150,8 @@ public class BatchResponseDto {
   /**
    * Get sku
    * @return sku
-  */
-  @Valid 
+   */
+  @Valid
   @Schema(name = "sku", required = false)
   public SkuDto getSku() {
     return sku;
@@ -190,22 +161,41 @@ public class BatchResponseDto {
     this.sku = sku;
   }
 
-  public BatchResponseDto status(StatusEnum status) {
+  public BatchResponseDto inboundDate(OffsetDateTime inboundDate) {
+    this.inboundDate = inboundDate;
+    return this;
+  }
+
+  /**
+   * Get inboundDate
+   * @return inboundDate
+   */
+  @Valid
+  @Schema(name = "inboundDate", example = "2017-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getInboundDate() {
+    return inboundDate;
+  }
+
+  public void setInboundDate(OffsetDateTime inboundDate) {
+    this.inboundDate = inboundDate;
+  }
+
+  public BatchResponseDto status(BatchStatus status) {
     this.status = status;
     return this;
   }
 
   /**
-   * Batch status in the app
+   * Get status
    * @return status
-  */
-  
-  @Schema(name = "status", description = "Batch status in the app", required = false)
-  public StatusEnum getStatus() {
+   */
+  @Valid
+  @Schema(name = "status", required = false)
+  public BatchStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(BatchStatus status) {
     this.status = status;
   }
 
@@ -219,17 +209,18 @@ public class BatchResponseDto {
     }
     BatchResponseDto batchResponseDto = (BatchResponseDto) o;
     return Objects.equals(this.batchId, batchResponseDto.batchId) &&
-        Objects.equals(this.batchName, batchResponseDto.batchName) &&
-        Objects.equals(this.buyingPrice, batchResponseDto.buyingPrice) &&
-        Objects.equals(this.sellingPrice, batchResponseDto.sellingPrice) &&
-        Objects.equals(this.photoUrl, batchResponseDto.photoUrl) &&
-        Objects.equals(this.sku, batchResponseDto.sku) &&
-        Objects.equals(this.status, batchResponseDto.status);
+            Objects.equals(this.batchNumber, batchResponseDto.batchNumber) &&
+            Objects.equals(this.buyingPrice, batchResponseDto.buyingPrice) &&
+            Objects.equals(this.sellingPrice, batchResponseDto.sellingPrice) &&
+            Objects.equals(this.photoUrl, batchResponseDto.photoUrl) &&
+            Objects.equals(this.sku, batchResponseDto.sku) &&
+            Objects.equals(this.inboundDate, batchResponseDto.inboundDate) &&
+            Objects.equals(this.status, batchResponseDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchName, buyingPrice, sellingPrice, photoUrl, sku, status);
+    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, sku, inboundDate, status);
   }
 
   @Override
@@ -237,11 +228,12 @@ public class BatchResponseDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class BatchResponseDto {\n");
     sb.append("    batchId: ").append(toIndentedString(batchId)).append("\n");
-    sb.append("    batchName: ").append(toIndentedString(batchName)).append("\n");
+    sb.append("    batchName: ").append(toIndentedString(batchNumber)).append("\n");
     sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
     sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
+    sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -258,4 +250,3 @@ public class BatchResponseDto {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

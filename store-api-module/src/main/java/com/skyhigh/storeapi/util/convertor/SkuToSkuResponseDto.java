@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SkuToSkuResponseDto implements Converter<Sku, SkuResponseDto> {
 
-
     @Override
     public SkuResponseDto convert(Sku sku) {
         Product product = sku.getProduct();

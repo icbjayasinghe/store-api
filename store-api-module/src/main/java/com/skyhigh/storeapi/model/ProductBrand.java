@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.annotation.Generated;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -23,7 +24,7 @@ import java.util.Objects;
 @Table(name = "ProductBrand")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class ProductBrand {
+public class ProductBrand implements Serializable {
 
   public ProductBrand() {
   }
