@@ -5,4 +5,6 @@ import com.skyhigh.storeapi.model.dto.BatchResponseDto;
 
 public interface BatchService {
     BatchResponseDto createBatch(BatchDto batchDto);
+
+    BatchResponseDto getBatch(Long batchId);
 }

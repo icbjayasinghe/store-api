@@ -1,11 +1,13 @@
 package com.skyhigh.storeapi.controller.impl;
 
 import com.skyhigh.storeapi.controller.BatchApi;
+import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
 import com.skyhigh.storeapi.model.dto.BatchDto;
 import com.skyhigh.storeapi.model.dto.BatchResponseDto;
 
 
 import com.skyhigh.storeapi.model.dto.BranchResponseDto;
+import com.skyhigh.storeapi.model.dto.SkuResponseDto;
 import com.skyhigh.storeapi.service.BatchService;
 import com.skyhigh.storeapi.service.BranchService;
 import org.apache.logging.log4j.LogManager;
@@ -60,7 +62,11 @@ public class BatchApiController implements BatchApi {
 
     @Override
     public ResponseEntity<BatchResponseDto> getBatchById(Long batchId) {
-        return BatchApi.super.getBatchById(batchId);
+        BatchResponseDto batchResponseDto = batchService.getBatch(batchId);
+        if (batchResponseDto == null) {
+            throw new ResourceNotFoundException("Batch with ID :"+batchId+" Not Found!");
+        }
+        return ResponseEntity.ok(batchResponseDto);
     }
 
     @Override
