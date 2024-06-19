@@ -8,6 +8,7 @@ import com.skyhigh.storeapi.model.Sku;
 import com.skyhigh.storeapi.model.dto.BatchDto;
 import com.skyhigh.storeapi.model.dto.BatchResponseDto;
 import com.skyhigh.storeapi.model.dto.CategoryResponseDto;
+import com.skyhigh.storeapi.model.dto.SkuResponseDto;
 import com.skyhigh.storeapi.repository.BatchRepository;
 import com.skyhigh.storeapi.repository.SkuRepository;
 import com.skyhigh.storeapi.service.BatchService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 @Service
 public class BatchServiceImpl implements BatchService {
@@ -56,5 +58,12 @@ public class BatchServiceImpl implements BatchService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public BatchResponseDto getBatch(Long batchId) {
+        Optional<Batch> batch = batchRepository.findById(batchId);
+        BatchResponseDto batchResponseDto = conversionService.convert(batch.get(), BatchResponseDto.class);
+        return batchResponseDto;
     }
 }

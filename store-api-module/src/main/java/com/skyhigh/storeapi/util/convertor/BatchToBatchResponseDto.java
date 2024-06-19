@@ -26,6 +26,7 @@ public class BatchToBatchResponseDto implements Converter<Batch, BatchResponseDt
                 .skuName(sku.getSkuName())
                 .photoUrl(sku.getPhotoUrl())
                 .productId(sku.getProduct().getProductId())
+                .concatProductName(sku.getConcatProductName())
                 .status(sku.getStatus())
                 .build();
 
