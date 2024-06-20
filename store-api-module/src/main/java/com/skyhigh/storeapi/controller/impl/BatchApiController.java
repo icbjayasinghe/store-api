@@ -57,7 +57,8 @@ public class BatchApiController implements BatchApi {
 
     @Override
     public ResponseEntity<List<BatchResponseDto>> findBatchByStatus(String status) {
-        return BatchApi.super.findBatchByStatus(status);
+        List<BatchResponseDto> batchResponseDtoList = batchService.getBatchesByStatus(status);
+        return ResponseEntity.ok(batchResponseDtoList);
     }
 
     @Override
