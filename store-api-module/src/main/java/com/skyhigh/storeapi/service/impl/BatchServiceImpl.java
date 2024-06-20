@@ -9,6 +9,8 @@ import com.skyhigh.storeapi.model.dto.BatchDto;
 import com.skyhigh.storeapi.model.dto.BatchResponseDto;
 import com.skyhigh.storeapi.model.dto.CategoryResponseDto;
 import com.skyhigh.storeapi.model.dto.SkuResponseDto;
+import com.skyhigh.storeapi.model.enums.BatchStatus;
+import com.skyhigh.storeapi.model.enums.SkuStatus;
 import com.skyhigh.storeapi.repository.BatchRepository;
 import com.skyhigh.storeapi.repository.SkuRepository;
 import com.skyhigh.storeapi.service.BatchService;
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BatchServiceImpl implements BatchService {
@@ -65,5 +69,14 @@ public class BatchServiceImpl implements BatchService {
         Optional<Batch> batch = batchRepository.findById(batchId);
         BatchResponseDto batchResponseDto = conversionService.convert(batch.get(), BatchResponseDto.class);
         return batchResponseDto;
+    }
+
+    @Override
+    public List<BatchResponseDto> getBatchesByStatus(String status) {
+        List<Batch> batchList = batchRepository.findAllByStatus(BatchStatus.valueOf(status));
+        List<BatchResponseDto> batchResponseDtoList =batchList.stream().map( batch ->
+                conversionService.convert(batch, BatchResponseDto.class)
+        ).collect(Collectors.toList());
+        return batchResponseDtoList;
     }
 }
