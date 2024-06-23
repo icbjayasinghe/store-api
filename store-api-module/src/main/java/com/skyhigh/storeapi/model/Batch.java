@@ -1,7 +1,9 @@
 package com.skyhigh.storeapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.skyhigh.storeapi.model.dto.BatchDto;
 import com.skyhigh.storeapi.model.enums.BatchStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -23,7 +25,7 @@ import java.util.Objects;
  * BatchDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-14T16:34:13.393349+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-22T22:08:37.998448+05:30[Asia/Colombo]")
 @Builder
 @Entity
 @Table(name = "Batch")
@@ -34,13 +36,14 @@ public class Batch implements Serializable {
   public Batch() {
   }
 
-  public Batch(Long batchId, String batchNumber, Double buyingPrice, Double sellingPrice, String photoUrl, Long skuId, OffsetDateTime inboundDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+  public Batch(Long batchId, String batchNumber, Double buyingPrice, Double sellingPrice, String photoUrl, Sku sku, Branch branch, OffsetDateTime inboundDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
     this.batchId = batchId;
     this.batchNumber = batchNumber;
     this.buyingPrice = buyingPrice;
     this.sellingPrice = sellingPrice;
     this.photoUrl = photoUrl;
-    this.skuId = skuId;
+    this.sku = sku;
+    this.branch = branch;
     this.inboundDate = inboundDate;
     this.status = status;
     this.createdAt = createdAt;
@@ -64,8 +67,15 @@ public class Batch implements Serializable {
   @JsonProperty("photoUrl")
   private String photoUrl;
 
-  @JsonProperty("skuId")
-  private Long skuId;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "sku_id", nullable = false)
+  @JsonIgnore
+  private Sku sku;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "branch_id", nullable = false)
+  @JsonIgnore
+  private Branch branch;
 
   @JsonProperty("createdDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -177,23 +187,51 @@ public class Batch implements Serializable {
     this.photoUrl = photoUrl;
   }
 
-  public Batch skuId(Long skuId) {
-    this.skuId = skuId;
+  public Batch sku(Sku sku) {
+    this.sku = sku;
     return this;
   }
 
   /**
-   * Get skuId
-   * @return skuId
+   * Get sku
+   * @return sku
    */
-  @NotNull
-  @Schema(name = "skuId", example = "10", required = true)
-  public Long getSkuId() {
-    return skuId;
+  @Schema(name = "sku", example = "10", required = true)
+  public Sku getSku() {
+    return sku;
   }
 
-  public void setSkuId(Long skuId) {
-    this.skuId = skuId;
+  public void setSku(Sku sku) {
+    this.sku = sku;
+  }
+
+  public Batch branch(Branch branch) {
+    this.branch = branch;
+    return this;
+  }
+
+  public Branch getBranch() {
+    return branch;
+  }
+
+  public void setBranch(Branch branch) {
+    this.branch = branch;
+  }
+
+  public OffsetDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(OffsetDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public OffsetDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   public Batch createdDate(OffsetDateTime createdDate) {
@@ -248,14 +286,14 @@ public class Batch implements Serializable {
             Objects.equals(this.buyingPrice, batchDto.buyingPrice) &&
             Objects.equals(this.sellingPrice, batchDto.sellingPrice) &&
             Objects.equals(this.photoUrl, batchDto.photoUrl) &&
-            Objects.equals(this.skuId, batchDto.skuId) &&
+            Objects.equals(this.sku, batchDto.sku) &&
             Objects.equals(this.inboundDate, batchDto.inboundDate) &&
             Objects.equals(this.status, batchDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, skuId, inboundDate, status);
+    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, sku, inboundDate, status);
   }
 
   @Override
@@ -267,7 +305,7 @@ public class Batch implements Serializable {
     sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
     sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
-    sb.append("    skuId: ").append(toIndentedString(skuId)).append("\n");
+    sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
     sb.append("    createdDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");

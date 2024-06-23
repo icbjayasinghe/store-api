@@ -1,10 +1,7 @@
 package com.skyhigh.storeapi.service.impl;
 
 import com.skyhigh.storeapi.exception.customException.AlreadyExistException;
-import com.skyhigh.storeapi.model.Batch;
-import com.skyhigh.storeapi.model.Category;
-import com.skyhigh.storeapi.model.ParentCategory;
-import com.skyhigh.storeapi.model.Sku;
+import com.skyhigh.storeapi.model.*;
 import com.skyhigh.storeapi.model.dto.BatchDto;
 import com.skyhigh.storeapi.model.dto.BatchResponseDto;
 import com.skyhigh.storeapi.model.dto.CategoryResponseDto;
@@ -12,6 +9,7 @@ import com.skyhigh.storeapi.model.dto.SkuResponseDto;
 import com.skyhigh.storeapi.model.enums.BatchStatus;
 import com.skyhigh.storeapi.model.enums.SkuStatus;
 import com.skyhigh.storeapi.repository.BatchRepository;
+import com.skyhigh.storeapi.repository.BranchRepository;
 import com.skyhigh.storeapi.repository.SkuRepository;
 import com.skyhigh.storeapi.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,9 @@ public class BatchServiceImpl implements BatchService {
     BatchRepository batchRepository;
 
     @Autowired
+    BranchRepository branchRepository;
+
+    @Autowired
     ConversionService conversionService;
 
     @Override
@@ -43,13 +44,17 @@ public class BatchServiceImpl implements BatchService {
             Sku sku = skuRepository.findById(batchDto.getSkuId()).orElseThrow(
                     () -> new NotFoundException("SKU not found")
             );
+            Branch branch = branchRepository.findById(batchDto.getBranchId()).orElseThrow(
+                    () -> new NotFoundException("Branch not found")
+            );
             Batch batch = Batch.builder()
                     .batchNumber(batchDto.getBatchNumber())
                     .buyingPrice(batchDto.getBuyingPrice())
                     .sellingPrice(batchDto.getSellingPrice())
                     .inboundDate(batchDto.getInboundDate())
                     .photoUrl(batchDto.getPhotoUrl())
-                    .skuId(batchDto.getSkuId())
+                    .branch(branch)
+                    .sku(sku)
                     .status(batchDto.getStatus())
                     .createdAt(OffsetDateTime.now())
                     .updatedAt(OffsetDateTime.now())

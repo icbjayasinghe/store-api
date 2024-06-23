@@ -18,8 +18,8 @@ import javax.annotation.Generated;
  * BatchResponseDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-14T16:52:52.190547+05:30[Asia/Colombo]")
 @Builder
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-22T22:08:37.998448+05:30[Asia/Colombo]")
 public class BatchResponseDto {
 
   @JsonProperty("batchId")
@@ -39,6 +39,9 @@ public class BatchResponseDto {
 
   @JsonProperty("sku")
   private SkuDto sku;
+
+  @JsonProperty("branch")
+  private BranchDto branch;
 
   @JsonProperty("inboundDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -66,17 +69,17 @@ public class BatchResponseDto {
     this.batchId = batchId;
   }
 
-  public BatchResponseDto batchName(String batchName) {
-    this.batchNumber = batchName;
+  public BatchResponseDto batchNumber(String batchNumber) {
+    this.batchNumber = batchNumber;
     return this;
   }
 
   /**
-   * Get batchName
-   * @return batchName
+   * Get batchNumber
+   * @return batchNumber
    */
-  @NotNull
-  @Schema(name = "batchName", example = "1st batch, 2nd batch", required = true)
+
+  @Schema(name = "batchNumber", example = "LOT34LJ", required = false)
   public String getBatchNumber() {
     return batchNumber;
   }
@@ -161,6 +164,25 @@ public class BatchResponseDto {
     this.sku = sku;
   }
 
+  public BatchResponseDto branch(BranchDto branch) {
+    this.branch = branch;
+    return this;
+  }
+
+  /**
+   * Get branch
+   * @return branch
+   */
+  @Valid
+  @Schema(name = "branch", required = false)
+  public BranchDto getBranch() {
+    return branch;
+  }
+
+  public void setBranch(BranchDto branch) {
+    this.branch = branch;
+  }
+
   public BatchResponseDto inboundDate(OffsetDateTime inboundDate) {
     this.inboundDate = inboundDate;
     return this;
@@ -214,13 +236,14 @@ public class BatchResponseDto {
             Objects.equals(this.sellingPrice, batchResponseDto.sellingPrice) &&
             Objects.equals(this.photoUrl, batchResponseDto.photoUrl) &&
             Objects.equals(this.sku, batchResponseDto.sku) &&
+            Objects.equals(this.branch, batchResponseDto.branch) &&
             Objects.equals(this.inboundDate, batchResponseDto.inboundDate) &&
             Objects.equals(this.status, batchResponseDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, sku, inboundDate, status);
+    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, sku, branch, inboundDate, status);
   }
 
   @Override
@@ -228,11 +251,12 @@ public class BatchResponseDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class BatchResponseDto {\n");
     sb.append("    batchId: ").append(toIndentedString(batchId)).append("\n");
-    sb.append("    batchName: ").append(toIndentedString(batchNumber)).append("\n");
+    sb.append("    batchNumber: ").append(toIndentedString(batchNumber)).append("\n");
     sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
     sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
+    sb.append("    branch: ").append(toIndentedString(branch)).append("\n");
     sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
