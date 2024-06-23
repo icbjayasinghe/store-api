@@ -3,11 +3,13 @@ package com.skyhigh.storeapi.util.convertor;
 import com.skyhigh.storeapi.model.Batch;
 import com.skyhigh.storeapi.model.Branch;
 import com.skyhigh.storeapi.model.Sku;
+import com.skyhigh.storeapi.model.dto.AddressDto;
 import com.skyhigh.storeapi.model.dto.BatchResponseDto;
 import com.skyhigh.storeapi.model.dto.BranchDto;
 import com.skyhigh.storeapi.model.dto.SkuDto;
 import com.skyhigh.storeapi.repository.SkuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,12 @@ import org.springframework.stereotype.Service;
 public class BatchToBatchResponseDto implements Converter<Batch, BatchResponseDto> {
 
     @Autowired
-    SkuRepository skuRepository;
+    AddressToAddressDto conversionService;
 
     @Override
     public BatchResponseDto convert(Batch batch) {
-        Sku sku = skuRepository.findById(batch.getSkuId()).get();
+
+        Sku sku = batch.getSku();
 
         SkuDto skuDto = SkuDto.builder()
                 .skuId(sku.getSkuId())
@@ -28,6 +31,19 @@ public class BatchToBatchResponseDto implements Converter<Batch, BatchResponseDt
                 .productId(sku.getProduct().getProductId())
                 .concatProductName(sku.getConcatProductName())
                 .status(sku.getStatus())
+                .build();
+
+        Branch branch = batch.getBranch();
+
+        AddressDto addressDto = conversionService.convert(branch.getAddress());
+
+        BranchDto branchDto = BranchDto.builder()
+                .branchId(branch.getBranchId())
+                .branchName(branch.getBranchName())
+                .storeId(branch.getStore().getStoreId())
+                .status(branch.getStatus())
+                .address(addressDto)
+                .photoUrl(branch.getPhotoUrl())
                 .build();
 
         BatchResponseDto batchResponseDto = BatchResponseDto.builder()
@@ -39,6 +55,7 @@ public class BatchToBatchResponseDto implements Converter<Batch, BatchResponseDt
                 .inboundDate(batch.getInboundDate())
                 .status(batch.getStatus())
                 .sku(skuDto)
+                .branch(branchDto)
                 .build();
         return batchResponseDto;
     }

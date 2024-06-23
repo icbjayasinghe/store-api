@@ -1,45 +1,61 @@
-package com.skyhigh.storeapi.model.dto;
+package com.skyhigh.storeapi.model;
 
-import java.time.OffsetDateTime;
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.*;
 import com.skyhigh.storeapi.model.enums.InventoryItemStatus;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.Generated;
+import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 
 /**
  * InventoryItemDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-22T22:08:37.998448+05:30[Asia/Colombo]")
-public class InventoryItemDto {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-04-16T20:13:57.830681+05:30[Asia/Colombo]")
+@Builder
+@Entity
+@Table(name = "InventoryItem")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+public class InventoryItem {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("inventoryItemId")
   private Long inventoryItemId;
 
-  @JsonProperty("batchId")
-  private Long batchId;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "batchId", nullable = false)
+  @JsonIgnore
+  private Batch batch;
 
   @JsonProperty("quantity")
   private Long quantity;
+
+  @JsonProperty("status")
+  private InventoryItemStatus status;
 
   @JsonProperty("inboundDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime inboundDate;
 
-  @JsonProperty("status")
-  private InventoryItemStatus status;
+  @CreatedDate
+  @Column(name = "created_at", nullable = false, updatable = false)
+  private OffsetDateTime createdAt;
 
-  public InventoryItemDto inventoryItemId(Long inventoryItemId) {
+  @LastModifiedDate
+  @Column(name = "updated_at")
+  private OffsetDateTime updatedAt;
+
+  public InventoryItem inventoryItemId(Long inventoryItemId) {
     this.inventoryItemId = inventoryItemId;
     return this;
   }
@@ -47,8 +63,8 @@ public class InventoryItemDto {
   /**
    * Get inventoryItemId
    * @return inventoryItemId
-   */
-
+  */
+  
   @Schema(name = "inventoryItemId", example = "10", required = false)
   public Long getInventoryItemId() {
     return inventoryItemId;
@@ -58,26 +74,25 @@ public class InventoryItemDto {
     this.inventoryItemId = inventoryItemId;
   }
 
-  public InventoryItemDto batchId(Long batchId) {
-    this.batchId = batchId;
+  public InventoryItem batchId(Batch batchId) {
+    this.batch = batchId;
     return this;
   }
 
   /**
    * Get batchId
    * @return batchId
-   */
-  @NotNull
+  */
   @Schema(name = "batchId", example = "10", required = true)
-  public Long getBatchId() {
-    return batchId;
+  public Batch getBatch() {
+    return batch;
   }
 
-  public void setBatchId(Long batchId) {
-    this.batchId = batchId;
+  public void setBatch(Batch batchId) {
+    this.batch = batchId;
   }
 
-  public InventoryItemDto quantity(Long quantity) {
+  public InventoryItem quantity(Long quantity) {
     this.quantity = quantity;
     return this;
   }
@@ -85,8 +100,8 @@ public class InventoryItemDto {
   /**
    * Get quantity
    * @return quantity
-   */
-
+  */
+  
   @Schema(name = "quantity", example = "10", required = false)
   public Long getQuantity() {
     return quantity;
@@ -96,42 +111,47 @@ public class InventoryItemDto {
     this.quantity = quantity;
   }
 
-  public InventoryItemDto inboundDate(OffsetDateTime inboundDate) {
-    this.inboundDate = inboundDate;
-    return this;
-  }
-
-  /**
-   * Get inboundDate
-   * @return inboundDate
-   */
-  @Valid
-  @Schema(name = "inboundDate", example = "2017-07-21T17:32:28Z", required = false)
-  public OffsetDateTime getInboundDate() {
-    return inboundDate;
-  }
-
-  public void setInboundDate(OffsetDateTime inboundDate) {
-    this.inboundDate = inboundDate;
-  }
-
-  public InventoryItemDto status(InventoryItemStatus status) {
+  public InventoryItem status(InventoryItemStatus status) {
     this.status = status;
     return this;
   }
 
   /**
-   * Get status
+   * Branch status in the app
    * @return status
-   */
-  @Valid
-  @Schema(name = "status", required = false)
+  */
+  
+  @Schema(name = "status", description = "Branch status in the app", required = false)
   public InventoryItemStatus getStatus() {
     return status;
   }
 
   public void setStatus(InventoryItemStatus status) {
     this.status = status;
+  }
+
+  public OffsetDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(OffsetDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public OffsetDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public OffsetDateTime getInboundDate() {
+    return inboundDate;
+  }
+
+  public void setInboundDate(OffsetDateTime inboundDate) {
+    this.inboundDate = inboundDate;
   }
 
   @Override
@@ -142,25 +162,26 @@ public class InventoryItemDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    InventoryItemDto inventoryItemDto = (InventoryItemDto) o;
+    InventoryItem inventoryItemDto = (InventoryItem) o;
     return Objects.equals(this.inventoryItemId, inventoryItemDto.inventoryItemId) &&
-            Objects.equals(this.batchId, inventoryItemDto.batchId) &&
+            Objects.equals(this.batch, inventoryItemDto.batch) &&
             Objects.equals(this.quantity, inventoryItemDto.quantity) &&
-            Objects.equals(this.inboundDate, inventoryItemDto.inboundDate) &&
             Objects.equals(this.status, inventoryItemDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(inventoryItemId, batchId, quantity, inboundDate, status);
+    return Objects.hash(inventoryItemId, batch, quantity, inboundDate, status);
   }
+
+
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class InventoryItemDto {\n");
     sb.append("    inventoryItemId: ").append(toIndentedString(inventoryItemId)).append("\n");
-    sb.append("    batchId: ").append(toIndentedString(batchId)).append("\n");
+    sb.append("    batchId: ").append(toIndentedString(batch)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

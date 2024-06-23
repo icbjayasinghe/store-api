@@ -1,23 +1,30 @@
 package com.skyhigh.storeapi.model.dto;
 
-import java.time.OffsetDateTime;
+import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.skyhigh.storeapi.model.enums.BatchStatus;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.time.OffsetDateTime;
 
+import com.skyhigh.storeapi.model.enums.BatchStatus;
+import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.format.annotation.DateTimeFormat;
 
+
+import java.util.*;
 import javax.annotation.Generated;
-
 
 /**
  * BatchDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-17T21:40:37.332295+05:30[Asia/Colombo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-22T22:08:37.998448+05:30[Asia/Colombo]")
+@Builder
 public class BatchDto {
 
   @JsonProperty("batchId")
@@ -38,7 +45,10 @@ public class BatchDto {
   @JsonProperty("skuId")
   private Long skuId;
 
-  @JsonProperty("createdDate")
+  @JsonProperty("branchId")
+  private Long branchId;
+
+  @JsonProperty("inboundDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime inboundDate;
 
@@ -64,17 +74,17 @@ public class BatchDto {
     this.batchId = batchId;
   }
 
-  public BatchDto batchName(String batchName) {
-    this.batchNumber = batchName;
+  public BatchDto batchNumber(String batchNumber) {
+    this.batchNumber = batchNumber;
     return this;
   }
 
   /**
-   * Get batchName
-   * @return batchName
+   * Get batchNumber
+   * @return batchNumber
    */
-  @NotNull
-  @Schema(name = "batchName", example = "1st batch, 2nd batch", required = true)
+
+  @Schema(name = "batchNumber", example = "LOT34LJ", required = false)
   public String getBatchNumber() {
     return batchNumber;
   }
@@ -159,17 +169,36 @@ public class BatchDto {
     this.skuId = skuId;
   }
 
-  public BatchDto createdDate(OffsetDateTime createdDate) {
-    this.inboundDate = createdDate;
+  public BatchDto branchId(Long branchId) {
+    this.branchId = branchId;
     return this;
   }
 
   /**
-   * Get createdDate
-   * @return createdDate
+   * Get branchId
+   * @return branchId
+   */
+
+  @Schema(name = "branchId", example = "10", required = false)
+  public Long getBranchId() {
+    return branchId;
+  }
+
+  public void setBranchId(Long branchId) {
+    this.branchId = branchId;
+  }
+
+  public BatchDto inboundDate(OffsetDateTime inboundDate) {
+    this.inboundDate = inboundDate;
+    return this;
+  }
+
+  /**
+   * Get inboundDate
+   * @return inboundDate
    */
   @Valid
-  @Schema(name = "createdDate", example = "2017-07-21T17:32:28Z", required = false)
+  @Schema(name = "inboundDate", example = "2017-07-21T17:32:28Z", required = false)
   public OffsetDateTime getInboundDate() {
     return inboundDate;
   }
@@ -212,13 +241,14 @@ public class BatchDto {
             Objects.equals(this.sellingPrice, batchDto.sellingPrice) &&
             Objects.equals(this.photoUrl, batchDto.photoUrl) &&
             Objects.equals(this.skuId, batchDto.skuId) &&
+            Objects.equals(this.branchId, batchDto.branchId) &&
             Objects.equals(this.inboundDate, batchDto.inboundDate) &&
             Objects.equals(this.status, batchDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, skuId, inboundDate, status);
+    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, skuId, branchId, inboundDate, status);
   }
 
   @Override
@@ -226,12 +256,13 @@ public class BatchDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class BatchDto {\n");
     sb.append("    batchId: ").append(toIndentedString(batchId)).append("\n");
-    sb.append("    batchName: ").append(toIndentedString(batchNumber)).append("\n");
+    sb.append("    batchNumber: ").append(toIndentedString(batchNumber)).append("\n");
     sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
     sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    skuId: ").append(toIndentedString(skuId)).append("\n");
-    sb.append("    createdDate: ").append(toIndentedString(inboundDate)).append("\n");
+    sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
+    sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

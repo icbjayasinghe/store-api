@@ -2305,6 +2305,10 @@ components:
           type: integer
           format: int64
           example: 10
+        branchId:
+          type: integer
+          format: int64
+          example: 10
         inboundDate:
           type: string
           format: date-time
@@ -2339,6 +2343,8 @@ components:
           type: string
         sku:
           $ref: '#/components/schemas/SkuDto'
+        branch:
+          $ref: '#/components/schemas/BranchDto'
         inboundDate:
           type: string
           format: date-time
@@ -2467,10 +2473,6 @@ components:
           type: integer
           format: int64
           example: 10
-        branchId:
-          type: integer
-          format: int64
-          example: 10
         batchId:
           type: integer
           format: int64
@@ -2479,12 +2481,13 @@ components:
           type: integer
           format: int64
           example: 10
-        status:
+        inboundDate:
           type: string
-          description: Branch status in the app
-          enum:
-            - ACTIVE
-            - DEACTIVE
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        status:
+          oneOf:
+            - $ref: '#/components/schemas/InventoryItemStatus'
       xml:
         name: inventoryItem
     InventoryItemResponseDto:
@@ -2497,20 +2500,19 @@ components:
           type: integer
           format: int64
           example: 10
-        branch:
-          $ref: '#/components/schemas/BranchDto'
         batch:
           $ref: '#/components/schemas/BatchDto'
         quantity:
           type: integer
           format: int64
           example: 10
-        status:
+        inboundDate:
           type: string
-          description: Branch status in the app
-          enum:
-            - ACTIVE
-            - DEACTIVE
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        status:
+          oneOf:
+            - $ref: '#/components/schemas/InventoryItemStatus'
       xml:
         name: InventoryItemResponseDto
     StoreConfDto:
@@ -2559,6 +2561,12 @@ components:
         - DEACTIVE
         - DELETED
     BatchStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - DEACTIVE
+        - DELETED
+    InventoryItemStatus:
       type: string
       enum:
         - ACTIVE
