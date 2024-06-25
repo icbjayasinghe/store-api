@@ -1968,6 +1968,48 @@ paths:
           description: Invalid status value
       security:
         - bearerAuth: []
+  /inventoryItem/findByBranch:
+    get:
+      tags:
+        - inventoryItem
+      summary: Finds Inventory Item by branch
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findInventoryItemByBranch
+      parameters:
+        - name: branchId
+          in: query
+          description: ID of Branch to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/InventoryItemStatus'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryItemResponseDto'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryItemResponseDto'
+        '400':
+          description: Invalid status value
+      security:
+        - bearerAuth: []
   /inventoryItem/{inventoryItemId}:
     get:
       tags:

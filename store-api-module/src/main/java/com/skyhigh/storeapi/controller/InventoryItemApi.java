@@ -7,6 +7,7 @@ package com.skyhigh.storeapi.controller;
 
 import com.skyhigh.storeapi.model.dto.InventoryItemDto;
 import com.skyhigh.storeapi.model.dto.InventoryItemResponseDto;
+import com.skyhigh.storeapi.model.enums.InventoryItemStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -118,6 +119,56 @@ public interface InventoryItemApi {
 
     }
 
+    /**
+     * GET /inventoryItem/findByBranch : Finds Inventory Item by branch
+     * Multiple status values can be provided with comma separated strings
+     *
+     * @param branchId ID of Branch to return (required)
+     * @param status Status values that need to be considered for filter (optional)
+     * @return successful operation (status code 200)
+     *         or Invalid status value (status code 400)
+     */
+    @Operation(
+            operationId = "findInventoryItemByBranch",
+            summary = "Finds Inventory Item by branch",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryItemResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryItemResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
+    )
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/inventoryItem/findByBranch",
+            produces = { "application/json", "application/xml" }
+    )
+    default ResponseEntity<List<InventoryItemResponseDto>> findInventoryItemByBranch(
+            @NotNull @Parameter(name = "branchId", description = "ID of Branch to return", required = true) @Valid @RequestParam(value = "branchId", required = true) Long branchId,
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid InventoryItemStatus status
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"inventoryItemId\" : 10, \"quantity\" : 10, \"inboundDate\" : \"2017-07-21T17:32:28Z\", \"batch\" : { \"photoUrl\" : \"photoUrl\", \"branchId\" : 10, \"sellingPrice\" : 100.0, \"buyingPrice\" : 100.0, \"inboundDate\" : \"2017-07-21T17:32:28Z\", \"batchId\" : 10, \"skuId\" : 10, \"batchNumber\" : \"LOT34LJ\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/xml"))) {
+                    String exampleString = "<InventoryItemResponseDto> <inventoryItemId>10</inventoryItemId> <quantity>10</quantity> <inboundDate>2017-07-21T17:32:28Z</inboundDate> </InventoryItemResponseDto>";
+                    ApiUtil.setExampleResponse(request, "application/xml", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
 
     /**
      * GET /inventoryItem/findByStatus : Finds Inventory Item by status

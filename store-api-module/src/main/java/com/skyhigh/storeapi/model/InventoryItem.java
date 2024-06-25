@@ -27,6 +27,19 @@ import java.util.Objects;
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class InventoryItem {
 
+  public InventoryItem() {
+  }
+
+  public InventoryItem(Long inventoryItemId, Batch batch, Long quantity, InventoryItemStatus status, OffsetDateTime inboundDate, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    this.inventoryItemId = inventoryItemId;
+    this.batch = batch;
+    this.quantity = quantity;
+    this.status = status;
+    this.inboundDate = inboundDate;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @JsonProperty("inventoryItemId")

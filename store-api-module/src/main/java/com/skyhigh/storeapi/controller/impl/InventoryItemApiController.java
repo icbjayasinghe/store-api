@@ -7,6 +7,7 @@ import com.skyhigh.storeapi.model.dto.InventoryItemDto;
 import com.skyhigh.storeapi.model.dto.InventoryItemResponseDto;
 
 
+import com.skyhigh.storeapi.model.enums.InventoryItemStatus;
 import com.skyhigh.storeapi.service.BatchService;
 import com.skyhigh.storeapi.service.InventoryService;
 import org.apache.logging.log4j.LogManager;
@@ -52,6 +53,12 @@ public class InventoryItemApiController implements InventoryItemApi {
     @Override
     public ResponseEntity<Void> deleteInventoryItem(Long inventoryItemId, String apiKey) {
         return InventoryItemApi.super.deleteInventoryItem(inventoryItemId, apiKey);
+    }
+
+    @Override
+    public ResponseEntity<List<InventoryItemResponseDto>> findInventoryItemByBranch(Long branchId, InventoryItemStatus status) {
+        List<InventoryItemResponseDto> itemResponseDtoList = inventoryService.getInventoryItemByBranch(branchId, status);
+        return ResponseEntity.ok(itemResponseDtoList);
     }
 
     @Override
