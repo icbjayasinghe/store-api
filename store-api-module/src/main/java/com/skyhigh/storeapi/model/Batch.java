@@ -36,7 +36,7 @@ public class Batch implements Serializable {
   public Batch() {
   }
 
-  public Batch(Long batchId, String batchNumber, Double buyingPrice, Double sellingPrice, String photoUrl, Sku sku, Branch branch, OffsetDateTime inboundDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+  public Batch(Long batchId, String batchNumber, Double buyingPrice, Double sellingPrice, String photoUrl, Sku sku, Branch branch, OffsetDateTime inboundDate, OffsetDateTime expireDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
     this.batchId = batchId;
     this.batchNumber = batchNumber;
     this.buyingPrice = buyingPrice;
@@ -45,6 +45,7 @@ public class Batch implements Serializable {
     this.sku = sku;
     this.branch = branch;
     this.inboundDate = inboundDate;
+    this.expireDate = expireDate;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
@@ -80,6 +81,10 @@ public class Batch implements Serializable {
   @JsonProperty("createdDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime inboundDate;
+
+  @JsonProperty("expireDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime expireDate;
 
   @JsonProperty("status")
   private BatchStatus status;
@@ -253,6 +258,25 @@ public class Batch implements Serializable {
     this.inboundDate = createdDate;
   }
 
+  public Batch expireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
+    return this;
+  }
+
+  /**
+   * Get expireDate
+   * @return expireDate
+   */
+  @Valid
+  @Schema(name = "expireDate", example = "2024-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getExpireDate() {
+    return expireDate;
+  }
+
+  public void setExpireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
+  }
+
   public Batch status(BatchStatus status) {
     this.status = status;
     return this;
@@ -287,7 +311,9 @@ public class Batch implements Serializable {
             Objects.equals(this.sellingPrice, batchDto.sellingPrice) &&
             Objects.equals(this.photoUrl, batchDto.photoUrl) &&
             Objects.equals(this.sku, batchDto.sku) &&
+            Objects.equals(this.branch, batchDto.branch) &&
             Objects.equals(this.inboundDate, batchDto.inboundDate) &&
+            Objects.equals(this.expireDate, batchDto.expireDate) &&
             Objects.equals(this.status, batchDto.status);
   }
 
@@ -306,6 +332,8 @@ public class Batch implements Serializable {
     sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
+    sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
+    sb.append("    expireDate: ").append(toIndentedString(expireDate)).append("\n");
     sb.append("    createdDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");

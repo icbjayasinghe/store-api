@@ -4,11 +4,10 @@ import com.skyhigh.storeapi.model.Batch;
 import com.skyhigh.storeapi.model.Branch;
 import com.skyhigh.storeapi.model.InventoryItem;
 import com.skyhigh.storeapi.model.Sku;
-import com.skyhigh.storeapi.model.dto.BatchResponseDto;
-import com.skyhigh.storeapi.model.dto.InventoryItemDto;
-import com.skyhigh.storeapi.model.dto.InventoryItemResponseDto;
+import com.skyhigh.storeapi.model.dto.*;
 import com.skyhigh.storeapi.model.enums.BatchStatus;
 import com.skyhigh.storeapi.model.enums.InventoryItemStatus;
+import com.skyhigh.storeapi.model.enums.ProductStatus;
 import com.skyhigh.storeapi.repository.BatchRepository;
 import com.skyhigh.storeapi.repository.BranchRepository;
 import com.skyhigh.storeapi.repository.InventoryRepository;
@@ -92,5 +91,40 @@ public class InventoryServiceImpl implements InventoryService {
             throw e;
         }
 
+    }
+
+    @Override
+    public List<InventoryGrpItemResponseDto> getInventoryItemByBranchGroupByProduct(Long branchId, String status) {
+
+        try {
+            Branch branch = branchRepository.findById(branchId).orElseThrow(
+                    () -> new NotFoundException("Branch not found")
+            );
+            List<InventoryGrpItemDto> inventoryGrpItems;
+            inventoryGrpItems = inventoryRepository.findAllByBranchAndGroupByProduct(branchId, ProductStatus.valueOf(status));
+
+            List<InventoryGrpItemResponseDto> itemResponseList = inventoryGrpItems.stream().map( inventoryItem -> {
+                List<InventoryItem> inventoryItems = inventoryRepository.findAllByProduct(inventoryItem.getProductId());
+
+                List<InventoryItemResponseDto> itemResponseDtos = inventoryItems.stream()
+                        .map( item ->
+                                conversionService.convert(item, InventoryItemResponseDto.class))
+                        .collect(Collectors.toList());
+                return new InventoryGrpItemResponseDto(
+                        inventoryItem.getCategory(),
+                        inventoryItem.getBrand(),
+                        inventoryItem.getProduct(),
+                        inventoryItem.getStockQuantity(),
+                        inventoryItem.getLastInboundDate(),
+                        itemResponseDtos
+                );
+                    }
+            ).collect(Collectors.toList());
+            return itemResponseList;
+        } catch (DataIntegrityViolationException dex) {
+            throw new DataIntegrityViolationException(dex.getMessage());
+        }catch (Exception e) {
+            throw e;
+        }
     }
 }

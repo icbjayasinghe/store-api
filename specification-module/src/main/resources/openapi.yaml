@@ -2010,6 +2010,51 @@ paths:
           description: Invalid status value
       security:
         - bearerAuth: []
+  /inventoryItem/findByBranch/GroupByProduct:
+    get:
+      tags:
+        - inventoryItem
+      summary: Finds Inventory Item by branch and Group by Product
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findInventoryItemByBranchGroupByProduct
+      parameters:
+        - name: branchId
+          in: query
+          description: ID of Branch to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: ACTIVE
+            enum:
+              - ACTIVE
+              - DEACTIVE
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryGrpItemResponseDto'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryGrpItemResponseDto'
+        '400':
+          description: Invalid status value
+      security:
+        - bearerAuth: []
   /inventoryItem/{inventoryItemId}:
     get:
       tags:
@@ -2354,7 +2399,11 @@ components:
         inboundDate:
           type: string
           format: date-time
-          example: 2017-07-21T17:32:28Z
+          example: 2024-07-21T17:32:28Z
+        expireDate:
+          type: string
+          format: date-time
+          example: 2024-07-21T17:32:28Z
         status:
           oneOf:
             - $ref: '#/components/schemas/BatchStatus'
@@ -2390,7 +2439,11 @@ components:
         inboundDate:
           type: string
           format: date-time
-          example: 2017-07-21T17:32:28Z
+          example: 2024-07-21T17:32:28Z
+        expireDate:
+          type: string
+          format: date-time
+          example: 2024-07-21T17:32:28Z
         status:
           oneOf:
             - $ref: '#/components/schemas/BatchStatus'
@@ -2557,6 +2610,32 @@ components:
             - $ref: '#/components/schemas/InventoryItemStatus'
       xml:
         name: InventoryItemResponseDto
+    InventoryGrpItemResponseDto:
+      required:
+        - branchId
+        - batchId
+      type: object
+      properties:
+        category:
+          type: string
+        brand:
+          type: string
+        product:
+          type: string
+        stockQuantity:
+          type: integer
+          format: int64
+          example: 10
+        lastInboundDate:
+          type: string
+          format: date-time
+          example: 2024-06-21T17:32:28Z
+        inventoryItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItemResponseDto'
+      xml:
+        name: inventoryItem
     StoreConfDto:
       type: object
       properties:

@@ -52,6 +52,10 @@ public class BatchDto {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime inboundDate;
 
+  @JsonProperty("expireDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime expireDate;
+
   @JsonProperty("status")
   private BatchStatus status;
 
@@ -207,6 +211,25 @@ public class BatchDto {
     this.inboundDate = inboundDate;
   }
 
+  public BatchDto expireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
+    return this;
+  }
+
+  /**
+   * Get expireDate
+   * @return expireDate
+   */
+  @Valid
+  @Schema(name = "expireDate", example = "2024-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getExpireDate() {
+    return expireDate;
+  }
+
+  public void setExpireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
+  }
+
   public BatchDto status(BatchStatus status) {
     this.status = status;
     return this;
@@ -243,12 +266,13 @@ public class BatchDto {
             Objects.equals(this.skuId, batchDto.skuId) &&
             Objects.equals(this.branchId, batchDto.branchId) &&
             Objects.equals(this.inboundDate, batchDto.inboundDate) &&
+            Objects.equals(this.expireDate, batchDto.expireDate) &&
             Objects.equals(this.status, batchDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, skuId, branchId, inboundDate, status);
+    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, skuId, branchId, inboundDate, expireDate, status);
   }
 
   @Override
@@ -263,6 +287,7 @@ public class BatchDto {
     sb.append("    skuId: ").append(toIndentedString(skuId)).append("\n");
     sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
     sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
+    sb.append("    expireDate: ").append(toIndentedString(expireDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
