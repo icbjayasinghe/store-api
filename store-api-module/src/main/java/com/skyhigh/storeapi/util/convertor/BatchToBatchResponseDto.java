@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BatchToBatchResponseDto implements Converter<Batch, BatchResponseDto> {
 
-    @Autowired
-    AddressToAddressDto conversionService;
-
     @Override
     public BatchResponseDto convert(Batch batch) {
 
@@ -33,29 +30,15 @@ public class BatchToBatchResponseDto implements Converter<Batch, BatchResponseDt
                 .status(sku.getStatus())
                 .build();
 
-        Branch branch = batch.getBranch();
-
-        AddressDto addressDto = conversionService.convert(branch.getAddress());
-
-        BranchDto branchDto = BranchDto.builder()
-                .branchId(branch.getBranchId())
-                .branchName(branch.getBranchName())
-                .storeId(branch.getStore().getStoreId())
-                .status(branch.getStatus())
-                .address(addressDto)
-                .photoUrl(branch.getPhotoUrl())
-                .build();
 
         BatchResponseDto batchResponseDto = BatchResponseDto.builder()
                 .batchId(batch.getBatchId())
                 .batchNumber(batch.getBatchNumber())
+                .manufactureDate(batch.getManufactureDate())
+                .expireDate(batch.getExpireDate())
                 .photoUrl(batch.getPhotoUrl())
-                .buyingPrice(batch.getBuyingPrice())
-                .sellingPrice(batch.getSellingPrice())
-                .inboundDate(batch.getInboundDate())
                 .status(batch.getStatus())
                 .sku(skuDto)
-                .branch(branchDto)
                 .build();
         return batchResponseDto;
     }

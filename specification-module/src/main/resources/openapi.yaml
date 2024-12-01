@@ -2367,7 +2367,6 @@ components:
         name: skuResponse
     BatchDto:
       required:
-        - sellingPrice
         - skuId
       type: object
       properties:
@@ -2378,25 +2377,13 @@ components:
         batchNumber:
           type: string
           example: LOT34LJ
-        buyingPrice:
-          type: number
-          format: double
-          example: 100.00
-        sellingPrice:
-          type: number
-          format: double
-          example: 100.00
         photoUrl:
           type: string
         skuId:
           type: integer
           format: int64
           example: 10
-        branchId:
-          type: integer
-          format: int64
-          example: 10
-        inboundDate:
+        manufactureDate:
           type: string
           format: date-time
           example: 2024-07-21T17:32:28Z
@@ -2411,7 +2398,6 @@ components:
         name: batch
     BatchResponseDto:
       required:
-        - sellingPrice
         - skuId
       type: object
       properties:
@@ -2422,21 +2408,11 @@ components:
         batchNumber:
           type: string
           example: LOT34LJ
-        buyingPrice:
-          type: number
-          format: double
-          example: 100.00
-        sellingPrice:
-          type: number
-          format: double
-          example: 100.00
         photoUrl:
           type: string
         sku:
           $ref: '#/components/schemas/SkuDto'
-        branch:
-          $ref: '#/components/schemas/BranchDto'
-        inboundDate:
+        manufactureDate:
           type: string
           format: date-time
           example: 2024-07-21T17:32:28Z
@@ -2572,6 +2548,18 @@ components:
           type: integer
           format: int64
           example: 10
+        branchId:
+          type: integer
+          format: int64
+          example: 10
+        buyingPrice:
+          type: number
+          format: double
+          example: 100.00
+        sellingPrice:
+          type: number
+          format: double
+          example: 100.00
         quantity:
           type: integer
           format: int64
@@ -2597,6 +2585,16 @@ components:
           example: 10
         batch:
           $ref: '#/components/schemas/BatchDto'
+        branch:
+          $ref: '#/components/schemas/BranchDto'
+        buyingPrice:
+          type: number
+          format: double
+          example: 100.00
+        sellingPrice:
+          type: number
+          format: double
+          example: 100.00
         quantity:
           type: integer
           format: int64

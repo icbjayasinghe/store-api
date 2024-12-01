@@ -51,9 +51,15 @@ public class InventoryServiceImpl implements InventoryService {
             Batch batch = batchRepository.findById(inventoryItemDto.getBatchId()).orElseThrow(
                     () -> new NotFoundException("Batch not found")
             );
+            Branch branch = branchRepository.findById(inventoryItemDto.getBranchId()).orElseThrow(
+                    () -> new NotFoundException("Branch not found")
+            );
             InventoryItem inventoryItem = InventoryItem.builder()
                     .quantity(inventoryItemDto.getQuantity())
                     .batch(batch)
+                    .branch(branch)
+                    .buyingPrice(inventoryItemDto.getBuyingPrice())
+                    .sellingPrice(inventoryItemDto.getSellingPrice())
                     .status(inventoryItemDto.getStatus())
                     .inboundDate(inventoryItemDto.getInboundDate())
                     .createdAt(OffsetDateTime.now())
@@ -77,9 +83,9 @@ public class InventoryServiceImpl implements InventoryService {
             );
             List<InventoryItem> inventoryItems;
             if (status != null) {
-                inventoryItems = inventoryRepository.findAllByBranchAndStatus(branchId, status);
+                inventoryItems = inventoryRepository.findAllByBranchAndStatus(branch, status);
             } else {
-                inventoryItems = inventoryRepository.findAllByBranch(branchId);
+                inventoryItems = inventoryRepository.findAllByBranch(branch);
             }
             List<InventoryItemResponseDto> itemResponseDtoList = inventoryItems.stream().map( inventoryItem ->
                     conversionService.convert(inventoryItem, InventoryItemResponseDto.class)

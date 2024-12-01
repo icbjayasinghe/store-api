@@ -1,5 +1,6 @@
 package com.skyhigh.storeapi.repository;
 
+import com.skyhigh.storeapi.model.Branch;
 import com.skyhigh.storeapi.model.Category;
 import com.skyhigh.storeapi.model.InventoryItem;
 import com.skyhigh.storeapi.model.dto.InventoryGrpItemDto;
@@ -13,18 +14,20 @@ import java.util.List;
 
 @Repository
 public interface InventoryRepository extends CrudRepository<InventoryItem, Long> {
-    @Query("SELECT i FROM InventoryItem i " +
-            "inner join Batch b " +
-            "on i.batch.batchId = b.batchId " +
-            "where b.branch.branchId = :branchId " +
-            "and i.status = :status")
-    List<InventoryItem> findAllByBranchAndStatus(Long branchId, InventoryItemStatus status);
+//    @Query("SELECT i FROM InventoryItem i " +
+//            "inner join Batch b " +
+//            "on i.batch.batchId = b.batchId " +
+//            "where b.branch.branchId = :branchId " +
+//            "and i.status = :status")
+//    List<InventoryItem> findAllByBranchAndStatus(Long branchId, InventoryItemStatus status);
 
-    @Query("SELECT i FROM InventoryItem i " +
-            "inner join Batch b " +
-            "on i.batch.batchId = b.batchId " +
-            "where b.branch.branchId = :branchId ")
-    List<InventoryItem> findAllByBranch(Long branchId);
+    List<InventoryItem> findAllByBranchAndStatus(Branch branch, InventoryItemStatus status);
+
+//    @Query("SELECT i FROM InventoryItem i " +
+//            "inner join Batch b " +
+//            "on i.batch.batchId = b.batchId " +
+//            "where b.branch.branchId = :branchId ")
+    List<InventoryItem> findAllByBranch(Branch branch);
 
     @Query("SELECT new com.skyhigh.storeapi.model.dto.InventoryGrpItemDto(c.categoryName, pb.brandName, p.productName, p.productId, sum(i.quantity), max(i.inboundDate)) FROM InventoryItem i " +
             "inner join Batch b " +
@@ -37,7 +40,7 @@ public interface InventoryRepository extends CrudRepository<InventoryItem, Long>
             "on i.batch.sku.product.productBrand.brandId = pb.brandId " +
             "inner join Category c " +
             "on i.batch.sku.product.category.categoryId = c.categoryId " +
-            "where b.branch.branchId = :branchId " +
+            "where i.branch.branchId = :branchId " +
             "and p.status = :status " +
             "GROUP BY i.batch.sku.product")
     List<InventoryGrpItemDto> findAllByBranchAndGroupByProduct(Long branchId, ProductStatus status);
