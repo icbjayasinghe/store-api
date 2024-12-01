@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -30,9 +31,12 @@ public class InventoryItem {
   public InventoryItem() {
   }
 
-  public InventoryItem(Long inventoryItemId, Batch batch, Long quantity, InventoryItemStatus status, OffsetDateTime inboundDate, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+  public InventoryItem(Long inventoryItemId, Batch batch, Branch branch, Double buyingPrice, Double sellingPrice, Long quantity, InventoryItemStatus status, OffsetDateTime inboundDate, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
     this.inventoryItemId = inventoryItemId;
     this.batch = batch;
+    this.branch = branch;
+    this.buyingPrice = buyingPrice;
+    this.sellingPrice = sellingPrice;
     this.quantity = quantity;
     this.status = status;
     this.inboundDate = inboundDate;
@@ -49,6 +53,17 @@ public class InventoryItem {
   @JoinColumn(name = "batchId", nullable = false)
   @JsonIgnore
   private Batch batch;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "branchId", nullable = false)
+  @JsonIgnore
+  private Branch branch;
+
+  @JsonProperty("buyingPrice")
+  private Double buyingPrice;
+
+  @JsonProperty("sellingPrice")
+  private Double sellingPrice;
 
   @JsonProperty("quantity")
   private Long quantity;
@@ -103,6 +118,63 @@ public class InventoryItem {
 
   public void setBatch(Batch batchId) {
     this.batch = batchId;
+  }
+
+  public InventoryItem branchId(Branch branchId) {
+    this.branch = branchId;
+    return this;
+  }
+
+  /**
+   * Get branchId
+   * @return branchId
+   */
+  @NotNull
+  @Schema(name = "branchId", example = "10", required = true)
+  public Branch getBranch() {
+    return branch;
+  }
+
+  public void setBranch(Branch branch) {
+    this.branch = branch;
+  }
+
+  public InventoryItem buyingPrice(Double buyingPrice) {
+    this.buyingPrice = buyingPrice;
+    return this;
+  }
+
+  /**
+   * Get buyingPrice
+   * @return buyingPrice
+   */
+
+  @Schema(name = "buyingPrice", example = "100.0", required = false)
+  public Double getBuyingPrice() {
+    return buyingPrice;
+  }
+
+  public void setBuyingPrice(Double buyingPrice) {
+    this.buyingPrice = buyingPrice;
+  }
+
+  public InventoryItem sellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
+    return this;
+  }
+
+  /**
+   * Get sellingPrice
+   * @return sellingPrice
+   */
+
+  @Schema(name = "sellingPrice", example = "100.0", required = false)
+  public Double getSellingPrice() {
+    return sellingPrice;
+  }
+
+  public void setSellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
   }
 
   public InventoryItem quantity(Long quantity) {
@@ -178,13 +250,17 @@ public class InventoryItem {
     InventoryItem inventoryItemDto = (InventoryItem) o;
     return Objects.equals(this.inventoryItemId, inventoryItemDto.inventoryItemId) &&
             Objects.equals(this.batch, inventoryItemDto.batch) &&
+            Objects.equals(this.branch, inventoryItemDto.branch) &&
+            Objects.equals(this.buyingPrice, inventoryItemDto.buyingPrice) &&
+            Objects.equals(this.sellingPrice, inventoryItemDto.sellingPrice) &&
             Objects.equals(this.quantity, inventoryItemDto.quantity) &&
+            Objects.equals(this.inboundDate, inventoryItemDto.inboundDate) &&
             Objects.equals(this.status, inventoryItemDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(inventoryItemId, batch, quantity, inboundDate, status);
+    return Objects.hash(inventoryItemId, batch, branch, buyingPrice, sellingPrice, quantity, inboundDate, status);
   }
 
 
@@ -194,7 +270,10 @@ public class InventoryItem {
     StringBuilder sb = new StringBuilder();
     sb.append("class InventoryItemDto {\n");
     sb.append("    inventoryItemId: ").append(toIndentedString(inventoryItemId)).append("\n");
-    sb.append("    batchId: ").append(toIndentedString(batch)).append("\n");
+    sb.append("    batch: ").append(toIndentedString(batch)).append("\n");
+    sb.append("    branch: ").append(toIndentedString(branch)).append("\n");
+    sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
+    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

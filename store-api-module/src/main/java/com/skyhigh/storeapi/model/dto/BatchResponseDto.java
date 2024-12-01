@@ -28,24 +28,19 @@ public class BatchResponseDto {
   @JsonProperty("batchNumber")
   private String batchNumber;
 
-  @JsonProperty("buyingPrice")
-  private Double buyingPrice;
-
-  @JsonProperty("sellingPrice")
-  private Double sellingPrice;
-
   @JsonProperty("photoUrl")
   private String photoUrl;
 
   @JsonProperty("sku")
   private SkuDto sku;
 
-  @JsonProperty("branch")
-  private BranchDto branch;
-
-  @JsonProperty("inboundDate")
+  @JsonProperty("manufactureDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime inboundDate;
+  private OffsetDateTime manufactureDate;
+
+  @JsonProperty("expireDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime expireDate;
 
   @JsonProperty("status")
   private BatchStatus status;
@@ -88,44 +83,6 @@ public class BatchResponseDto {
     this.batchNumber = batchNumber;
   }
 
-  public BatchResponseDto buyingPrice(Double buyingPrice) {
-    this.buyingPrice = buyingPrice;
-    return this;
-  }
-
-  /**
-   * Get buyingPrice
-   * @return buyingPrice
-   */
-
-  @Schema(name = "buyingPrice", example = "100.0", required = false)
-  public Double getBuyingPrice() {
-    return buyingPrice;
-  }
-
-  public void setBuyingPrice(Double buyingPrice) {
-    this.buyingPrice = buyingPrice;
-  }
-
-  public BatchResponseDto sellingPrice(Double sellingPrice) {
-    this.sellingPrice = sellingPrice;
-    return this;
-  }
-
-  /**
-   * Get sellingPrice
-   * @return sellingPrice
-   */
-  @NotNull
-  @Schema(name = "sellingPrice", example = "100.0", required = true)
-  public Double getSellingPrice() {
-    return sellingPrice;
-  }
-
-  public void setSellingPrice(Double sellingPrice) {
-    this.sellingPrice = sellingPrice;
-  }
-
   public BatchResponseDto photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
@@ -164,42 +121,42 @@ public class BatchResponseDto {
     this.sku = sku;
   }
 
-  public BatchResponseDto branch(BranchDto branch) {
-    this.branch = branch;
+  public BatchResponseDto manufactureDate(OffsetDateTime manufactureDate) {
+    this.manufactureDate = manufactureDate;
     return this;
   }
 
   /**
-   * Get branch
-   * @return branch
+   * Get manufactureDate
+   * @return manufactureDate
    */
   @Valid
-  @Schema(name = "branch", required = false)
-  public BranchDto getBranch() {
-    return branch;
+  @Schema(name = "manufactureDate", example = "2024-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getManufactureDate() {
+    return manufactureDate;
   }
 
-  public void setBranch(BranchDto branch) {
-    this.branch = branch;
+  public void setManufactureDate(OffsetDateTime manufactureDate) {
+    this.manufactureDate = manufactureDate;
   }
 
-  public BatchResponseDto inboundDate(OffsetDateTime inboundDate) {
-    this.inboundDate = inboundDate;
+  public BatchResponseDto expireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
     return this;
   }
 
   /**
-   * Get inboundDate
-   * @return inboundDate
+   * Get expireDate
+   * @return expireDate
    */
   @Valid
-  @Schema(name = "inboundDate", example = "2017-07-21T17:32:28Z", required = false)
-  public OffsetDateTime getInboundDate() {
-    return inboundDate;
+  @Schema(name = "expireDate", example = "2024-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getExpireDate() {
+    return expireDate;
   }
 
-  public void setInboundDate(OffsetDateTime inboundDate) {
-    this.inboundDate = inboundDate;
+  public void setExpireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
   }
 
   public BatchResponseDto status(BatchStatus status) {
@@ -232,18 +189,16 @@ public class BatchResponseDto {
     BatchResponseDto batchResponseDto = (BatchResponseDto) o;
     return Objects.equals(this.batchId, batchResponseDto.batchId) &&
             Objects.equals(this.batchNumber, batchResponseDto.batchNumber) &&
-            Objects.equals(this.buyingPrice, batchResponseDto.buyingPrice) &&
-            Objects.equals(this.sellingPrice, batchResponseDto.sellingPrice) &&
             Objects.equals(this.photoUrl, batchResponseDto.photoUrl) &&
             Objects.equals(this.sku, batchResponseDto.sku) &&
-            Objects.equals(this.branch, batchResponseDto.branch) &&
-            Objects.equals(this.inboundDate, batchResponseDto.inboundDate) &&
+            Objects.equals(this.manufactureDate, batchResponseDto.manufactureDate) &&
+            Objects.equals(this.expireDate, batchResponseDto.expireDate) &&
             Objects.equals(this.status, batchResponseDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, sku, branch, inboundDate, status);
+    return Objects.hash(batchId, batchNumber, photoUrl, sku, manufactureDate, expireDate, status);
   }
 
   @Override
@@ -252,12 +207,10 @@ public class BatchResponseDto {
     sb.append("class BatchResponseDto {\n");
     sb.append("    batchId: ").append(toIndentedString(batchId)).append("\n");
     sb.append("    batchNumber: ").append(toIndentedString(batchNumber)).append("\n");
-    sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
-    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
-    sb.append("    branch: ").append(toIndentedString(branch)).append("\n");
-    sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
+    sb.append("    manufactureDate: ").append(toIndentedString(manufactureDate)).append("\n");
+    sb.append("    expireDate: ").append(toIndentedString(expireDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

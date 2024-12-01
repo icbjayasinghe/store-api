@@ -3,11 +3,13 @@ package com.skyhigh.storeapi.controller.impl;
 import com.skyhigh.storeapi.controller.InventoryItemApi;
 import com.skyhigh.storeapi.exception.customException.ResourceNotFoundException;
 import com.skyhigh.storeapi.model.dto.BatchResponseDto;
+import com.skyhigh.storeapi.model.dto.InventoryGrpItemResponseDto;
 import com.skyhigh.storeapi.model.dto.InventoryItemDto;
 import com.skyhigh.storeapi.model.dto.InventoryItemResponseDto;
 
 
 import com.skyhigh.storeapi.model.enums.InventoryItemStatus;
+import com.skyhigh.storeapi.model.enums.ProductStatus;
 import com.skyhigh.storeapi.service.BatchService;
 import com.skyhigh.storeapi.service.InventoryService;
 import org.apache.logging.log4j.LogManager;
@@ -64,6 +66,12 @@ public class InventoryItemApiController implements InventoryItemApi {
     @Override
     public ResponseEntity<List<InventoryItemResponseDto>> findInventoryItemByStatus(String status) {
         return InventoryItemApi.super.findInventoryItemByStatus(status);
+    }
+
+    @Override
+    public ResponseEntity<List<InventoryGrpItemResponseDto>> findInventoryItemByBranchGroupByProduct(Long branchId, String status) {
+        List<InventoryGrpItemResponseDto> itemResponseDtoList = inventoryService.getInventoryItemByBranchGroupByProduct(branchId, status);
+        return ResponseEntity.ok(itemResponseDtoList);
     }
 
     @Override

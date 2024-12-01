@@ -31,6 +31,15 @@ public class InventoryItemResponseDto {
   @JsonProperty("batch")
   private BatchDto batch;
 
+  @JsonProperty("branch")
+  private BranchDto branch;
+
+  @JsonProperty("buyingPrice")
+  private Double buyingPrice;
+
+  @JsonProperty("sellingPrice")
+  private Double sellingPrice;
+
   @JsonProperty("quantity")
   private Long quantity;
 
@@ -77,6 +86,63 @@ public class InventoryItemResponseDto {
 
   public void setBatch(BatchDto batch) {
     this.batch = batch;
+  }
+
+  public InventoryItemResponseDto branch(BranchDto branch) {
+    this.branch = branch;
+    return this;
+  }
+
+  /**
+   * Get branch
+   * @return branch
+   */
+  @Valid
+  @Schema(name = "branch", required = false)
+  public BranchDto getBranch() {
+    return branch;
+  }
+
+  public void setBranch(BranchDto branch) {
+    this.branch = branch;
+  }
+
+  public InventoryItemResponseDto buyingPrice(Double buyingPrice) {
+    this.buyingPrice = buyingPrice;
+    return this;
+  }
+
+  /**
+   * Get buyingPrice
+   * @return buyingPrice
+   */
+
+  @Schema(name = "buyingPrice", example = "100.0", required = false)
+  public Double getBuyingPrice() {
+    return buyingPrice;
+  }
+
+  public void setBuyingPrice(Double buyingPrice) {
+    this.buyingPrice = buyingPrice;
+  }
+
+  public InventoryItemResponseDto sellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
+    return this;
+  }
+
+  /**
+   * Get sellingPrice
+   * @return sellingPrice
+   */
+
+  @Schema(name = "sellingPrice", example = "100.0", required = false)
+  public Double getSellingPrice() {
+    return sellingPrice;
+  }
+
+  public void setSellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
   }
 
   public InventoryItemResponseDto quantity(Long quantity) {
@@ -147,6 +213,9 @@ public class InventoryItemResponseDto {
     InventoryItemResponseDto inventoryItemResponseDto = (InventoryItemResponseDto) o;
     return Objects.equals(this.inventoryItemId, inventoryItemResponseDto.inventoryItemId) &&
             Objects.equals(this.batch, inventoryItemResponseDto.batch) &&
+            Objects.equals(this.branch, inventoryItemResponseDto.branch) &&
+            Objects.equals(this.buyingPrice, inventoryItemResponseDto.buyingPrice) &&
+            Objects.equals(this.sellingPrice, inventoryItemResponseDto.sellingPrice) &&
             Objects.equals(this.quantity, inventoryItemResponseDto.quantity) &&
             Objects.equals(this.inboundDate, inventoryItemResponseDto.inboundDate) &&
             Objects.equals(this.status, inventoryItemResponseDto.status);
@@ -154,7 +223,7 @@ public class InventoryItemResponseDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(inventoryItemId, batch, quantity, inboundDate, status);
+    return Objects.hash(inventoryItemId, batch, branch, buyingPrice, sellingPrice, quantity, inboundDate, status);
   }
 
   @Override
@@ -163,6 +232,9 @@ public class InventoryItemResponseDto {
     sb.append("class InventoryItemResponseDto {\n");
     sb.append("    inventoryItemId: ").append(toIndentedString(inventoryItemId)).append("\n");
     sb.append("    batch: ").append(toIndentedString(batch)).append("\n");
+    sb.append("    branch: ").append(toIndentedString(branch)).append("\n");
+    sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
+    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("    inboundDate: ").append(toIndentedString(inboundDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

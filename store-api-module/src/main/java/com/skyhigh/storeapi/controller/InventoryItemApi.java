@@ -5,9 +5,11 @@
  */
 package com.skyhigh.storeapi.controller;
 
+import com.skyhigh.storeapi.model.dto.InventoryGrpItemResponseDto;
 import com.skyhigh.storeapi.model.dto.InventoryItemDto;
 import com.skyhigh.storeapi.model.dto.InventoryItemResponseDto;
 import com.skyhigh.storeapi.model.enums.InventoryItemStatus;
+import com.skyhigh.storeapi.model.enums.ProductStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -360,6 +362,57 @@ public interface InventoryItemApi {
             @Parameter(name = "quantity", description = "Quantity of Inventory Item that needs to be updated") @Valid @RequestParam(value = "quantity", required = false) Long quantity,
             @Parameter(name = "status", description = "Status of Branch that needs to be updated") @Valid @RequestParam(value = "status", required = false) String status
     ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /inventoryItem/findByBranch/GroupByProduct : Finds Inventory Item by branch and Group by Product
+     * Multiple status values can be provided with comma separated strings
+     *
+     * @param branchId ID of Branch to return (required)
+     * @param status Status values that need to be considered for filter (optional, default to ACTIVE)
+     * @return successful operation (status code 200)
+     *         or Invalid status value (status code 400)
+     */
+    @Operation(
+            operationId = "findInventoryItemByBranchGroupByProduct",
+            summary = "Finds Inventory Item by branch and Group by Product",
+            tags = { "inventoryItem" },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryGrpItemResponseDto.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = InventoryGrpItemResponseDto.class))
+                    }),
+                    @ApiResponse(responseCode = "400", description = "Invalid status value")
+            },
+            security = {
+                    @SecurityRequirement(name = "bearerAuth")
+            }
+    )
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/inventoryItem/findByBranch/GroupByProduct",
+            produces = { "application/json", "application/xml" }
+    )
+    default ResponseEntity<List<InventoryGrpItemResponseDto>> findInventoryItemByBranchGroupByProduct(
+            @NotNull @Parameter(name = "branchId", description = "ID of Branch to return", required = true) @Valid @RequestParam(value = "branchId", required = true) Long branchId,
+            @Parameter(name = "status", description = "Status values that need to be considered for filter") @Valid @RequestParam(value = "status", required = false, defaultValue = "ACTIVE") String status
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"product\" : \"product\", \"inventoryItems\" : [ { \"inventoryItemId\" : 10, \"quantity\" : 10, \"inboundDate\" : \"2017-07-21T17:32:28Z\", \"batch\" : { \"photoUrl\" : \"photoUrl\", \"branchId\" : 10, \"sellingPrice\" : 100.0, \"buyingPrice\" : 100.0, \"inboundDate\" : \"2024-07-21T17:32:28Z\", \"expireDate\" : \"2024-07-21T17:32:28Z\", \"batchId\" : 10, \"skuId\" : 10, \"batchNumber\" : \"LOT34LJ\" } }, { \"inventoryItemId\" : 10, \"quantity\" : 10, \"inboundDate\" : \"2017-07-21T17:32:28Z\", \"batch\" : { \"photoUrl\" : \"photoUrl\", \"branchId\" : 10, \"sellingPrice\" : 100.0, \"buyingPrice\" : 100.0, \"inboundDate\" : \"2024-07-21T17:32:28Z\", \"expireDate\" : \"2024-07-21T17:32:28Z\", \"batchId\" : 10, \"skuId\" : 10, \"batchNumber\" : \"LOT34LJ\" } } ], \"stockQuantity\" : 10, \"category\" : \"category\", \"brand\" : \"brand\", \"lastInboundDate\" : \"2024-06-21T17:32:28Z\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/xml"))) {
+                    String exampleString = "<inventoryItem> <category>aeiou</category> <brand>aeiou</brand> <product>aeiou</product> <stockQuantity>10</stockQuantity> <lastInboundDate>2024-06-21T17:32:28Z</lastInboundDate> </inventoryItem>";
+                    ApiUtil.setExampleResponse(request, "application/xml", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

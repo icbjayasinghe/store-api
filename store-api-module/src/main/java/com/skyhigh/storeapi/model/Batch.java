@@ -36,15 +36,13 @@ public class Batch implements Serializable {
   public Batch() {
   }
 
-  public Batch(Long batchId, String batchNumber, Double buyingPrice, Double sellingPrice, String photoUrl, Sku sku, Branch branch, OffsetDateTime inboundDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+  public Batch(Long batchId, String batchNumber, String photoUrl, Sku sku, OffsetDateTime manufactureDate, OffsetDateTime expireDate, BatchStatus status, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
     this.batchId = batchId;
     this.batchNumber = batchNumber;
-    this.buyingPrice = buyingPrice;
-    this.sellingPrice = sellingPrice;
     this.photoUrl = photoUrl;
     this.sku = sku;
-    this.branch = branch;
-    this.inboundDate = inboundDate;
+    this.manufactureDate = manufactureDate;
+    this.expireDate = expireDate;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
@@ -58,12 +56,6 @@ public class Batch implements Serializable {
   @JsonProperty("batchNumber")
   private String batchNumber;
 
-  @JsonProperty("buyingPrice")
-  private Double buyingPrice;
-
-  @JsonProperty("sellingPrice")
-  private Double sellingPrice;
-
   @JsonProperty("photoUrl")
   private String photoUrl;
 
@@ -72,14 +64,13 @@ public class Batch implements Serializable {
   @JsonIgnore
   private Sku sku;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "branch_id", nullable = false)
-  @JsonIgnore
-  private Branch branch;
-
-  @JsonProperty("createdDate")
+  @JsonProperty("manufactureDate")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime inboundDate;
+  private OffsetDateTime manufactureDate;
+
+  @JsonProperty("expireDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime expireDate;
 
   @JsonProperty("status")
   private BatchStatus status;
@@ -130,44 +121,6 @@ public class Batch implements Serializable {
     this.batchNumber = batchName;
   }
 
-  public Batch buyingPrice(Double buyingPrice) {
-    this.buyingPrice = buyingPrice;
-    return this;
-  }
-
-  /**
-   * Get buyingPrice
-   * @return buyingPrice
-   */
-
-  @Schema(name = "buyingPrice", example = "100.0", required = false)
-  public Double getBuyingPrice() {
-    return buyingPrice;
-  }
-
-  public void setBuyingPrice(Double buyingPrice) {
-    this.buyingPrice = buyingPrice;
-  }
-
-  public Batch sellingPrice(Double sellingPrice) {
-    this.sellingPrice = sellingPrice;
-    return this;
-  }
-
-  /**
-   * Get sellingPrice
-   * @return sellingPrice
-   */
-  @NotNull
-  @Schema(name = "sellingPrice", example = "100.0", required = true)
-  public Double getSellingPrice() {
-    return sellingPrice;
-  }
-
-  public void setSellingPrice(Double sellingPrice) {
-    this.sellingPrice = sellingPrice;
-  }
-
   public Batch photoUrl(String photoUrl) {
     this.photoUrl = photoUrl;
     return this;
@@ -205,19 +158,6 @@ public class Batch implements Serializable {
     this.sku = sku;
   }
 
-  public Batch branch(Branch branch) {
-    this.branch = branch;
-    return this;
-  }
-
-  public Branch getBranch() {
-    return branch;
-  }
-
-  public void setBranch(Branch branch) {
-    this.branch = branch;
-  }
-
   public OffsetDateTime getCreatedAt() {
     return createdAt;
   }
@@ -234,23 +174,42 @@ public class Batch implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public Batch createdDate(OffsetDateTime createdDate) {
-    this.inboundDate = createdDate;
+  public Batch manufactureDate(OffsetDateTime manufactureDate) {
+    this.manufactureDate = manufactureDate;
     return this;
   }
 
   /**
-   * Get createdDate
-   * @return createdDate
+   * Get manufactureDate
+   * @return manufactureDate
    */
   @Valid
-  @Schema(name = "createdDate", example = "2017-07-21T17:32:28Z", required = false)
-  public OffsetDateTime getInboundDate() {
-    return inboundDate;
+  @Schema(name = "manufactureDate", example = "2024-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getManufactureDate() {
+    return manufactureDate;
   }
 
-  public void setInboundDate(OffsetDateTime createdDate) {
-    this.inboundDate = createdDate;
+  public void setManufactureDate(OffsetDateTime manufactureDate) {
+    this.manufactureDate = manufactureDate;
+  }
+
+  public Batch expireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
+    return this;
+  }
+
+  /**
+   * Get expireDate
+   * @return expireDate
+   */
+  @Valid
+  @Schema(name = "expireDate", example = "2024-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getExpireDate() {
+    return expireDate;
+  }
+
+  public void setExpireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
   }
 
   public Batch status(BatchStatus status) {
@@ -283,17 +242,16 @@ public class Batch implements Serializable {
     Batch batchDto = (Batch) o;
     return Objects.equals(this.batchId, batchDto.batchId) &&
             Objects.equals(this.batchNumber, batchDto.batchNumber) &&
-            Objects.equals(this.buyingPrice, batchDto.buyingPrice) &&
-            Objects.equals(this.sellingPrice, batchDto.sellingPrice) &&
             Objects.equals(this.photoUrl, batchDto.photoUrl) &&
             Objects.equals(this.sku, batchDto.sku) &&
-            Objects.equals(this.inboundDate, batchDto.inboundDate) &&
+            Objects.equals(this.manufactureDate, batchDto.manufactureDate) &&
+            Objects.equals(this.expireDate, batchDto.expireDate) &&
             Objects.equals(this.status, batchDto.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(batchId, batchNumber, buyingPrice, sellingPrice, photoUrl, sku, inboundDate, status);
+    return Objects.hash(batchId, batchNumber, photoUrl, sku, manufactureDate, expireDate, status);
   }
 
   @Override
@@ -302,11 +260,10 @@ public class Batch implements Serializable {
     sb.append("class BatchDto {\n");
     sb.append("    batchId: ").append(toIndentedString(batchId)).append("\n");
     sb.append("    batchName: ").append(toIndentedString(batchNumber)).append("\n");
-    sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
-    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    photoUrl: ").append(toIndentedString(photoUrl)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
-    sb.append("    createdDate: ").append(toIndentedString(inboundDate)).append("\n");
+    sb.append("    manufactureDate: ").append(toIndentedString(manufactureDate)).append("\n");
+    sb.append("    expireDate: ").append(toIndentedString(expireDate)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

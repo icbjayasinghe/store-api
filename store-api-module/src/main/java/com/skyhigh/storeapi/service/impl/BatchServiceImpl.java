@@ -44,16 +44,14 @@ public class BatchServiceImpl implements BatchService {
             Sku sku = skuRepository.findById(batchDto.getSkuId()).orElseThrow(
                     () -> new NotFoundException("SKU not found")
             );
-            Branch branch = branchRepository.findById(batchDto.getBranchId()).orElseThrow(
-                    () -> new NotFoundException("Branch not found")
-            );
+//            Branch branch = branchRepository.findById(batchDto.getBranchId()).orElseThrow(
+//                    () -> new NotFoundException("Branch not found")
+//            );
             Batch batch = Batch.builder()
                     .batchNumber(batchDto.getBatchNumber())
-                    .buyingPrice(batchDto.getBuyingPrice())
-                    .sellingPrice(batchDto.getSellingPrice())
-                    .inboundDate(batchDto.getInboundDate())
+                    .manufactureDate(batchDto.getManufactureDate())
+                    .expireDate(batchDto.getExpireDate())
                     .photoUrl(batchDto.getPhotoUrl())
-                    .branch(branch)
                     .sku(sku)
                     .status(batchDto.getStatus())
                     .createdAt(OffsetDateTime.now())
