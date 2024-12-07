@@ -1,9 +1,6 @@
 package com.skyhigh.storeapi.util.convertor;
 
-import com.skyhigh.storeapi.model.Batch;
-import com.skyhigh.storeapi.model.Branch;
-import com.skyhigh.storeapi.model.Category;
-import com.skyhigh.storeapi.model.InventoryItem;
+import com.skyhigh.storeapi.model.*;
 import com.skyhigh.storeapi.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -18,32 +15,15 @@ public class InventoryItemToInventoryItemResponseDto implements Converter<Invent
     @Override
     public InventoryItemResponseDto convert(InventoryItem inventoryItem) {
         Batch batch = inventoryItem.getBatch();
-        BatchDto batchDto = BatchDto.builder()
-                .batchId(batch.getBatchId())
-                .batchNumber(batch.getBatchNumber())
-                .photoUrl(batch.getPhotoUrl())
-                .manufactureDate(batch.getManufactureDate())
-                .expireDate(batch.getExpireDate())
-                .status(batch.getStatus())
-                .skuId(batch.getSku().getSkuId())
-                .build();
-        Branch branch = inventoryItem.getBranch();
-
-        AddressDto addressDto = conversionService.convert(branch.getAddress());
-
-        BranchDto branchDto = BranchDto.builder()
-                .branchId(branch.getBranchId())
-                .branchName(branch.getBranchName())
-                .address(addressDto)
-                .status(branch.getStatus())
-                .storeId(branch.getStore().getStoreId())
-                .photoUrl(batch.getPhotoUrl()).build();
+        Sku sku = batch.getSku();
 
         InventoryItemResponseDto itemResponseDto = InventoryItemResponseDto.builder()
                 .inventoryItemId(inventoryItem.getInventoryItemId())
                 .status(inventoryItem.getStatus())
-                .batch(batchDto)
-                .branch(branchDto)
+                .batchNumber(batch.getBatchNumber())
+                .expireDate(batch.getExpireDate())
+                .manufactureDate(batch.getManufactureDate())
+                .skuName(sku.getSkuName())
                 .buyingPrice(inventoryItem.getBuyingPrice())
                 .sellingPrice(inventoryItem.getSellingPrice())
                 .inboundDate(inventoryItem.getInboundDate())

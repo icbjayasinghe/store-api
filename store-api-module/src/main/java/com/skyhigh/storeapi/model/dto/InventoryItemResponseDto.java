@@ -28,11 +28,19 @@ public class InventoryItemResponseDto {
   @JsonProperty("inventoryItemId")
   private Long inventoryItemId;
 
-  @JsonProperty("batch")
-  private BatchDto batch;
+  @JsonProperty("batchNumber")
+  private String batchNumber;
 
-  @JsonProperty("branch")
-  private BranchDto branch;
+  @JsonProperty("skuName")
+  private String skuName;
+
+  @JsonProperty("manufactureDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime manufactureDate;
+
+  @JsonProperty("expireDate")
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime expireDate;
 
   @JsonProperty("buyingPrice")
   private Double buyingPrice;
@@ -69,42 +77,80 @@ public class InventoryItemResponseDto {
     this.inventoryItemId = inventoryItemId;
   }
 
-  public InventoryItemResponseDto batch(BatchDto batch) {
-    this.batch = batch;
+  public InventoryItemResponseDto batchNumber(String batchNumber) {
+    this.batchNumber = batchNumber;
     return this;
   }
 
   /**
-   * Get batch
-   * @return batch
+   * Get batchNumber
+   * @return batchNumber
    */
-  @Valid
-  @Schema(name = "batch", required = false)
-  public BatchDto getBatch() {
-    return batch;
+
+  @Schema(name = "batchNumber", example = "batch10", required = false)
+  public String getBatchNumber() {
+    return batchNumber;
   }
 
-  public void setBatch(BatchDto batch) {
-    this.batch = batch;
+  public void setBatchNumber(String batchNumber) {
+    this.batchNumber = batchNumber;
   }
 
-  public InventoryItemResponseDto branch(BranchDto branch) {
-    this.branch = branch;
+  public InventoryItemResponseDto skuName(String skuName) {
+    this.skuName = skuName;
     return this;
   }
 
   /**
-   * Get branch
-   * @return branch
+   * Get skuName
+   * @return skuName
    */
-  @Valid
-  @Schema(name = "branch", required = false)
-  public BranchDto getBranch() {
-    return branch;
+
+  @Schema(name = "skuName", example = "4L", required = false)
+  public String getSkuName() {
+    return skuName;
   }
 
-  public void setBranch(BranchDto branch) {
-    this.branch = branch;
+  public void setSkuName(String skuName) {
+    this.skuName = skuName;
+  }
+
+  public InventoryItemResponseDto manufactureDate(OffsetDateTime manufactureDate) {
+    this.manufactureDate = manufactureDate;
+    return this;
+  }
+
+  /**
+   * Get manufactureDate
+   * @return manufactureDate
+   */
+  @Valid
+  @Schema(name = "manufactureDate", example = "2017-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getManufactureDate() {
+    return manufactureDate;
+  }
+
+  public void setManufactureDate(OffsetDateTime manufactureDate) {
+    this.manufactureDate = manufactureDate;
+  }
+
+  public InventoryItemResponseDto expireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
+    return this;
+  }
+
+  /**
+   * Get expireDate
+   * @return expireDate
+   */
+  @Valid
+  @Schema(name = "expireDate", example = "2017-07-21T17:32:28Z", required = false)
+  public OffsetDateTime getExpireDate() {
+    return expireDate;
+  }
+
+  public void setExpireDate(OffsetDateTime expireDate) {
+    this.expireDate = expireDate;
   }
 
   public InventoryItemResponseDto buyingPrice(Double buyingPrice) {
@@ -212,8 +258,10 @@ public class InventoryItemResponseDto {
     }
     InventoryItemResponseDto inventoryItemResponseDto = (InventoryItemResponseDto) o;
     return Objects.equals(this.inventoryItemId, inventoryItemResponseDto.inventoryItemId) &&
-            Objects.equals(this.batch, inventoryItemResponseDto.batch) &&
-            Objects.equals(this.branch, inventoryItemResponseDto.branch) &&
+            Objects.equals(this.batchNumber, inventoryItemResponseDto.batchNumber) &&
+            Objects.equals(this.skuName, inventoryItemResponseDto.skuName) &&
+            Objects.equals(this.manufactureDate, inventoryItemResponseDto.manufactureDate) &&
+            Objects.equals(this.expireDate, inventoryItemResponseDto.expireDate) &&
             Objects.equals(this.buyingPrice, inventoryItemResponseDto.buyingPrice) &&
             Objects.equals(this.sellingPrice, inventoryItemResponseDto.sellingPrice) &&
             Objects.equals(this.quantity, inventoryItemResponseDto.quantity) &&
@@ -223,7 +271,7 @@ public class InventoryItemResponseDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(inventoryItemId, batch, branch, buyingPrice, sellingPrice, quantity, inboundDate, status);
+    return Objects.hash(inventoryItemId, batchNumber, skuName, manufactureDate, expireDate, buyingPrice, sellingPrice, quantity, inboundDate, status);
   }
 
   @Override
@@ -231,8 +279,10 @@ public class InventoryItemResponseDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class InventoryItemResponseDto {\n");
     sb.append("    inventoryItemId: ").append(toIndentedString(inventoryItemId)).append("\n");
-    sb.append("    batch: ").append(toIndentedString(batch)).append("\n");
-    sb.append("    branch: ").append(toIndentedString(branch)).append("\n");
+    sb.append("    batchNumber: ").append(toIndentedString(batchNumber)).append("\n");
+    sb.append("    skuName: ").append(toIndentedString(skuName)).append("\n");
+    sb.append("    manufactureDate: ").append(toIndentedString(manufactureDate)).append("\n");
+    sb.append("    expireDate: ").append(toIndentedString(expireDate)).append("\n");
     sb.append("    buyingPrice: ").append(toIndentedString(buyingPrice)).append("\n");
     sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
