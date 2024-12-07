@@ -2583,10 +2583,20 @@ components:
           type: integer
           format: int64
           example: 10
-        batch:
-          $ref: '#/components/schemas/BatchDto'
-        branch:
-          $ref: '#/components/schemas/BranchDto'
+        batchNumber:
+          type: string
+          example: batch10
+        skuName:
+          type: string
+          example: 4L
+        manufactureDate:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+        expireDate:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
         buyingPrice:
           type: number
           format: double
